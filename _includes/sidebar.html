@@ -1,0 +1,168 @@
+{% if page.notDetail %}
+<div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+    <!-- Search Container -->
+    <div class="hidden-xs">
+        <div class="input-group">
+            <input type="text" name="q" autofocus="" class="form-control" id="autocomplete" placeholder="搜索" autocomplete="off">
+                        <span class="input-group-btn">
+                            <button class="btn  btn-default" id="search-btn" type="submit">Go</button>
+                        </span>
+        </div>
+    </div>
+
+    <!-- Featured Tags -->
+    {% if site.data.common.featured-tags %}
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5><a href="{{'/tags/' | prepend: site.data.common.baseurl }}">FEATURED TAGS</a></h5>
+        <div class="tags">
+            {% for tag in site.tags %}
+            {% if tag[1].size > site.data.common.featured-condition-size %}
+            <a href="{{ site.data.common.baseurl }}/tags/#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}">
+                {{ tag[0] }}
+            </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Short About -->
+    <section class="visible-md visible-lg">
+        <hr><h5><a href="{{'/about/' | prepend: site.data.common.baseurl }}">ABOUT ME</a></h5>
+        <div class="short-about">
+            {% if site.data.common.sidebar-avatar %}
+            <img class="avatar" src="{{site.data.common.sidebar-avatar}}" />
+            {% endif %}
+            {% if site.data.common.sidebar-about-description %}
+            <p>{{site.data.common.sidebar-about-description}}</p>
+            {% endif %}
+            <!-- SNS Link -->
+            <ul class="list-inline">
+                {% if site.data.common.RSS %}
+                <li>
+                    <a href="{{ '/feed.xml' | prepend: site.data.common.baseurl }}">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                                    </span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if site.data.common.twitter_username %}
+                <li>
+                    <a href="https://twitter.com/{{ site.data.common.twitter_username }}">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if site.data.common.zhihu_username %}
+                <li>
+                    <a target="_blank" href="https://www.zhihu.com/people/sun-dong-zhi/activities">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                    </span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if site.data.common.weibo_username %}
+                <li>
+                    <a target="_blank" href="https://weibo.com/2407846257/profile?rightmod=1&wvr=6&mod=personinfo">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                                    </span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if site.data.common.facebook_username %}
+                <li>
+                    <a target="_blank" href="https://www.facebook.com/profile.php?id=100004675021382">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                    </span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if site.data.common.github_username %}
+                <li>
+                    <a target="_blank" href="https://github.com/{{ site.data.common.github_username }}">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </section>
+    <!-- Friends Blog -->
+    {% if site.data.common.friends %}
+    <hr>
+    <h5>FRIENDS</h5>
+    <ul class="list-inline">
+        {% for friend in site.data.common.friends %}
+        <li><a href="{{friend.href}}">{{friend.title}}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endif %}
+
+
+
+{% unless page.notDetail %}
+
+<div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+                hidden-xs
+                hidden-sm
+            ">
+    <!-- Search Container -->
+    <div class="hidden-xs">
+        <div class="input-group">
+            <input type="text" name="q" autofocus="" class="form-control" id="autocomplete" placeholder="搜索" autocomplete="off">
+            <span class="input-group-btn">
+                <button class="btn  btn-default" id="search-btn" type="submit">Go</button>
+            </span>
+        </div>
+    </div>
+
+    <hr class="hidden-sm hidden-xs">
+    <!--<h5 id="catalog">-->
+        <!--<a class="catalog-toggle" href="#">目录</a>-->
+    <!--</h5>-->
+    <div id="toc"></div>
+
+
+    <!--<ul class="catalog-body">-->
+        <!--<li class="h2_nav"><a href="#多页应用vuepwa" rel="nofollow">多页应用、Vue、PWA？</a></li>-->
+        <!--<li class="h2_nav"><a href="#实现-prpl-模式" rel="nofollow">实现 “PRPL” 模式</a></li>-->
+        <!--<li class="h3_nav active"><a href="#1-pushpreload推送预加载初始-url-路由所需的关键资源" rel="nofollow">1. PUSH/PRELOAD，推送/预加载初始 URL 路由所需的关键资源。</a></li>-->
+    <!--</ul>-->
+
+
+
+
+
+</div>
+
+
+{% endunless %}
+

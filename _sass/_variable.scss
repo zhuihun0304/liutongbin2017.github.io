@@ -1,0 +1,206 @@
+$fontStack:    14px/1.5 '\5FAE\8F6F\96C5\9ED1',YaHei,helvetica,tahoma,arial,"Hiragino Sans GB",\5b8b\4f53;
+$fontNew: '黑体', Arial;
+
+$width: 980px;
+$margin: 0 auto;
+
+/*所有颜色集合*/
+$mainColor: #ff460d;  //小面积使用
+$orangeColor: #ff421c;
+$linkColor: #317ff5; //按钮链接
+$bgColor: #fafafa;
+$bgBotColor: #f6f6f6;
+$divideColor: #eeeeee; //分割线
+$formColor: #cccccc;
+$inputBgColor: #fbfafa;
+
+$overviewBg: #EDF4FD;
+
+$h1Color: #333333;
+$h2Color: #666666;
+$contentColor: #999999;
+$lightTextColor: #a2a09e;
+
+$borderColor: #ffbba8;
+
+$white: #fff;
+
+$tipsBgColor: #f0e2b8;
+$borderTipsBorder: 1px solid #d1b89f;
+$tipsColor: #7c2108;
+
+//表单按钮的初始颜色和背景色
+$btnFormDefaultColor: #b9d4fe;
+$btnFormDefaultBgColor :#2f7bf2;
+$btnFormDefaultHoverBgColor :#1d6be0;
+
+//首页投标相关文字颜色
+//$originTextColor : #ff431d;
+
+
+
+/*字号*/
+$size12: 12px;
+$size13: 13px;
+$size14: 14px;
+$size16: 16px;
+$size18: 18px;
+$size20: 20px;
+$size22: 22px;
+$size24: 24px;
+$size30: 30px;
+$size34: 34px;
+$size36: 36px;
+
+
+//居中
+$center: center;
+
+/*行间距*/
+$lineSpaceSize: 10px;
+
+//边框
+$borderSize: 1px solid #eee;
+$borderDivide: 1px solid #d2d2d2;
+$borderBlue: 1px solid #317ff5;
+$borderLight: 1px solid #efefef;
+
+//理财进度条宽6
+$financeBaseBorder: 6px solid #eee;
+$financeLineBorder: 6px solid #ffbba8;
+
+//vip 比例条边框
+$vipBaseBorder: 2px solid #d7d7d7;
+$vipLineBorder: 2px solid #2f7e43;
+
+//footer 底线
+$footerBorder: 1px solid #ddd;
+
+//position
+$relative: relative;
+$absolute: absolute;
+$static : static;
+
+
+$inlineBlock: inline-block;
+
+
+//头部微信微博等图片的url
+$iconShareUrl: url('/v2/assets/images/icon_share.png');
+
+$iconVipUrl: url('/v2/assets/images/vip.png');
+
+$tinyIconUrl:url('/v2/assets/images/tiny_icon.png');
+
+$logoImage: url('/v2/assets/images/logo.png');
+
+$logoOutImage: url('/v2/assets/images/logo_out.png');
+
+$contactIcon: url('/v2/assets/images/contact.png');
+
+$downloadIcon: url('/v2/assets/images/download.png');
+
+//资格认证图片
+$qualificationIcon: url('/v2/assets/images/qualification.png');
+//微信公众号图片
+$weixinIcon:  url('/v2/assets/images/weixin.png');
+
+$featuresIcon: url('/v2/assets/images/features_icon.png');
+
+//注册背景图
+$registerBg: url('/v2/assets/images/register_bg.png');
+
+//登录背景图
+$loginBg: url('/v2/assets/images/login_bg.png');
+
+//投标相关按钮新手专享标识
+$financeIcon: url('/v2/assets/images/finance_icon.png');
+
+//理财有风险投资需谨慎
+$warningIcon: url('/v2/assets/images/warning_icon.png');
+
+//合作伙伴
+$partnerIcon : url('/v2/assets/images/partner_icon.png');
+
+//媒体报道
+$mediaReportsIcon: url('/v2/assets/images/media_reports_icon.png');
+
+//活动i
+$activityHao: url('/v2/assets/images/activity_hao.png');
+$activityRed: url('/v2/assets/images/activity_red.png');
+$activityInvite: url('/v2/assets/images/activity_invite.png');
+$activityTou: url('/v2/assets/images/activity_tou.png');
+
+
+//投标进度icon
+$stateIcon: url('/v2/assets/images/state_icon.png');
+
+//首页信息披露背景图
+$infoRecordIcon: url('/v2/assets/images/info-record.png');
+
+
+//概览页面安全等级图片
+$securityLevelIcon: url('/v2/assets/images/security-level.png');
+//余额所用图片
+$balanceIcon: url('/v2/assets/images/balance.png');
+
+$arrowIcon: url('/v2/assets/images/side-down.png');
+
+$iconWidth: 25px;
+
+//银行icon
+$bankIcon: url('/v2/assets/images/yinhang.png');
+
+//常用宽度可以用加减乘除来计算所得
+$onePx: 1px;
+$fivePx: 5px;
+$tenPx: 10px;
+$hunPx: 100px;
+
+$percent: 100%;
+//鼠标悬浮
+$pointer: pointer;
+//券包图片
+$couponPackageIcon: url('/v2/assets/images/coupon_package.png');
+//会员中心
+$userCenterIcon : url('/v2/assets/images/user_center.png');
+$userCenterDownloadIcon: url('/v2/assets/images/user_center_download.png');
+//帮助中心
+$helpPageIcon: url('/v2/assets/images/help/help_page.png');
+//龙贷产品
+$productionsIcon: url('/v2/assets/images/productions_icon.png');
+
+//投标记录
+$tenderIcon: url('/v2/assets/images/tender_icon.png');
+//图片预览
+$albumIcon: url('/v2/assets/images/album_icon.png');
+
+//visible
+$none: none;
+$block: block;
+
+//边框阴影效果
+$boxShadow: 2px 2px 10px #d2d2d2;
+
+$boxShadowBottom: 0px 1px 5px #eee;
+
+$boxContentShadow: 1px 1px 5px #eee;
+
+$borderShadow: 0px 0px 10px $borderColor;
+
+$percentShadow:  0px 0px 5px $borderColor;
+
+$boxShadowTop: 0px 0px 10px $divideColor;
+
+$boxShadowBtn: 0px 1px 5px $linkColor;
+
+//z-index;
+$z1: 1;
+$z2: 2;
+$z3: 3;
+$z4: 4;
+$z5: 5;
+$z6: 6;
+$z7: 7;
+
+$red: yellow;

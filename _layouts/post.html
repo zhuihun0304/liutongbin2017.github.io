@@ -1,0 +1,76 @@
+---
+layout: default
+---
+
+
+{% include commonTop.html %}
+
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container">
+				{{ content }}
+
+                <hr>
+
+                {% include disqus.html %}
+
+            </div>
+
+            <!-- Sidebar Container -->
+            {% include sidebar.html %}
+
+
+            <!-- 详情底部的友情链接和标签云这里不单独抽离 -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                {% if site.data.common.featured-tags %}
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        {% for tag in site.tags %}
+                            <a href="{{ site.data.common.baseurl }}/tags/#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}">
+                                {{ tag[0] }}
+                            </a>
+        				{% endfor %}
+        			</div>
+                </section>
+                {% endif %}
+
+                <!-- Friends Blog -->
+                {% if site.data.common.friends %}
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    {% for friend in site.data.common.friends %}
+                        <li><a href="{{friend.href}}">{{friend.title}}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+
+        </div>
+    </div>
+</article>
+
+
+
+

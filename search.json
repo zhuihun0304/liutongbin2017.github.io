@@ -1,0 +1,19 @@
+---
+layout: null
+---
+{
+  "code" : 200 ,
+  "data" : [
+    {% for post in site.posts %}
+      {
+      "value" : "{{post.title| escape}}",
+      "subtitle": "{{post.subtitle | escape}}",
+      "data" : "{{post.url}}",
+      "date": "{{post.date | date_to_utc | date: '%Y-%m-%d'}}"
+      }
+      {% if forloop.last == false %}
+        ,
+      {% endif %}
+    {% endfor %}
+  ]
+}

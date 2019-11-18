@@ -1,0 +1,32 @@
+---
+layout: default
+---
+
+
+{% include commonTop.html %}
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+
+        <!-- Post Container -->
+        <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                {% unless page.hideSidebar %} post-container col-lg-offset-1 {% endunless %}
+            ">
+            {{ content }}
+        </div>
+        <!-- Sidebar Container -->
+        {% unless page.hideSidebar %}
+            {% include sidebar.html %}
+        {% endunless %}
+    </div>
+</div>
+
+
+
+
+

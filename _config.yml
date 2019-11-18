@@ -1,0 +1,61 @@
+description: "Dark knight's的个人技术博客,专注于web开发,追求前端最完美体验"
+keyword: "web,前端开发,网站设计,程序员,java,javascript,nodejs,python,Dark knight's"
+timezone: Asia/Shanghai
+encoding: "utf-8"
+side_bar_repo_limit: 5
+
+# Build settings
+# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
+highlighter: rouge
+permalink: pretty
+paginate: 8
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+anchorjs: false                          # if you want to customize anchor. check out line:181 of `post.html`
+
+
+
+# Gems
+# from PR#40, to support local preview for Jekyll 3.0
+plugins_dir:
+  - jekyll-feed
+  - jekyll-paginate
+
+gems:
+    - rouge
+    - jekyll-sitemap
+#    - jekyll-seo-tag
+#    - jekyll-html-pipeline
+    - jekyll-paginate
+    - jekyll-feed
+    - jemoji
+#    - jekyll-mentions
+    - jekyll-github-metadata
+
+# Markdown settings
+# replace redcarpet to kramdown,
+# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
+# document: http://jekyllrb.com/docs/configuration/#kramdown
+
+
+markdown: kramdown
+kramdown:
+  input:  GFM
+  syntax_highlighter: true                            # use Github Flavored Markdown !important
+
+
+
+
+sass:
+    sass_dir: _sass
+    style: compressed
+
+
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
+  - docker_darknights
+  - "vendor"
+

@@ -1,0 +1,148 @@
+//存放可继承的样式添加后尽量不更改。 这里的样式一般可以继承，针对特定需要的再进行进一步定制
+//使用时尽量使用一个新的类，然后在新类里继承这样可以减少一个类重复出现相互覆盖
+@import "variable";
+@import "mixin";
+
+.border {
+  border: $borderSize;
+}
+
+.border-pretty {
+  border-top: 1px solid #c6c6c6;
+  border-bottom: 1px solid #fff;
+  margin: 15px 10px 0 30px;
+}
+
+.common-shadow {
+  border: $borderSize;
+  @include border-radius(4px);
+  @include box-shadow($boxContentShadow);
+}
+
+.text-decoration {
+  text-decoration: none;
+}
+
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vipSmall {
+  width: $iconWidth + 2;
+  height: $iconWidth - 4;
+}
+
+.vipLarge {
+  width: $iconWidth*2 - 1;
+  height: $iconWidth - 8;
+}
+
+
+.padding-no-bottom {
+  padding-top: $tenPx*2;
+  padding-left: $tenPx*2;
+  padding-right: $tenPx*2;
+}
+
+//悬浮显示内容块样式
+
+.hover-table-con {
+  cursor: $pointer;
+  position: $relative;
+  &:hover {
+    .hover-table {
+      display: $block;
+    }
+  }
+}
+.hover-table {
+  display: $none;
+}
+
+.percent-common {
+  width: $percent;
+  display: $inlineBlock;
+  position: $relative;
+}
+
+//进度条头部会员
+.percent-base {
+  @extend .percent-common;
+
+  @include border-radius(5px);
+}
+
+.percent-line {
+  @extend .percent-common;
+  top: $onePx*0;
+  left: $onePx*0;
+  position: $absolute;
+
+  @include border-radius(5px);
+
+}
+
+.input-border {
+  width: 450px;
+  border: $borderSize;
+  background-color: $inputBgColor;
+  @include line-height($tenPx*6);
+}
+
+.select-border {
+  cursor: pointer;
+}
+
+//全部form相关样式 start----------
+.input {
+  width: $percent;
+  padding: 12px;
+  outline: 0;
+  @extend .border;
+  @include border-radius($onePx*4);
+  @include line-height($onePx*44);
+
+  &:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 30px white inset;
+  }
+  &:focus{
+    border-color: $linkColor;
+  }
+}
+
+.input.warn{
+  border-color: $mainColor;
+}
+
+.btn-form{
+  display: $inlineBlock;
+  width: $percent;
+  font-size: $size16;
+  text-align: $center;
+  color: $white;
+  letter-spacing: $onePx*2;
+  background: $btnFormDefaultBgColor;
+  cursor: pointer;
+  &:hover {
+    background: $btnFormDefaultHoverBgColor;
+    @include box-shadow($boxShadowBtn);
+  }
+  @include border-radius(2px);
+  @include line-height(44px);
+
+
+}
+
+.btn-form.disable {
+  background: $formColor;
+
+  &:hover {
+    background: $formColor;
+    box-shadow: none;
+  }
+}
+
+
+//全部form相关样式 end----------

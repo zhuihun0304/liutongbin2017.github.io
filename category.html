@@ -1,0 +1,35 @@
+---
+title: category
+layout: common
+description: keep hungry keep foolish
+header-img: "images/bg/batman/bat3.jpg"
+hideSidebar: true
+shortBg: true
+notDetail: true
+---
+
+
+<!-- 标签列表 -->
+{% for category in site.categories %}
+<div class="one-tag-list">
+			  	<span class="fa fa-tag listing-seperator" id="{{ category[0] }}">
+                    <span class="tag-text">{{ category[0] }}</span>
+                </span>
+    {% for post in category[1] %}
+        <div class="post-preview">
+            <a href="{{ post.url | prepend: site.baseurl }}">
+                <h2 class="post-title">
+                    {{ post.title }}
+                </h2>
+                {% if post.subtitle %}
+                <h3 class="post-subtitle">
+                    {{ post.subtitle }}
+                </h3>
+                {% endif %}
+            </a>
+             <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p>
+        </div>
+        <hr>
+    {% endfor %}
+</div>
+{% endfor %}
