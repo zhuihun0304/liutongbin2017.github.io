@@ -4,7 +4,7 @@ rvm:
 addons:
   ssh_known_hosts: ltongbin.com
 before_install:
-- openssl enc -d -aes-256-cbc -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- openssl enc -d -aes-256-cbc -in id_rsa.enc -out ~/.ssh/id_rsa
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host ltongbin.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
