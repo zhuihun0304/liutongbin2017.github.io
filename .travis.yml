@@ -13,14 +13,14 @@ script:
 - bundle exec jekyll build
 after_success:
 - git clone https://github.com/liutongbin2017/ltongbin.com.git
-- cd darknights.me && rm -rf * && cp -r ../_site/* .
+- cd ltongbin.com && rm -rf * && cp -r ../_site/* .
 - git config user.name "liutongbin"
 - git config user.email "liutongbin@gozap.com.com"
 - git add --all .
 - git commit -m "Travis CI Auto Builder"
 - git push --force https://$JEKYLL_GITHUB_TOKEN@github.com/liutongbin2017/ltongbin.com.git
   master
-- ssh root@ltongbin.com "docker restart darknights"
+- ssh root@ltongbin.com "docker restart ltongbin"
 branches:
   only:
   - master
