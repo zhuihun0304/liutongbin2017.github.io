@@ -1,0 +1,28 @@
+language: ruby
+rvm:
+- 2.3.3
+addons:
+  ssh_known_hosts: ltongbin.com
+before_install:
+- openssl enc -d -aes-256-cbc -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host ltongbin.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+script:
+- bundle install
+- bundle exec jekyll build
+after_success:
+- git clone https://github.com/liutongbin2017/ltongbin.com.git
+- cd darknights.me && rm -rf * && cp -r ../_site/* .
+- git config user.name "liutongbin"
+- git config user.email "liutongbin@gozap.com.com"
+- git add --all .
+- git commit -m "Travis CI Auto Builder"
+- git push --force https://$JEKYLL_GITHUB_TOKEN@github.com/liutongbin2017/ltongbin.com.git
+  master
+- ssh root@ltongbin.com "docker restart darknights"
+branches:
+  only:
+  - master
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
