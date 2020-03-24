@@ -9,6 +9,7 @@ before_install:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host ltongbin.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
+- bundle update --bundler
 - bundle install
 - bundle exec jekyll build
 after_success:
