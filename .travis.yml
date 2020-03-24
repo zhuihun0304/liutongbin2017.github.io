@@ -3,11 +3,11 @@ rvm:
 - 2.7.0
 addons:
   ssh_known_hosts: ltongbin.com
-# before_install:
-# - openssl aes-256-cbc -K $encrypted_8e6aadf5448b_key -iv $encrypted_8e6aadf5448b_iv
-#   -in id_rsa.enc -out ~/.ssh/id_rsa -d
-# - chmod 600 ~/.ssh/id_rsa
-# - echo -e "Host ltongbin.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+before_install:
+- openssl aes-256-cbc -K $encrypted_8e6aadf5448b_key -iv $encrypted_8e6aadf5448b_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host ltongbin.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
 - bundle install
 - bundle exec jekyll build
@@ -15,7 +15,7 @@ after_success:
 - git clone https://github.com/liutongbin2017/ltongbin.com.git
 - cd ltongbin.com && rm -rf * && cp -r ../_site/* .
 - git config user.name "liutongbin"
-- git config user.email "liutongbin@gozap.com.com"
+- git config user.email "liutongbin@gozap.com"
 - git add --all .
 - git commit -m "Travis CI Auto Builder"
 - git push --force https://$JEKYLL_GITHUB_TOKEN@github.com/liutongbin2017/ltongbin.com.git
