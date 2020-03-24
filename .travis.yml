@@ -9,11 +9,10 @@ before_install:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host ltongbin.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 script:
-- bundle update --bundler
 - bundle install
 - bundle exec jekyll build
 after_success:
-- git clone https://github.com/liutongbin2017/liutongbin2017.github.io.git
+- git clone https://github.com/liutongbin2017/ltongbin.com.git
 - cd ltongbin.com && rm -rf * && cp -r ../_site/* .
 - git config user.name "liutongbin"
 - git config user.email "liutongbin@gozap.com"
