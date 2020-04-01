@@ -1,7 +1,11 @@
 <!-- Page Header -->
 <style type="text/css">
     header.intro-header{
-        background-image: url('{% if page.header-img %}{{ site.data.common.cdn | append: page.header-img }} {% else %} {{ site.data.common.cdn | append: site.data.common.header-img }}{% endif %}')
+        /* background-image: url('{% if page.header-img %}{{ site.data.common.cdn | append: page.header-img }} {% else %} {{ site.data.common.cdn | append: site.data.common.header-img }}{% endif %}') */
+        /* background-image: url('{% if header-img %}{{append: header-img}} {% else %} {{append: site.data.common.header-img}}{% endif %}') */
+        background-image: url('{% if page.header-img %}{{ page.header-img}} {% else %} {{append: site.data.common.header-img}}{% endif %}')
+
+
     }
 </style>
 

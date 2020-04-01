@@ -1,12 +1,12 @@
 # Site settings
 
-title: Dark Knight
-SEOTitle: Dark knight's Blog
+title: Binn
+SEOTitle: Binn's Blog
 header-img: images/bg/batman/bat-home.jpg
-email: sundongzhi11014111@gmail.com
-description: "人是不能闲的，一闲就会想得太多，一闲就会感情泛滥 ，所谓矫情屁事多，空虚寂寞冷，都是因为懒散堕落闲。"
+email: liutongbin2017@gmail.com
+description: "认真过好每一天"
 keyword: "web,前端开发,网站设计,程序员"
-url: "http://darknights.me"              # your host, for absolute URL
+url: "https://ltongbin.com"              # your host, for absolute URL
 baseurl: ""         # for example, '/blog' if your blog hosted on 'host/blog'
 
 cdn: https://cdn.darknights.cn/assets/
@@ -14,9 +14,9 @@ cdn: https://cdn.darknights.cn/assets/
 
 # SNS settings
 RSS: false
-weibo_username:     IORI20091101
-zhihu_username:     IORI20091101
-github_username:    IORI20091101
+weibo_username:     这个世界不解释
+zhihu_username:     枯叶凋零
+github_username:    liutongbin2017
 #twitter_username:  huxpro
 facebook_username:  https://www.facebook.com/profile.php?id=100004675021382
 
