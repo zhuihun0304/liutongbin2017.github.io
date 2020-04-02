@@ -3,8 +3,8 @@ layout:     post
 title:      安卓和IOS前端页面调试
 subtitle:   调试客户端的webview
 date:       2018-10-20
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

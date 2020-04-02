@@ -3,8 +3,8 @@ layout:     post
 title:      娱乐
 subtitle:   just fun
 date:       2017-10-29
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 
 comments: true
 

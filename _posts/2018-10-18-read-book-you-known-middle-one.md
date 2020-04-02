@@ -3,8 +3,8 @@ layout:     post
 title:      你不知道的JavaScript中卷(一)
 subtitle:   你不知道的JavaScript
 date:       2018-10-18
-author:     "toshiba"
-header-img: "images/bg/batman/bat9.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

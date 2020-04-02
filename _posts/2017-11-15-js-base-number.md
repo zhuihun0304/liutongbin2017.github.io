@@ -3,8 +3,8 @@ layout:     post
 title:      javascript的的最大安全数
 subtitle:   javascript基础知识
 date:       2017-11-01
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

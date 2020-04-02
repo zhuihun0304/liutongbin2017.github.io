@@ -3,7 +3,7 @@ layout:     post
 title:      使用electron进行桌面开发笔记
 subtitle:   使用electron桌面开发问题汇总
 date:       2018-03-15
-author:     "toshiba"
+author:     "binn"
 header-img: "images/bg/batman/bat1.jpg"
 
 comments: true

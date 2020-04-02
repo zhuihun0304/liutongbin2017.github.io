@@ -3,8 +3,8 @@ layout:     post
 title:      "LeetCode,LintCode,Hihocoder刷题指南"
 subtitle:   "通过题目训练来提升自己的编程能力"
 date:       2017-10-12
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 tags:
     - interview
     - JavaScript

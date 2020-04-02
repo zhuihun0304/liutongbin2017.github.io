@@ -3,7 +3,7 @@ layout:     post
 title:      HTML学习指南（一）
 subtitle:   将html内容进行归拢总结
 date:       2017-03-16
-author:     "toshiba"
+author:     "binn"
 header-img: "images/bg/batman/bat4.jpg"
 comments: true
 

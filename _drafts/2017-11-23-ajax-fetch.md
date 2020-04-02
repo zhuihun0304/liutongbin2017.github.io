@@ -3,7 +3,7 @@ layout:     post
 title:      放弃ajax拥抱fetch
 subtitle:   fetch使用的一些注意点
 date:       2017-11-23
-author:     "toshiba"
+author:     "binn"
 header-img: "images/bg/batman/bat7.jpg"
 comments: true
 

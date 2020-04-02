@@ -3,8 +3,8 @@ layout:     post
 title:      Effective JavaScript (二)
 subtitle:   理解JavaScript的浮点数
 date:       2018-06-21
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

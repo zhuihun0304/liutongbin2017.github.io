@@ -3,8 +3,8 @@ layout:     post
 title:      "使用travis-ci集成项目,自动部署博客站点"
 subtitle:   "travis集成注意点和操作步骤"
 date:       2017-09-05
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 tags:
     - 博客搭建
     - jekyll

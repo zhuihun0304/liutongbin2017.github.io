@@ -3,8 +3,8 @@ layout:     post
 title:      Lodash.js源码阅读分析（一）
 subtitle:   对于lodash的源码进行分析解读
 date:       2017-11-16
-author:     "toshiba"
-header-img: "images/bg/batman/bat4.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

@@ -3,7 +3,7 @@ layout:     post
 title:      webpack最佳实践
 subtitle:   webpack初步配置以及优化
 date:       2018-11-28
-author:     "toshiba"
+author:     "binn"
 header-img: "images/bg/batman/bat8.jpg"
 comments: true
 

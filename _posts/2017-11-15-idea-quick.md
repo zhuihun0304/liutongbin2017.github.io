@@ -3,8 +3,8 @@ layout:     post
 title:      IDEA快捷键
 subtitle:   熟悉IDEA快捷键工欲善其事必先利其器快捷键总结Mac版
 date:       2017-11-15
-author:     "toshiba"
-header-img: "images/bg/batman/bat1.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 
 comments: true
 

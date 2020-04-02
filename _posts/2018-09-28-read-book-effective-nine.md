@@ -3,8 +3,8 @@ layout:     post
 title:      Effective JavaScript (九)
 subtitle:   库和API设计
 date:       2018-09-28
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

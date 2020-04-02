@@ -3,7 +3,7 @@ layout:     post
 title:      初涉Android
 subtitle:   Android环境安装
 date:       2017-12-20
-author:     "toshiba"
+author:     "binn"
 header-img: "images/bg/batman/bat8.jpg"
 comments: true
 

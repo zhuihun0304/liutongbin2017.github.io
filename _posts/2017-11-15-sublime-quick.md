@@ -3,8 +3,8 @@ layout:     post
 title:      SublimeText快捷键
 subtitle:   SublimeText快捷键总结工欲善其事必先利其器快捷键总结
 date:       2017-11-15
-author:     "toshiba"
-header-img: "images/bg/batman/bat1.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 
 comments: true
 

@@ -3,8 +3,8 @@ layout:     post
 title:      Generator函数的含义和用法
 subtitle:   ES6重点记录
 date:       2017-11-20
-author:     "toshiba"
-header-img: "images/bg/batman/bat6.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

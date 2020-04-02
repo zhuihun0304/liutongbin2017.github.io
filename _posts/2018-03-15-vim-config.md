@@ -3,8 +3,8 @@ layout:     post
 title:      vim快捷键和配置
 subtitle:   熟悉vim快捷键和配置欲善其事必先利其器快捷键总结
 date:       2018-03-15
-author:     "toshiba"
-header-img: "images/bg/batman/bat1.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 
 comments: true
 

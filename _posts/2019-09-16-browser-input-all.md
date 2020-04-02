@@ -3,8 +3,8 @@ layout:     post
 title:      在浏览器输入 URL 回车之后发生了什么
 subtitle:   在浏览器输入 URL 回车之后的一系列流程解析
 date:       2019-09-16
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

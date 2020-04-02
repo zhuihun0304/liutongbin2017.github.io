@@ -3,7 +3,7 @@ layout:     post
 title:      Babel配置详解
 subtitle:   适合自己的babel配置
 date:       2018-11-03
-author:     "toshiba"
+author:     "binn"
 header-img: "images/bg/batman/bat9.jpg"
 comments: true
 

@@ -5,7 +5,7 @@ layout:     post
 title:      "spring boot错误处理"
 subtitle:   "spring boot 错误踔厉"
 date:       2017-09-08
-author:     "toshiba"
+author:     "binn"
 header-img: "assets/images/post-bg-js-module.jpg"
 tags:
     - 博客搭建

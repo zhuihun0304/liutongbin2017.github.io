@@ -3,8 +3,8 @@ layout:     post
 title:      Effective JavaScript(一)
 subtitle:   了解你使用的JavaScript版本
 date:       2018-06-19
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

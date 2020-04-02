@@ -3,8 +3,8 @@ layout:     post
 title:      原码, 反码, 补码 详解
 subtitle:   原码, 反码, 补码的基础概念和计算方法.
 date:       2017-10-31
-author:     "toshiba"
-header-img: "images/bg/batman/bat2.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

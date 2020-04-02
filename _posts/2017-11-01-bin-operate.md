@@ -3,8 +3,8 @@ layout:     post
 title:      javascript的位操作
 subtitle:   在javascript中的位操作涉及二进制的处理
 date:       2017-11-01
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

@@ -3,8 +3,8 @@ layout:     post
 title:      "搭建jekyll 博客流程记录"
 subtitle:   "如何搭建个人博客以及注意点"
 date:       2017-09-05
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 tags:
     - 博客搭建
     - JavaScript

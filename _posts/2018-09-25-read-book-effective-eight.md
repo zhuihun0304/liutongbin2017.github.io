@@ -3,8 +3,8 @@ layout:     post
 title:      Effective JavaScript (八)
 subtitle:   数组和字典
 date:       2018-09-25
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

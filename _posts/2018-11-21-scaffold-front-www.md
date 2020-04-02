@@ -3,8 +3,8 @@ layout:     post
 title:      搭建门户网站技术选型
 subtitle:   从零开始搭建门户网站
 date:       2018-10-21
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

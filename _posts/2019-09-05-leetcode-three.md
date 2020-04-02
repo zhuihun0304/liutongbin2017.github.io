@@ -3,8 +3,8 @@ layout:     post
 title:      LeetCode刷题总结(简单版三)
 subtitle:   对LeetCode刷过的题目进行整理总结，方便后期查阅复习。
 date:       2019-09-05
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

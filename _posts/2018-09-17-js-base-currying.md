@@ -3,8 +3,8 @@ layout:     post
 title:      函数柯里化
 subtitle:   浅析函数柯里化
 date:       2018-09-17
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :

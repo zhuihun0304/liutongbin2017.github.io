@@ -3,8 +3,8 @@ layout:     post
 title:      "git的使用教程(三)"
 subtitle:   "git的高级教程以及正规开发中的工作流程"
 date:       2017-10-22
-author:     "toshiba"
-header-img: "images/bg/batman/bat3.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 tags:
     - 工具
     - git

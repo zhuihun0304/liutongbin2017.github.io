@@ -3,7 +3,7 @@ layout:     post
 title:      前端构建工具fit&webpack
 subtitle:   记录前端一些构建工具使用
 date:       2017-11-23
-author:     "toshiba"
+author:     "binn"
 header-img: "images/bg/batman/bat8.jpg"
 comments: true
 

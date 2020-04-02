@@ -3,8 +3,8 @@ layout:     post
 title:      JavaScript面试题 
 subtitle:   一些好的JavaScript面试题总结
 date:       2018-09-11
-author:     "toshiba"
-header-img: "images/bg/batman/bat8.jpg"
+author:     "binn"
+header-img: "https://i.loli.net/2020/04/01/OGmz4tWRHn2ql7D.jpg"
 comments: true
 
 tags :
