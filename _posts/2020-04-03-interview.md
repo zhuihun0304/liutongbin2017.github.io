@@ -17,7 +17,8 @@ categories:
 ---
 ### http与https的区别与作用：
 1. https数据传输期间对信息进行加密；  
-2. 使用https可以提高seo，提高搜索排名；  
+2. 使用https可以提高seo，提高搜索排名； 
+[为何会提高seo](http://www.dede58.com/web/17553.html) 
 3. https是使用TLS/SSL加密的http协议；  
 4. http的端口是80，https是433，https需要ca申请证书，一般免费证书很少，需要交费；  
 5. http协议是Hyper Text Transfer Protocol(超文本传输协议)的缩写，是用于从万维网(wwww:World Wide Web)服务器传输超文本到本地浏览器的传送协议。http是一个基于TCP/IP通信协议来传递数据(HTML文件，图片，查询结果等)。
