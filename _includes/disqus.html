@@ -1,12 +1,14 @@
 <ul class="pager">
     {% if page.previous.url %}
     <li class="previous">
-        <a href="{{ page.previous.url | prepend: site.data.common.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">&larr; Previous Post</a>
+        <a href="{{ page.previous.url | prepend: site.data.common.baseurl | replace: '//', '/' }}" data-toggle="tooltip"
+            data-placement="top" title="{{page.previous.title}}">&larr; Previous Post</a>
     </li>
     {% endif %}
     {% if page.next.url %}
     <li class="next">
-        <a href="{{ page.next.url | prepend: site.data.common.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">Next Post &rarr;</a>
+        <a href="{{ page.next.url | prepend: site.data.common.baseurl | replace: '//', '/' }}" data-toggle="tooltip"
+            data-placement="top" title="{{page.next.title}}">Next Post &rarr;</a>
     </li>
     {% endif %}
 </ul>
@@ -16,12 +18,9 @@
 {% if site.data.common.disqus_username %}
 <!-- disqus 评论框 start -->
 <div class="comment">
-    <div id="disqus_thread"
-         data-thread-key="{{page.id}}"
-         data-title="{{page.title}}"
-         data-url="{{site.data.common.url}}{{site.data.common.baseurl}}{{page.url}}"></div>
+    <div id="disqus_thread" data-thread-key="{{page.id}}" data-title="{{page.title}}"
+        data-url="{{site.data.common.url}}{{site.data.common.baseurl}}{{page.url}}"></div>
     <script>
-
         /**
          *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
          *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
@@ -31,14 +30,16 @@
          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
          };
          */
-        (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document, s = d.createElement('script');
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document,
+                s = d.createElement('script');
             s.src = 'https://iori-1.disqus.com/embed.js';
             s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
         })();
     </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript>
 </div>
 <!-- disqus 评论框 end -->
 {% endif %}
@@ -51,34 +52,34 @@
 {% if site.data.common.anchorjs %}
 <!-- async load function -->
 <!--<script>-->
-    <!--function async(u, c) {-->
-        <!--var d = document, t = 'script',-->
-                <!--o = d.createElement(t),-->
-                <!--s = d.getElementsByTagName(t)[0];-->
-        <!--o.src = u;-->
-        <!--if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }-->
-        <!--s.parentNode.insertBefore(o, s);-->
-    <!--}-->
+<!--function async(u, c) {-->
+<!--var d = document, t = 'script',-->
+<!--o = d.createElement(t),-->
+<!--s = d.getElementsByTagName(t)[0];-->
+<!--o.src = u;-->
+<!--if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }-->
+<!--s.parentNode.insertBefore(o, s);-->
+<!--}-->
 <!--</script>-->
 <!--&lt;!&ndash; anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ &ndash;&gt;-->
 <!--<script>-->
-    <!--async("{{ site.data.common.cdn | append: 'scripts/anchor.min.js' }}",function(){-->
-        <!--anchors.options = {-->
-            <!--visible: 'always',-->
-            <!--placement: 'right',-->
-            <!--icon: '¶'-->
-        <!--};-->
-        <!--anchors.add(".post-container h3").remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');-->
-    <!--})-->
+<!--async("{{ site.data.common.cdn | append: 'scripts/anchor.min.js' }}",function(){-->
+<!--anchors.options = {-->
+<!--visible: 'always',-->
+<!--placement: 'right',-->
+<!--icon: '¶'-->
+<!--};-->
+<!--anchors.add(".post-container h3").remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');-->
+<!--})-->
 <!--</script>-->
 <style>
     /* place left on bigger screen */
     @media all and (min-width: 800px) {
-        .anchorjs-link{
+        .anchorjs-link {
             position: absolute;
             left: -0.75em;
             font-size: 1.1em;
-            margin-top : -0.1em;
+            margin-top: -0.1em;
         }
     }
 </style>
