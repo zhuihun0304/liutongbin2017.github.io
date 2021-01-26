@@ -119,3 +119,35 @@ var reverse = function(x) {
     return res
 }
 ```
+
+### 3.回文数
+判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数
+```
+示例 1:
+输入: 121
+输出: true
+
+示例 2:
+输入: -121
+输出: false
+解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。
+
+示例 3:
+输入: 10
+输出: false
+解释: 从右向左读, 为 01 。因此它不是一个回文数。
+```
+
+### 答案一
+我的答案是将数字转换成字符串然后倒转，判断Number值是否相等
+```
+x = 121
+var isPalindrome = function(x) {
+    var newX = x.toString().split('').reverse().join('')
+    if(Number(x) === Number(newX)) {
+        return true
+    } else {
+        return false
+    }
+};
+```
