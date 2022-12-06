@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="关于javascript中的~操作参考文章中有一道面试题,尽管文章已经有了一部分解释但是还有一些点不够明确在此在进行一次分析  !~location.href.search(‘abc’)  首先再次回顾一下js中的位运算  &amp; 与 | 或 ~ 非 ^ 异或 &lt;&lt; 左移 &gt;&gt; 算数右移(有符号右移) &gt;&gt;&gt; 逻辑右移(无符号右移)  Number.p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript的位操作">
+<meta property="og:url" content="http://example.com/2017/11/01/2017-11-01-bin-operate/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="关于javascript中的~操作参考文章中有一道面试题,尽管文章已经有了一部分解释但是还有一些点不够明确在此在进行一次分析  !~location.href.search(‘abc’)  首先再次回顾一下js中的位运算  &amp; 与 | 或 ~ 非 ^ 异或 &lt;&lt; 左移 &gt;&gt; 算数右移(有符号右移) &gt;&gt;&gt; 逻辑右移(无符号右移)  Number.p">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-10-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:57:23.130Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="计算机基础">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>javascript的位操作 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="在javascript中的位操作涉及二进制的处理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-11-01 00:00" pubdate>
+        2017年11月1日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.5k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">在javascript中的位操作涉及二进制的处理</h1>
+            
+            <div class="markdown-body">
+              <h1 id="关于javascript中的-操作"><a href="#关于javascript中的-操作" class="headerlink" title="关于javascript中的~操作"></a>关于javascript中的~操作</h1><p>参考文章中有一道面试题,尽管文章已经有了一部分解释但是还有一些点不够明确在此在进行一次分析</p>
+<blockquote>
+<p>!~location.href.search(‘abc’)</p>
+</blockquote>
+<p>首先再次回顾一下js中的位运算</p>
+<ul>
+<li>&amp; 与</li>
+<li>| 或</li>
+<li>~ 非</li>
+<li>^ 异或</li>
+<li>&lt;&lt; 左移</li>
+<li>&gt;&gt; 算数右移(有符号右移)</li>
+<li>&gt;&gt;&gt; 逻辑右移(无符号右移)</li>
+</ul>
+<p>Number.prototype.toString</p>
+<p>Number.prototype.toString方法可以讲数字转化为字符串，有一个可选的参数，用来决定将数字显示为指定的进制，下面可以查看3的二进制表示</p>
+<p>````<br> 3..toString(2)</p>
+<p> (3).toString(2)</p>
+<p> Number(3).toString(2)   //这里如果直接 3.toString(2)是会报错的</p>
+<blockquote>
+<blockquote>
+<p>11</p>
+</blockquote>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># &amp; 与</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">&amp;按位与会将操作数和被操作数的相同为进行与运算，如果都为1则为1，如果有一个为0则为0</span><br><br></code></pre></td></tr></table></figure>
+<p>101<br>011</p>
+<hr>
+<p>001</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># \| 或</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">按位或是相同的位置上只要有一个为1就是1，两个都为0则为0</span><br><br></code></pre></td></tr></table></figure>
+<p>101<br>001</p>
+<hr>
+<p>101</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># ~ 非</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">~操作符会将操作数的每一位取反，如果是1则变为0，如果是0则边为1</span><br><br></code></pre></td></tr></table></figure>
+<h2 id="101"><a href="#101" class="headerlink" title="101"></a>101</h2><p>010</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash"><span class="hljs-comment"># ^ 异或</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">再来说说异或，这个比较有意思，异或顾名思义看看两个位是否为异——不同，两个位不同则为1，两个位相同则为0</span><br><br><br><br></code></pre></td></tr></table></figure>
+<p>101<br>001</p>
+<hr>
+<p>100</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>再次分析开头的问题<br><br>首先关于indexOf获得的值可能有几种请求 <span class="hljs-number">-1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span> 从这三种进行分析<br><br>## ~<span class="hljs-number">-1</span><br><br>为了简便计算我这只取<span class="hljs-number">8</span>位<br><br></code></pre></td></tr></table></figure>
+<p>10000001  //这是-1的原码 (真值的绝对值加上符号位)<br>——–  //进行按位非操作后 这里会改变符号<br>01111110  //得到此值为正值要获得该值得真值需要然后取反再减一 注意取反的操作不会改变符号</p>
+<hr>
+<p>00000000  //最后得到的值是0</p>
+<p>//浏览器控制台输出</p>
+<p>~-1<br>0</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>## ~<span class="hljs-number">0</span><br><br></code></pre></td></tr></table></figure>
+<p>00000000  //这是0的原码 (真值的绝对值加上符号位)<br>——–  //进行按位非操作后 这里会改变符号<br>11111111  //得到此值该值为负值的补码 要获得该值得真值需要对补码求补即取反+1 (注意取反的操作不会改变符号)</p>
+<hr>
+<p>10000001  //最后得到的值是1</p>
+<p>//浏览器控制台输出</p>
+<p>~0<br>-1</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br><br><br>## ~<span class="hljs-number">1</span><br><br></code></pre></td></tr></table></figure>
+<p>00000001  //这是1的原码 (真值的绝对值加上符号位)<br>——–  //进行按位非操作后 这里会改变符号<br>11111110  //得到此值该值为负值的补码 要获得该值得真值需要对补码求补即取反+1 (注意取反的操作不会改变符号)</p>
+<hr>
+<p>10000010  //最后得到的值是2</p>
+<p>//浏览器控制台输出</p>
+<p>~1<br>-2</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs"><br><br>因此在上面问题出现的时候<br><br></code></pre></td></tr></table></figure>
+<p>~location.href.search(‘abc’)  //未匹配到返回 -1 这里为 ~-1  == 0 ==&gt; !0 == true;<br>~location.href.search(‘abc’)  //未匹配到返回 0 这里为 ~0  == -1 ==&gt; !-1 == false;<br>~location.href.search(‘abc’)  //未匹配到返回 1 这里为 ~1  == -2 ==&gt; !-2== false;</p>
+<p>```</p>
+<p>因此只有返回 -1时</p>
+<p>如果为 -1 说明未匹配到</p>
+<blockquote>
+<p>!~location.href.search(‘abc’) ===&gt; true</p>
+</blockquote>
+<p>得证。</p>
+<h1 id="文章参考"><a href="#文章参考" class="headerlink" title="文章参考"></a>文章参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://yanhaijing.com/javascript/2016/07/20/binary-in-js/">聊聊JavaScript中的二进制数</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.html">原码, 反码, 补码 详解</a></li>
+</ul>
+<h1 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://yanhaijing.com/javascript/2014/03/14/what-every-javascript-developer-should-know-about-floating-points/">每一个JavaScript开发者应该了解的浮点知识</a></li>
+<li><a target="_blank" rel="noopener" href="http://jser.it/blog/2014/07/07/numbers-in-javascript/">Numbers in JavaScript</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/js%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">js基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/11/15/2017-11-15-sublime-quick/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SublimeText快捷键</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/11/01/2017-11-15-js-base-number/">
+                        <span class="hidden-mobile">javascript的的最大安全数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="高性能网站建设指南-前端工程师技能精髓减少HTTP请求性能黄金法则提示了只有10%~20%响应时间花在了HTML文档上其他都用在了加载各种组件包括（图片，样式表，脚本，falsh）进行的HTTP请求上。因此改善响应时间的最简单途径就是减少组件数量，并由此减少请求数量 可以以下通过方式  CSS Sprites   内联图片 data:URL   合并脚本和样式表  data:URL模式首次在199">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高性能网站建设指南">
+<meta property="og:url" content="http://example.com/2017/12/20/2017-12-20-read-book-web/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="高性能网站建设指南-前端工程师技能精髓减少HTTP请求性能黄金法则提示了只有10%~20%响应时间花在了HTML文档上其他都用在了加载各种组件包括（图片，样式表，脚本，falsh）进行的HTTP请求上。因此改善响应时间的最简单途径就是减少组件数量，并由此减少请求数量 可以以下通过方式  CSS Sprites   内联图片 data:URL   合并脚本和样式表  data:URL模式首次在199">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:59:29.709Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="读书总结">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>高性能网站建设指南 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="读书《高性能网站建设指南》总结">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-12-20 00:00" pubdate>
+        2017年12月20日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.9k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">读书《高性能网站建设指南》总结</h1>
+            
+            <div class="markdown-body">
+              <h1 id="高性能网站建设指南-前端工程师技能精髓"><a href="#高性能网站建设指南-前端工程师技能精髓" class="headerlink" title="高性能网站建设指南-前端工程师技能精髓"></a>高性能网站建设指南-前端工程师技能精髓</h1><h2 id="减少HTTP请求"><a href="#减少HTTP请求" class="headerlink" title="减少HTTP请求"></a>减少HTTP请求</h2><p><code>性能黄金法则</code>提示了只有10%~20%响应时间花在了HTML文档上其他都用在了加载各种组件包括（图片，样式表，脚本，falsh）进行的HTTP请求上。因此改善响应时间的最简单途径就是减少组件数量，并由此减少请求数量</p>
+<p>可以以下通过方式</p>
+<blockquote>
+<p>CSS Sprites</p>
+</blockquote>
+<blockquote>
+<p>内联图片 data:URL</p>
+</blockquote>
+<blockquote>
+<p>合并脚本和样式表</p>
+</blockquote>
+<p>data:URL模式首次在1995年被提议其格式如下 :<code>data:mediatype;base64,data</code><br>其他类似的模式还有<br> ftp:，file:， mailto:， smtp:， pop:， dns:， whois:， finger:， daytime:，news: ， run:<br>需要注意的是内联图片不被IE支持，而且增加了文档的大小如果存在于HTML当中首次下载的文档大小会变大，鉴于此可以将内联图片放到css当中这样可以让图片可以被缓存而且这样减少了一个图片的http请求。</p>
+<h2 id="使用内容发布网络CDN"><a href="#使用内容发布网络CDN" class="headerlink" title="使用内容发布网络CDN"></a>使用内容发布网络CDN</h2><p>合理使用cdn会很大程度增加网站响应速度而且价格不贵，比如本站使用的又拍云（非广告），即使被DDOS了也花不了多少</p>
+<h2 id="添加Expires头"><a href="#添加Expires头" class="headerlink" title="添加Expires头"></a>添加Expires头</h2><p>通过设置一个长久有效的Expires头可以使web组件被缓存。web服务器通过Expires头来告诉Web客户端它可以使用一个组件的当前副本直到制定的时间为止。<br>但是由于Expires是一个特定时间，它要求服务器跟客户端始终严格同步（通常很难保证），所以需要跟Cache-Control: max-age=31500000 配合使用该项配置告诉客户端该组件过多长时间才会失效而不是到某一个时间失效。<br>如果两者同时出现max-age指令会覆盖Expires头。<br>比较幸运的是mod_expires Apache模块能够使用Expires头时能像max-age那样以相对的方式设置日期。使用Expire-Default指令来完成。设置如下：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs lasso">&lt;FilesMatch <span class="hljs-string">&quot;\.(gif|jpg|js|css)$&quot;</span>&gt;<br>    ExpiresDefault <span class="hljs-string">&quot;access plus 10 years&quot;</span><br>&lt;/FileMatch&gt;<br><span class="hljs-comment">//该指令会同时向响应中发送Expires头和Cache-Contral max-age,响应格式如下：</span><br>Expires: Wed, <span class="hljs-number">16</span> Oct <span class="hljs-number">2024</span> <span class="hljs-number">05</span>:<span class="hljs-number">43</span>:<span class="hljs-number">02</span> GMT<br><span class="hljs-keyword">Cache</span><span class="hljs-params">-control</span>: <span class="hljs-keyword">max</span><span class="hljs-params">-age</span>=<span class="hljs-number">315360000</span><br><br></code></pre></td></tr></table></figure>
+<p>通过设置Expires头可以避免额外的http请求，减少一半的响应时间。</p>
+<p>##压缩组件<br>使用gzip来压缩组件，从HTTP1.1开始Web客户端可以通过HTTP请求中的: Accept-Enconding: gzip,deflate  来表示对于压缩的支持，如果Web服务器看到请求中有这个头就会使用客户端列出来的方法中的一种来压缩响应。Web服务器通过响应中的Content-Encoding头来通知客户端 : Content-Encoding: gzip.</p>
+<blockquote>
+<p>gzip是目前最流行和最有效的压缩方法， 另外一种deflate的方式效果略逊且不流行，因此gzip使最理想的压缩方式</p>
+</blockquote>
+<p>配置gzip使用的模块取决于Apache的版本</p>
+<ul>
+<li>Apache1.3使用mod_gzip</li>
+<li>Apache2.x使用mod_deflate</li>
+</ul>
+<p>目前的状况是浏览器与服务器直接连接并没有任何问题，但是如果中间有代理服务器的话有两种情况<br>情况一：Web客户端不支持gzip发送到代理服务器，代理服务器向服务器请求得到未压缩的组件，然后组件被代理服务器缓存，此后对该组件的所有请求都走缓存，组件失去了压缩的机会，即使以后的客户端支持gzip也没用了<br>情况二：如何顺序相反缓存的则是gzip压缩后的组件，这样一个不支持gzip的Web浏览器无法正常解压导致组件可能失效。<br>无论哪种情况都不是我们希望见到的，解决这个问题的方式是在Web服务器的响应中添加Vary头。Web服务器可以告诉代理根据一个或多个请求头来改变缓存响应，由于压缩决定基于Accept-Encoding请求头的，因此需要在服务器的Vary响应中包含Accept-Encoding.  如 Vary: Accept-Encoding<br>这使得代理会缓存两个版本的内容如果有设置Accept-Encoding: gzip,deflate的返回压缩版本，没有设置的返回未压缩版本。<br>还可以把在Apache设置支持和不支持gzip白名单将User-Agent加入Vary如 <code>Vary: Accept-Encoding,User-Agent</code></p>
+<h2 id="将样式表放在顶部"><a href="#将样式表放在顶部" class="headerlink" title="将样式表放在顶部"></a>将样式表放在顶部</h2><p>最好的实践是将Css放到head标签中防止FOUC（Flash Of Unstyled Content）。</p>
+<blockquote>
+<p>和A不一样，[LINK]只能出现在文档的HEAD中，但出现的次数时任意的</p>
+</blockquote>
+<p>CSS放到底部会在IE导致白屏</p>
+<blockquote>
+<ul>
+<li>在新窗口打开时</li>
+<li>重新加载时</li>
+<li>作为主页时</li>
+</ul>
+</blockquote>
+<h2 id="将脚本放到底部"><a href="#将脚本放到底部" class="headerlink" title="将脚本放到底部"></a>将脚本放到底部</h2><blockquote>
+<ul>
+<li>脚本会阻塞后面组件的下载</li>
+<li>脚本会阻塞后面内容的呈现</li>
+</ul>
+</blockquote>
+<p>所以最佳的位置就是放到页面body最底部</p>
+<h2 id="避免CSS表达式"><a href="#避免CSS表达式" class="headerlink" title="避免CSS表达式"></a>避免CSS表达式</h2><p>css表达式使用不当会导致频繁的求值导致地下的性能</p>
+<blockquote>
+<p>可以明确的一点是不了解底层影响的情况下使用css表达式是非常危险的，所以尽量避免使用CSS表达式。</p>
+</blockquote>
+<h2 id="使用外部的Javascript和CSS"><a href="#使用外部的Javascript和CSS" class="headerlink" title="使用外部的Javascript和CSS"></a>使用外部的Javascript和CSS</h2><p>组件的引入不外乎内联和外置。就纯粹而已内联要快一些但是我们还是会使用外置的css和脚本，这是因为外置的组件是会被缓存的导致以后的请求会从浏览器缓存读渲染会更快，而内联的脚本会导致html体积增大但是HTML是不会缓存的这样每次请求的html体积都会很大，造成额外的带宽消耗。</p>
+<ul>
+<li>加载后下载脚本可以在第一次加载内联的组件然后异步加载外部组件以便为下次加载提供便利这里使用的html是不一样的需要注意。</li>
+<li>动态内联，使用cookie来让后台决定返回那个页面。</li>
+</ul>
+<h2 id="减少DNS查找"><a href="#减少DNS查找" class="headerlink" title="减少DNS查找"></a>减少DNS查找</h2><p>根据HTTP1.1规范，建议浏览器从每个主机名并行下载两个组件，如果一个web页面平均的将组件放到两个主机名下整体响应时间会减少一半。<br>Yahoo研究表明使用两个主机名比使用1，4，10个主机名能带来更好的性能。因此建议将组件分别放到至少两个但是不超过四个与主机名下，这样不会造成过多的DNS查找，又可以为并行下载。</p>
+<h2 id="精简Javascript"><a href="#精简Javascript" class="headerlink" title="精简Javascript"></a>精简Javascript</h2><p>可以使用gulp等工具对脚本和css进行混淆，精简和压缩，服务端开启gzip，以减少文件的体积大小。</p>
+<h2 id="避免重定向"><a href="#避免重定向" class="headerlink" title="避免重定向"></a>避免重定向</h2><p>比如为了使用<a target="_blank" rel="noopener" href="http://www.xxx.com/">www.xxx.com</a> 重定向到 <a target="_blank" rel="noopener" href="http://www.xxx.com/">www.xxx.com/</a> 这种是不推荐的，我们只需要使用服务端配置，无需重定向就能拥有如此简洁的url即可</p>
+<blockquote>
+<p>寻找一种避免重定向的方法</p>
+</blockquote>
+<h2 id="删除重复脚本"><a href="#删除重复脚本" class="headerlink" title="删除重复脚本"></a>删除重复脚本</h2><blockquote>
+<p>确保脚本只被包含一次</p>
+</blockquote>
+<p>可以添加文件MD5后缀或者时间戳来保证文件是不同的</p>
+<h2 id="配置或删除ETag"><a href="#配置或删除ETag" class="headerlink" title="配置或删除ETag"></a>配置或删除ETag</h2><p>ETag，一般建议移除ETag</p>
+<blockquote>
+<p>比较最新修改日期 Last-Modified<br>比较实体标签 ETag</p>
+</blockquote>
+<h2 id="使Ajax可缓存"><a href="#使Ajax可缓存" class="headerlink" title="使Ajax可缓存"></a>使Ajax可缓存</h2><p>真实情况ajax一般不缓存<br>缓存可以缓存的ajax请求，通过修改cache-control</p>
+<h2 id="析构网站的工具"><a href="#析构网站的工具" class="headerlink" title="析构网站的工具"></a>析构网站的工具</h2><p>YSlow</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/03/15/2018-03-15-vim-config/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">vim快捷键和配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/11/20/2017-11-20-js-generator/">
+                        <span class="hidden-mobile">Generator函数的含义和用法</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

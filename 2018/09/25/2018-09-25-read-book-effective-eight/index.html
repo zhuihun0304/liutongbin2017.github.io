@@ -1,0 +1,591 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="使用Object的直接实例构造轻量级的字典12345678910var dict &#x3D; &amp;#123; alice: 34, bob: 24, chris: 62 &amp;#125;;var people &#x3D; [];for(var name in dict) &amp;#123;	people.push(name + &quot;: &quot; + dict[name]);&amp;#125;people; &#x2F;&#x2F; [&amp;q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective JavaScript (八)">
+<meta property="og:url" content="http://example.com/2018/09/25/2018-09-25-read-book-effective-eight/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="使用Object的直接实例构造轻量级的字典12345678910var dict &#x3D; &amp;#123; alice: 34, bob: 24, chris: 62 &amp;#125;;var people &#x3D; [];for(var name in dict) &amp;#123;	people.push(name + &quot;: &quot; + dict[name]);&amp;#125;people; &#x2F;&#x2F; [&amp;q">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:59:29.732Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="读书总结">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Effective JavaScript (八) - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="数组和字典">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-25 00:00" pubdate>
+        2018年9月25日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      15k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      127 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">数组和字典</h1>
+            
+            <div class="markdown-body">
+              <h2 id="使用Object的直接实例构造轻量级的字典"><a href="#使用Object的直接实例构造轻量级的字典" class="headerlink" title="使用Object的直接实例构造轻量级的字典"></a>使用Object的直接实例构造轻量级的字典</h2><figure class="highlight maxima"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">var</span> dict = &#123; alice: <span class="hljs-number">34</span>, bob: <span class="hljs-number">24</span>, chris: <span class="hljs-number">62</span> &#125;;<br><br><span class="hljs-built_in">var</span> people = [];<br><br><span class="hljs-keyword">for</span>(<span class="hljs-built_in">var</span> name <span class="hljs-keyword">in</span> dict) &#123;<br>	people.<span class="hljs-built_in">push</span>(name + <span class="hljs-string">&quot;: &quot;</span> + dict[name]);<br>&#125;<br><br>people; // [<span class="hljs-string">&quot;alice: 34&quot;</span>, <span class="hljs-string">&quot;bob: 24&quot;</span>, <span class="hljs-string">&quot;chris: 62&quot;</span>];<br><br></code></pre></td></tr></table></figure>
+
+<p>我们创建一个自定义的字典类会怎样呢</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">NaiveDict</span>(<span class="hljs-params"></span>) &#123;&#125;<br><br><span class="hljs-title class_">NaiveDict</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">count</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> name <span class="hljs-keyword">in</span> <span class="hljs-variable language_">this</span>) &#123;<br>		i++;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> i;<br>&#125;;<br><br><span class="hljs-title class_">NaiveDict</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">toString</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;[object NaiveDict]&quot;</span>;<br>&#125;;<br><br><span class="hljs-keyword">var</span> dict = <span class="hljs-keyword">new</span> <span class="hljs-title class_">NaiveDict</span>();<br><br>dict.<span class="hljs-property">alice</span> = <span class="hljs-number">34</span>;<br>dict.<span class="hljs-property">bob</span> = <span class="hljs-number">24</span>;<br>dict.<span class="hljs-property">chris</span> = <span class="hljs-number">62</span>;<br><br>dict.<span class="hljs-title function_">count</span>(); <span class="hljs-comment">// 5</span><br><br></code></pre></td></tr></table></figure>
+
+<p>这样有一个问题，count会枚举出所有的属性包括了toString 和count,而不仅仅是我们需要的值。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs abnf">var dict <span class="hljs-operator">=</span> new Array()<span class="hljs-comment">;</span><br><br>dict.alice <span class="hljs-operator">=</span> <span class="hljs-number">34</span><span class="hljs-comment">;</span><br>dict.bob <span class="hljs-operator">=</span> <span class="hljs-number">24</span><span class="hljs-comment">;</span><br>dict.chris <span class="hljs-operator">=</span> <span class="hljs-number">62</span><span class="hljs-comment">;</span><br><br></code></pre></td></tr></table></figure>
+<p>这样也会有问题，代码对原型污染很脆弱，应用程序的其他库有可能会打猴子补丁，比如</p>
+<blockquote>
+<p>原型污染是指当枚举字典的条目时，原型对象中的一些属性可能会导致出现一些不期望的属性。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">first</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>[<span class="hljs-number">0</span>];<br>&#125;<br><br><span class="hljs-title class_">Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">last</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>[<span class="hljs-number">1</span>];<br>&#125;<br><br><span class="hljs-keyword">var</span> names = [];<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> name <span class="hljs-keyword">in</span> dict) &#123;<br>	names.<span class="hljs-title function_">push</span>(name);<br>&#125;<br><br>names; [<span class="hljs-string">&quot;alice&quot;</span>, <span class="hljs-string">&quot;bob&quot;</span>, <span class="hljs-string">&quot;chris&quot;</span>, <span class="hljs-string">&quot;first&quot;</span>, <span class="hljs-string">&quot;last&quot;</span>]<br><br></code></pre></td></tr></table></figure>
+<p>使用使用 <code>new Object() </code>可能会面临同样的问题，但是使用 <code>&#123;&#125;</code>的方式会更好, 虽然不能保证对于原型污染时安全的，任何人仍然能增加属性到Object.prototype，但是风险可以降低到仅仅局限于Object.prototype</p>
+<ul>
+<li>坚持使用Object的直接实例原则可以使for…in循环摆脱原型污染的影响</li>
+<li>使用对象字面量构建轻量级字典</li>
+</ul>
+<h2 id="使用null原型以防止原型污染"><a href="#使用null原型以防止原型污染" class="headerlink" title="使用null原型以防止原型污染"></a>使用null原型以防止原型污染</h2><p>防止原型污染的最简单的方式之一就是一开始就不使用原型。但是ES5发布之前并没有一个标准的方式创建一个空原型的新对象。你可能会这样做</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">C</span>(<span class="hljs-params"></span>) &#123; &#125;<br><br>C.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = <span class="hljs-literal">null</span>;<br><br><span class="hljs-keyword">var</span> o = <span class="hljs-keyword">new</span> <span class="hljs-title function_">C</span>();<br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getPrototypeOf</span>(o) === <span class="hljs-literal">null</span>; <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getPrototypeOf</span>(o) === <span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> <span class="hljs-comment">// true</span><br><br><br><span class="hljs-comment">// ES5之后应该这样做</span><br><span class="hljs-keyword">var</span> x = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-literal">null</span>);<br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getPrototypeOf</span>(o) === <span class="hljs-literal">null</span>; <span class="hljs-comment">// true</span><br><br>在不支持<span class="hljs-title class_">Object</span>.<span class="hljs-property">create</span>的<span class="hljs-title class_">JavaScript</span>环境中特殊对象__proto__提供了对对象内部原型链的读写访问<br><br><span class="hljs-keyword">var</span> x = &#123; <span class="hljs-attr">__proto__</span>: <span class="hljs-literal">null</span> &#125;;<br><br>x <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Object</span>;  <span class="hljs-comment">// false;</span><br><br></code></pre></td></tr></table></figure>
+<p>第二种貌似更方便，但是有了Object.create函数后，Object.create是更值得推荐的方式。</p>
+<ul>
+<li>在ES5中要使用Object.create(null)创建自由原型的空对象是不太容易被污染的。</li>
+<li>在一些老环境中考虑使用{ <strong>proto</strong>: null }， 但是它既不是标准的也不是可移植的还有可能在未来被删除</li>
+<li>绝对不要使用__proto__作为字典中的key</li>
+</ul>
+<h2 id="使用hasOwnProperty方法避免原型污染"><a href="#使用hasOwnProperty方法避免原型污染" class="headerlink" title="使用hasOwnProperty方法避免原型污染"></a>使用hasOwnProperty方法避免原型污染</h2><p>JavaScript的对象操作总是以继承的方式工作，即使一个空的对象字面量也继承了Object.prototype的大量属性</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">var dict = &#123;&#125;<br><span class="hljs-string">&quot;alice&quot;</span> <span class="hljs-keyword">in</span> dict; <span class="hljs-regexp">//</span>false;<br><span class="hljs-string">&quot;bob&quot;</span> <span class="hljs-keyword">in</span> dict; <span class="hljs-regexp">//</span>false;<br><span class="hljs-string">&quot;chris&quot;</span> <span class="hljs-keyword">in</span> dict; <span class="hljs-regexp">//</span>false;<br><br><span class="hljs-regexp">//</span> toString 和valueOf方法继承自Object.prototype<br><span class="hljs-string">&quot;toString&quot;</span> <span class="hljs-keyword">in</span> dict; <span class="hljs-regexp">//</span>false;  <br><span class="hljs-string">&quot;valueOf&quot;</span> <span class="hljs-keyword">in</span> dict; <span class="hljs-regexp">//</span>false;<br></code></pre></td></tr></table></figure>
+<p>幸运的是Object.hasOwnProperty方法可以用来判断属性是否继承自原型对象。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">dict.hasOwnProperty(<span class="hljs-string">&quot;alice&quot;</span>);     <span class="hljs-regexp">//</span> false<br>dict.hasOwnProperty(<span class="hljs-string">&quot;toString&quot;</span>);  <span class="hljs-regexp">//</span> false<br>dict.hasOwnProperty(<span class="hljs-string">&quot;valueOf&quot;</span>);   <span class="hljs-regexp">//</span> false<br></code></pre></td></tr></table></figure>
+<p>不幸的是我们没有完全解决问题，当调用dict.hasOwnProperty时，我们请求调查对象的hasOwnProperty方法，通常情况下，该方法会简单的继承自Object.property对象，然而如果字典中存储一个同名的条目时，那么原型中的hasOwnProperty方法不能再被捕获到。</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs fsharp"><span class="hljs-built_in">dict</span>.hasOwnProperty <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br><br><span class="hljs-built_in">dict</span>.hasOwnProperty(<span class="hljs-string">&quot;alice&quot;</span>);<br><span class="hljs-comment">// error dict.hasOwnProperty is not a function</span><br></code></pre></td></tr></table></figure>
+<p>这是有可能的,最安全的方式就是</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> hasOwn = <span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">hasOwnProperty</span>;<br>或者<br><span class="hljs-keyword">var</span> hasOwn = &#123;&#125;.<span class="hljs-property">hasOwnProperty</span>;<br><br>hasOwn.<span class="hljs-title function_">call</span>(dict, <span class="hljs-string">&quot;alice&quot;</span>);<br></code></pre></td></tr></table></figure>
+<p>不管起接收者的hasOwnProperty方法是否被覆盖，该方法都能工作。</p>
+<p>我们开始创建一个字典类 版本一</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Dict</span>(<span class="hljs-params">elements</span>) &#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">elements</span> = elements || &#123;&#125;;<br>&#125;<br><br><span class="hljs-title class_">Dict</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">has</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">key</span>) &#123;<br>	<span class="hljs-keyword">return</span> &#123;&#125;.<span class="hljs-property">hasOwnProperty</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">elements</span>, key);<br>&#125;<br><br><span class="hljs-title class_">Dict</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">get</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">key</span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">has</span>(key) ? <span class="hljs-variable language_">this</span>.<span class="hljs-property">elements</span>[key] : <span class="hljs-literal">undefined</span>;<br>&#125;<br><br><span class="hljs-title class_">Dict</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">set</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">key, val</span>) &#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">elements</span>[key] = val;<br>&#125;<br><br><span class="hljs-title class_">Dict</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">remove</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">key</span>) &#123;<br>	<span class="hljs-keyword">delete</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">elements</span>[key];<br>&#125;<br><br><span class="hljs-keyword">var</span> dict = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Dict</span>(&#123;<br>	<span class="hljs-attr">alice</span>: <span class="hljs-number">34</span>,<br>	<span class="hljs-attr">bob</span>: <span class="hljs-number">24</span>,<br>	<span class="hljs-attr">chris</span>: <span class="hljs-number">62</span><br>&#125;);<br><br>dict.<span class="hljs-title function_">has</span>(<span class="hljs-string">&quot;alice&quot;</span>);    <span class="hljs-comment">// true</span><br>dict.<span class="hljs-title function_">get</span>(<span class="hljs-string">&quot;bob&quot;</span>);      <span class="hljs-comment">// 24</span><br>dict.<span class="hljs-title function_">has</span>(<span class="hljs-string">&quot;valueOf&quot;</span>)   <span class="hljs-comment">//false</span><br><br></code></pre></td></tr></table></figure>
+<p>在一些JavaScript的环境中，特殊的属性名__proto__可能导致自身的污染问题__proto__属性只是简单的继承Object.prototype,所以我们的例子会有一个问题</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs fsharp">var <span class="hljs-built_in">dict</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> Dict();<br><span class="hljs-built_in">dict</span>.has(<span class="hljs-string">&quot;__proto__&quot;</span>); <span class="hljs-comment">// ?</span><br><br></code></pre></td></tr></table></figure>
+<p>这段代码在不同的环境下可能会有不同的结果，所以为了达到最大的可移植性和安全性，便有了下面更复杂但是更安全的实现<br>这里检测到__proto__的可以 重新设置一个新属性作为实例对象的一个属性，随对象而在但是不会去设置对象的__proto__</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">function Dict(elements) &#123;<br>	<span class="hljs-keyword">this</span>.elements = elements || &#123;&#125;;<br>	<span class="hljs-keyword">this</span>.hasSpecialProto = <span class="hljs-literal">false</span>;<br>	<span class="hljs-keyword">this</span>.specialProto = undefined;<br>&#125;<br><br>Dict.prototype.has = function(key) &#123;<br>	<span class="hljs-keyword">if</span>(key === <span class="hljs-string">&quot;__proto__&quot;</span>) &#123; <br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.hasSpecialProto;<br>	&#125;<br>	<span class="hljs-keyword">return</span> &#123;&#125;.hasOwnProperty.call(<span class="hljs-keyword">this</span>.elements, key);<br>&#125;<br><br>Dict.prototype.<span class="hljs-keyword">get</span> = function(key) &#123;<br>	<span class="hljs-keyword">if</span>(key === <span class="hljs-string">&quot;__proto__&quot;</span>) &#123; <br>		<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.specialProto;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.has(key) ? <span class="hljs-keyword">this</span>.elements[key] : undefined;<br>&#125;<br><br>Dict.prototype.<span class="hljs-keyword">set</span> = function(key, <span class="hljs-keyword">val</span>) &#123;<br>	<span class="hljs-keyword">if</span>(key === <span class="hljs-string">&quot;__proto__&quot;</span>) &#123;<br>		<span class="hljs-keyword">this</span>.hasSpecialProto = <span class="hljs-literal">true</span>;<br><br>		<span class="hljs-keyword">this</span>.specialProto = <span class="hljs-keyword">val</span>;<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-keyword">this</span>.elements[key] = <span class="hljs-keyword">val</span>;	<br>	&#125;<br>	<br>&#125;<br><br>Dict.prototype.remove = function(key) &#123;<br>	<span class="hljs-keyword">if</span>(key === <span class="hljs-string">&quot;__proto__&quot;</span>) &#123;<br>		<span class="hljs-keyword">this</span>.hasSpecialProto = <span class="hljs-literal">false</span>;<br>		<span class="hljs-keyword">this</span>.sepcialProto = undefined;<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		delete <span class="hljs-keyword">this</span>.elements[key];	<br>	&#125;<br>	<br>&#125;<br><br><span class="hljs-keyword">var</span> dict = new Dict(&#123;<br>	alice: <span class="hljs-number">34</span>,<br>	bob: <span class="hljs-number">24</span>,<br>	chris: <span class="hljs-number">62</span><br>&#125;);<br><br>dict.has(<span class="hljs-string">&quot;alice&quot;</span>);    <span class="hljs-comment">// true</span><br>dict.<span class="hljs-keyword">get</span>(<span class="hljs-string">&quot;bob&quot;</span>);      <span class="hljs-comment">// 24</span><br>dict.has(<span class="hljs-string">&quot;valueOf&quot;</span>)   <span class="hljs-comment">//false</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="使用数组而不要使用字典来存储有序集合"><a href="#使用数组而不要使用字典来存储有序集合" class="headerlink" title="使用数组而不要使用字典来存储有序集合"></a>使用数组而不要使用字典来存储有序集合</h2><p>JavaScript对象是一个无序集合,ECMAScript标准并未规定属性存储的任何特定顺序，甚至对于枚举对象也未涉及。这将会导致一个问题，<code>for...in</code>循环会挑选一个特定顺序来枚举对象属性.比如</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">report</span>(<span class="hljs-params">highScores</span>) </span>&#123;<br>	<span class="hljs-keyword">var</span> result = <span class="hljs-string">&quot;&quot;</span>;<br>	<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> name in highScores) &#123;<br>		result += i + <span class="hljs-string">&quot; . &quot;</span> + name + <span class="hljs-string">&quot; : &quot;</span> + highScores[name] + <span class="hljs-string">&#x27;\n&#x27;</span>;<br><br>		i++;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-title function_ invoke__">report</span>([&#123;<br>		<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Hank&quot;</span>,<br>		<span class="hljs-attr">points</span>: <span class="hljs-number">1110100</span><br>	&#125;,&#123;<br>		<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Steve&quot;</span>,<br>		<span class="hljs-attr">points</span>: <span class="hljs-number">1064500</span><br>	&#125;,&#123;<br>		<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Billy&quot;</span>,<br>		<span class="hljs-attr">points</span>: <span class="hljs-number">1052000</span><br>	&#125;]);<br><br>由于不同的环境选择不同的顺序来存储和枚举对象属性，所以这个函数得到顺序混乱的“最高分”报表<br></code></pre></td></tr></table></figure>
+<p>请记住你的程序是否以来对象枚举的顺序并不总是显而易见的，如果没有在多个JavaScript环境中测试过你的程序，你甚至可能不回注意到程序的行为因为一个for…in循环的确切顺序而被改变，对于上面的例子需要使用数组,那么它完全可以工作在任何JavaScript环境中</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">report</span>(<span class="hljs-params">highScores</span>) </span>&#123;<br>	<span class="hljs-keyword">var</span> result = <span class="hljs-string">&quot;&quot;</span>;<br>	<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = highScores.length; i &lt; n; i++) &#123;<br>		<span class="hljs-keyword">var</span> score = hightScores[i];<br>		result += (i + <span class="hljs-number">1</span>) + <span class="hljs-string">&quot; . &quot;</span> + score.name + <span class="hljs-string">&quot; : &quot;</span> + score.points + <span class="hljs-string">&#x27;\n&#x27;</span>;<br><br>		i++;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-title function_ invoke__">report</span>([&#123;<br>		<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Hank&quot;</span>,<br>		<span class="hljs-attr">points</span>: <span class="hljs-number">1110100</span><br>	&#125;,&#123;<br>		<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Steve&quot;</span>,<br>		<span class="hljs-attr">points</span>: <span class="hljs-number">1064500</span><br>	&#125;,&#123;<br>		<span class="hljs-attr">name</span>: <span class="hljs-string">&quot;Billy&quot;</span>,<br>		<span class="hljs-attr">points</span>: <span class="hljs-number">1052000</span><br>	&#125;]);<br><br></code></pre></td></tr></table></figure>
+
+<p>一个微妙的顺序以来的典型例子是浮点运算， 假设一个对象使用<code>for...in</code> 如下</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">var</span> ratings = &#123;<br>	<span class="hljs-string">&quot;Good will Hunting&quot;</span>: 0.8,<br>	<span class="hljs-string">&quot;Mystic River&quot;</span>: 0.7,<br>	<span class="hljs-string">&quot;21&quot;</span>: 0.6,<br>	<span class="hljs-string">&quot;Doubt&quot;</span>: 0.9<br>&#125;;<br><br><span class="hljs-keyword">var</span> <span class="hljs-keyword">total</span> = 0, <span class="hljs-keyword">count</span> = 0;<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span>. ratings) &#123;<br>	<span class="hljs-keyword">total</span> += ratings[key];<br>	<span class="hljs-keyword">count</span>++;<br>&#125;<br><br><span class="hljs-keyword">total</span> /= <span class="hljs-keyword">count</span>;<br><br><span class="hljs-keyword">total</span>; <span class="hljs-comment">//?</span><br><br></code></pre></td></tr></table></figure>
+<p>事实证明，流行的JavaScrtip环境实际上使用不同的顺序执行这个循环。</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs gcode">一些环境这样计算<br><br><span class="hljs-comment">(0.8 + 0.7 + 0.6 + 0.9)</span> / <span class="hljs-number">4</span>  <span class="hljs-comment">// 0.75</span><br><br>还有一些环境先枚举潜在的数组索引，<span class="hljs-number">21</span>恰好是一个可行的数组索引，它首先被枚举，导致如下结果<br><br><span class="hljs-comment">(0.6 + 0.8 + 0.7 + 0.9)</span> / <span class="hljs-number">4</span>  <span class="hljs-comment">// 0.7499999999999999</span><br><br><br>更好的表示方法是使用整数值<br><br><span class="hljs-comment">(8 + 7 + 6 + 9)</span> / <span class="hljs-number">4</span>/ <span class="hljs-number">10.</span>  <span class="hljs-comment">//0.75</span><br><br><span class="hljs-comment">(6 + 8 + 7  + 9)</span> / <span class="hljs-number">4</span>/ <span class="hljs-number">10.</span>  <span class="hljs-comment">//0.75</span><br><br></code></pre></td></tr></table></figure>
+<p>通常当执行<code>for...in</code> 循环时应当时刻小心，确保操作行为与顺序无关。</p>
+<h2 id="绝不要在Object-prototype中增加可枚举属性"><a href="#绝不要在Object-prototype中增加可枚举属性" class="headerlink" title="绝不要在Object.prototype中增加可枚举属性"></a>绝不要在Object.prototype中增加可枚举属性</h2><p><code>for...in</code>非常便利，然而它很容易受到原型污染的影响。目前为止<code>for...in</code>最常见的用法是枚举字典中的元素。这暗示着如果想允许对字典对象使用<code>for...in</code>循环，那么不要在共享的Object.prototype中增加可枚举的属性。</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs maxima">Object.prototype.allKeys = function() &#123;<br>	<span class="hljs-built_in">var</span> result = [];<br>	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">var</span> <span class="hljs-built_in">key</span> <span class="hljs-keyword">in</span> this) &#123;<br>		result.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">key</span>);<br>	&#125;<br><br>	<span class="hljs-built_in">return</span> result;<br>&#125;<br><br>(&#123;a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span>, c: <span class="hljs-number">3</span>&#125;).allKeys(); // [<span class="hljs-string">&quot;allkeys&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>]  该方法污染了自身<br><br>更友好的做法是将allkeys定义为一个函数而不是方法，虽然着稍微有点不方便<br><br>function allKeys(obj) &#123;<br>	<span class="hljs-built_in">var</span> result = [];<br>	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">var</span> <span class="hljs-built_in">key</span> <span class="hljs-keyword">in</span> obj) &#123;<br>		result.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">key</span>);<br>	&#125;<br><br>	<span class="hljs-built_in">return</span> result;<br>&#125;<br><br><br><br></code></pre></td></tr></table></figure>
+<p>如果你确实想在Object.prototype中增加属性， ES5提供了一个更加友好的机制Object.defineProperty</p>
+<blockquote>
+<p><code>Object.defineProperty</code>方法可以定义一个对象的属性并制定该属性的元数据。例如，我们可以用与之前完全一样的方法定义上面的属性而通过设置其可枚举属性为false使其在<code>for...in</code>循环中不可见。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>, <span class="hljs-string">&quot;allKeys&quot;</span>, &#123;<br>	<span class="hljs-attr">value</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">var</span> result = [];<br>		<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> <span class="hljs-variable language_">this</span>) &#123;<br>			result.<span class="hljs-title function_">push</span>(key);<br>		&#125;<br>		<span class="hljs-keyword">return</span> result;<br>	&#125;,<br>	<span class="hljs-attr">writable</span>: <span class="hljs-literal">true</span>,<br>	<span class="hljs-attr">enumerable</span>: <span class="hljs-literal">false</span>,<br>	<span class="hljs-attr">configurable</span>: <span class="hljs-literal">true</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<p>它不会污染其他所有<code>Object</code>实例的所有<code>for...in</code>循环。每当你需要增加一个不应该出现在<code>for...in</code>循环中出现的属性时，Object.defineProperty便是你的选择</p>
+<h2 id="避免在枚举期间修改对象"><a href="#避免在枚举期间修改对象" class="headerlink" title="避免在枚举期间修改对象"></a>避免在枚举期间修改对象</h2><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Member</span></span>(name) &#123;<br>	<span class="hljs-built_in">this</span>.name = name;<br>	<span class="hljs-built_in">this</span>.friends = [];<br>&#125;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> <span class="hljs-type">Member</span>(<span class="hljs-string">&quot;Alice&quot;</span>),<br>	b = <span class="hljs-keyword">new</span> <span class="hljs-type">Member</span>(<span class="hljs-string">&quot;Bob&quot;</span>),<br>	c = <span class="hljs-keyword">new</span> <span class="hljs-type">Member</span>(<span class="hljs-string">&quot;Carol&quot;</span>),<br>	d = <span class="hljs-keyword">new</span> <span class="hljs-type">Member</span>(<span class="hljs-string">&quot;Dieter&quot;</span>),<br>	e = <span class="hljs-keyword">new</span> <span class="hljs-type">Member</span>(<span class="hljs-string">&quot;Eli&quot;</span>),<br>	f = <span class="hljs-keyword">new</span> <span class="hljs-type">Member</span>(<span class="hljs-string">&quot;Fatima&quot;</span>);<br><br>a.friends.push(b);<br>b.friends.push(c);<br>c.friends.push(e);<br>d.friends.push(b);<br>e.friends.push(d,f);<br><br>如果我们写了一个方法 在<span class="hljs-keyword">for</span>...<span class="hljs-keyword">in</span>的时候操作对象比如，删除或添加， 在许多JavaScript环境中这段代码根本不能工作。<br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>ECMAScript规定了，如果被枚举的对象在枚举期间添加了新的属性，那么在枚举期间并不能保证新添加的属性能够被访问。</p>
+</blockquote>
+<p>这个隐式的规范的实际后果是： 如果我们修改了被枚举的对象则不能保证<code>for...in</code>循环行为的可预见性。</p>
+<p>我们可以新建一个WorkSet类来追踪当前集合中元素的数量</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">function WorkSet() &#123;<br>	<span class="hljs-keyword">this</span>.entries = new Dict();<br>	<span class="hljs-keyword">this</span>.count = <span class="hljs-number">0</span>;<br>&#125;<br><br>WorkSet.prototype.isEmpty = function() &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.count === <span class="hljs-number">0</span>;<br>&#125;<br><br>WorkSet.prototype.add = function(key, <span class="hljs-keyword">val</span>) &#123;<br>	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.entries.has(key)) &#123;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br>	<span class="hljs-keyword">this</span>.entries.<span class="hljs-keyword">set</span>(key, <span class="hljs-keyword">val</span>);<br>	<span class="hljs-keyword">this</span>.count++;<br>&#125;<br><br>WorkSet.prototype.<span class="hljs-keyword">get</span> = function(key) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.entries.<span class="hljs-keyword">get</span>(key);<br>&#125;<br><br>WorkSet.prototype.remove = function(key) &#123;<br>	<span class="hljs-keyword">if</span>(!<span class="hljs-keyword">this</span>.entries.had(key)) &#123;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br>	<span class="hljs-keyword">this</span>.entries.remove(key);<br>	<span class="hljs-keyword">this</span>.count--;<br>&#125;<br><br>WorkSet.prototype.pick = function() &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.entries.pick();<br>&#125;<br><br><span class="hljs-comment">//这里同时需要给Dict类增加一个pick方法</span><br><br>Dick.prototype.pick = function() &#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> <span class="hljs-keyword">this</span>.elements) &#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.has(key)) &#123;<br>			<span class="hljs-keyword">return</span> key;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">throw</span> new Error(<span class="hljs-string">&quot;empty dictionary&quot;</span>);<br>&#125;<br><br><span class="hljs-comment">// 现在我们可以实现一个inNetwork的方法</span><br>到最后发现这段代码没什么卵用<br>Member.prototype.inNetwork = function(other) &#123;<br>	<span class="hljs-keyword">var</span> visited = &#123;&#125;;<br>	<span class="hljs-keyword">var</span> workset = new WorkSet();<br>	workset.add(<span class="hljs-keyword">this</span>.name, <span class="hljs-keyword">this</span>);<br><br>	<span class="hljs-keyword">while</span>(!workset.isEmpty()) &#123;<br>		<span class="hljs-keyword">var</span> name = = workset.pick();<br>		<span class="hljs-keyword">var</span> member = workset.<span class="hljs-keyword">get</span>(name);<br>		workset.remove(name);<br>		<span class="hljs-keyword">if</span>(name <span class="hljs-keyword">in</span> visited) &#123;<br>			<span class="hljs-keyword">continue</span>;<br>		&#125;<br><br>		visited[name] = member;<br><br>		<span class="hljs-keyword">if</span>(member === other) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>		&#125;<br><br>		member.friends.forEach(function(friend) &#123;<br>			workset.add(friend.name, friend);<br>		&#125;)<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>以上pick方法是一个不确定性的例子， 不确定性指的是一个操作不能保证使用语言的语意产生一个单一的可预见的结果。这个不确定性来源于这样一个事实，for…in循环可能在不同的JavaScript环境中选择不同的枚举顺序。<br>基于这些原因，考虑使用一个确定的工作集算法替代方案是值得的。集工作列表算法Work-list.</p>
+<ul>
+<li>使用for…in循环枚举一个对象属性时，确保不要修改该对象</li>
+<li>当迭代一个对象时，如果该对象的内容可能会在循环期间被改变，应该使用while循环或经典的for循环代替for…in循环</li>
+<li>为了在不断变化的数据结构中能够预测枚举，考虑使用一个有序的数据结构，例如数组，而不要使用字典对象</li>
+</ul>
+<h2 id="数组迭代优先使用for循环而不是for-in"><a href="#数组迭代优先使用for循环而不是for-in" class="headerlink" title="数组迭代优先使用for循环而不是for...in"></a>数组迭代优先使用<code>for</code>循环而不是<code>for...in</code></h2><p>看下面代码mean的输出值时多少？</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">var</span> scores = [98, 74, 85, 77, 93, 100, 89];<br><br><span class="hljs-keyword">var</span> <span class="hljs-keyword">total</span> = 0;<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">score</span> <span class="hljs-keyword">in</span> scores) &#123;<br>	<span class="hljs-keyword">total</span> += <span class="hljs-keyword">score</span>;<br>&#125;<br><br><span class="hljs-keyword">var</span> <span class="hljs-keyword">mean</span> = <span class="hljs-keyword">total</span> / socres.length;<br><br> <span class="hljs-keyword">mean</span>; <span class="hljs-comment">// ?  17636.571428571428</span><br><br><br> 请记住即使是数组的索引属性，对象属性的key始终是字符串<br><br> <span class="hljs-keyword">total</span> = 0 + <span class="hljs-string">&quot;0&quot;</span> + <span class="hljs-string">&quot;1&quot;</span> + <span class="hljs-string">&quot;2&quot;</span> + <span class="hljs-string">&quot;3&quot;</span> + <span class="hljs-string">&quot;4&quot;</span> + <span class="hljs-string">&quot;5&quot;</span> + <span class="hljs-string">&quot;6&quot;</span>;<br><br> <span class="hljs-keyword">total</span> = <span class="hljs-string">&quot;00123456&quot;</span>;<br><br><br></code></pre></td></tr></table></figure>
+<p>迭代数组内容的正确方式是使用传统的for循环, 建议存储数组长度到一个局部变量中</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> scores = [<span class="hljs-number">98</span>, <span class="hljs-number">74</span>, <span class="hljs-number">85</span>, <span class="hljs-number">77</span>, <span class="hljs-number">93</span>, <span class="hljs-number">100</span>, <span class="hljs-number">89</span>];<br><span class="hljs-keyword">var</span> total = <span class="hljs-number">0</span>;<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = scores.<span class="hljs-built_in">length</span>; i &lt; n; i++) &#123;<br>	total += socres[i];<br>&#125;<br><br><span class="hljs-keyword">var</span> <span class="hljs-built_in">mean</span> = toal / scores.<span class="hljs-built_in">length</span>;<br><br><span class="hljs-built_in">mean</span>; <span class="hljs-comment">// 88</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="迭代方法由于循环"><a href="#迭代方法由于循环" class="headerlink" title="迭代方法由于循环"></a>迭代方法由于循环</h2><p>一些常见的for循环错误</p>
+<figure class="highlight nim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nim"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt;= n; i++) <span class="hljs-meta">&#123;...&#125;</span>. // 获取最后一项错误<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span>; i &lt; n; i++) <span class="hljs-meta">&#123;...&#125;</span>. // 丢失第一项<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = n; i &gt;= <span class="hljs-number">0</span> ; i--) <span class="hljs-meta">&#123;...&#125;</span>. // 获取起始值错误<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = n - <span class="hljs-number">1</span>; i &gt; <span class="hljs-number">0</span> ; i--) <span class="hljs-meta">&#123;...&#125;</span>. // 丢失最后一项<br><br></code></pre></td></tr></table></figure>
+<p>我们面对这样一个事实，搞清楚终止条件是一个累赘。<br>幸运的是ES5提供了一些便利的方法。Array.prototype.forEach是其中最简单的一个。例如：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = players.<span class="hljs-built_in">length</span>; i &lt; n; i++) &#123;<br>	players[i].score++;<br>&#125;<br>可以用下面代码替换<br>players.forEach(<span class="hljs-keyword">function</span>(<span class="hljs-params">p</span>) &#123;<br>	p.socre++;<br>&#125;)	<br><br></code></pre></td></tr></table></figure>
+<p>这段代码不仅更简单可读而且消除了终止条件和任何数组索引。</p>
+<p>另一个例子是对数组进行操作后建立一个新的数组我们可以这样实现</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> trimmed = [];<br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = input.lenght; i &lt; n; i++) &#123;<br>	trimmed.<span class="hljs-built_in">push</span>(input[i].<span class="hljs-built_in">trim</span>());<br>&#125;<br><br>我们同样可以使用forEach来实现<br><br><span class="hljs-keyword">var</span> trimmed = [];<br>input.forEach(<span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>	trimmed.<span class="hljs-built_in">push</span>(s.<span class="hljs-built_in">trim</span>());<br>&#125;);<br><br><br>因为这是一个十分普遍的操作，所以ES5提供了一个更简单优雅的实现<span class="hljs-built_in">Array</span>.prototype.<span class="hljs-built_in">map</span><br><br><span class="hljs-keyword">var</span> trimmed = input.<span class="hljs-built_in">map</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>	<span class="hljs-keyword">return</span> s.<span class="hljs-built_in">trim</span>();	<br>&#125;)<br><br><br></code></pre></td></tr></table></figure>
+
+<p>另外一种常见的模式是计算一个新的数组，该数组只包含现有数组的一部分元素.<code>Array.prototype.filter</code>使其变得简单</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br>listings.<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">listing</span>) &#123;<br>	<span class="hljs-keyword">return</span> listing.price &gt;= <span class="hljs-built_in">min</span> &amp;&amp; listing.price &lt;= <span class="hljs-built_in">max</span>;<br>&#125;);<br><br></code></pre></td></tr></table></figure>
+<p>这些都是ES5的默认方法，我们当然可以实现自己的方法，比如我们需要这样一个模式，提取满足谓词的数组的前几个元素</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-variable">function</span> <span class="hljs-title function_">takeWhile</span>(<span class="hljs-params">a</span>, <span class="hljs-params">pred</span>) &#123;<br>	<span class="hljs-keyword">var</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> [];<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, <span class="hljs-variable">n</span> <span class="hljs-operator">=</span> <span class="hljs-variable">a</span>.<span class="hljs-property">length</span>; <span class="hljs-variable">i</span> <span class="hljs-operator">&lt;</span> <span class="hljs-variable">n</span>; <span class="hljs-variable">i</span><span class="hljs-operator">+</span><span class="hljs-operator">+</span>) &#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-operator">!</span><span class="hljs-title function_">pred</span>(<span class="hljs-variable">a</span>[<span class="hljs-variable">i</span>], <span class="hljs-variable">i</span>)) &#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		<span class="hljs-variable">result</span>[<span class="hljs-variable">i</span>] <span class="hljs-operator">=</span> <span class="hljs-variable">a</span>[<span class="hljs-variable">i</span>];<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">result</span>;<br>&#125;<br><br><span class="hljs-keyword">var</span> <span class="hljs-variable">prefix</span> <span class="hljs-operator">=</span> <span class="hljs-title function_">taleWhile</span>([1, 2, 4, 8, 16, 32], <span class="hljs-params">function</span>(<span class="hljs-params">n</span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">n</span> <span class="hljs-operator">&lt;</span> <span class="hljs-number">10</span>;<br>&#125;);<br><br><span class="hljs-comment">// [1, 2, 4, 8]</span><br><br><br></code></pre></td></tr></table></figure>
+<p>请注意我们将索引i赋值给了pred, 我们可以选择使用或忽略该索引。事实上标准库中的所有迭代方法包括(forEach, map, filter)都将数组索引传递给了用户自定义函数。</p>
+<p>我们也可以将takeWhile加入到Array.prototype中参考猴子补丁的影响</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Array</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">takeWhile</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">pred</span>) &#123;<br>	<span class="hljs-keyword">var</span> result = [];<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = <span class="hljs-variable language_">this</span>.<span class="hljs-property">length</span>; i &lt; n; i++) &#123;<br>		<span class="hljs-keyword">if</span>(!<span class="hljs-title function_">pred</span>(<span class="hljs-variable language_">this</span>[i], i)) &#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br><br>		result[i] = <span class="hljs-variable language_">this</span>[i];<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-keyword">var</span> prefix = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">16</span>, <span class="hljs-number">32</span>].<span class="hljs-title function_">takeWhile</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">n</span>) &#123;<br>	<span class="hljs-keyword">return</span> n &lt; <span class="hljs-number">10</span>;<br>&#125;)<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>循环只有一点优于迭代函数，那就是前者有控制流操作，如break 和continue。 </p>
+</blockquote>
+<p>举例来说</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-variable">function</span> <span class="hljs-title function_">takeWhile</span>(<span class="hljs-params">a</span>, <span class="hljs-params">pred</span>) &#123;<br>	<span class="hljs-keyword">var</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> [];<br>	<span class="hljs-variable">a</span>.<span class="hljs-property">forEach</span>(<span class="hljs-title function_">function</span>(<span class="hljs-params">x</span>, <span class="hljs-params">i</span>) &#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-operator">!</span><span class="hljs-title function_">pred</span>(<span class="hljs-variable">x</span>)) &#123;<br>			<span class="hljs-comment">// ?</span><br>		&#125;<br>		<span class="hljs-variable">result</span>[<span class="hljs-variable">i</span>] <span class="hljs-operator">=</span> <span class="hljs-variable">x</span>;<br>	&#125;);<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">result</span>;<br>&#125;<br><br>我们可以使用一个内部异常来提前终止该循环，但是这既尴尬又效率低下<br><br><span class="hljs-variable">function</span> <span class="hljs-title function_">takeWhile</span>(<span class="hljs-params">a</span>, <span class="hljs-params">pred</span>) &#123;<br>	<span class="hljs-keyword">var</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> [];<br>	<span class="hljs-keyword">var</span> <span class="hljs-variable">earlyExit</span> <span class="hljs-operator">=</span> [];<br>	<span class="hljs-title function_">try</span> &#123;<br>		<span class="hljs-variable">a</span>.<span class="hljs-property">forEach</span>(<span class="hljs-title function_">function</span>(<span class="hljs-params">x</span>, <span class="hljs-params">i</span>) &#123;<br>			<span class="hljs-keyword">if</span>(<span class="hljs-operator">!</span><span class="hljs-title function_">pred</span>(<span class="hljs-variable">x</span>)) &#123;<br>				<span class="hljs-variable">throw</span> <span class="hljs-variable">earlyExit</span>;<br>			&#125;<br><br>			<span class="hljs-variable">result</span>[<span class="hljs-variable">i</span>] <span class="hljs-operator">=</span> <span class="hljs-variable">x</span>;<br>		&#125;);<br>	&#125; <span class="hljs-title function_">catch</span>(<span class="hljs-params">e</span>) &#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-variable">e</span> <span class="hljs-operator">!=</span><span class="hljs-operator">=</span> <span class="hljs-variable">earlyExit</span>) &#123;<br>			<span class="hljs-variable">throw</span> <span class="hljs-variable">e</span>;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">result</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>ES5的数组方法some和every可以用于提前终止循环。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade">[<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>].some(<span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;.<span class="hljs-keyword">return</span> x &gt; <span class="hljs-number">5</span>; &#125;);  <span class="hljs-comment">// true</span><br>[<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>].some(<span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;.<span class="hljs-keyword">return</span> x &lt; <span class="hljs-number">0</span>; &#125;);  <span class="hljs-comment">// false</span><br><br>[<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>].every(<span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;.<span class="hljs-keyword">return</span> x &gt; <span class="hljs-number">0</span>; &#125;);  <span class="hljs-comment">// true</span><br>[<span class="hljs-number">1</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>].every(<span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;.<span class="hljs-keyword">return</span> x &lt; <span class="hljs-number">3</span>; &#125;);  <span class="hljs-comment">// true</span><br><br></code></pre></td></tr></table></figure>
+
+<p>利用这一点我们可以重新实现takeWhile方法</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs wren"><br><span class="hljs-variable">function</span> <span class="hljs-title function_">takeWhile</span>(<span class="hljs-params">a</span>, <span class="hljs-params">pred</span>) &#123;<br>	<span class="hljs-keyword">var</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> [];<br><br>	<span class="hljs-variable">a</span>.<span class="hljs-property">every</span>(<span class="hljs-title function_">function</span>(<span class="hljs-params">x</span>, <span class="hljs-params">i</span>) &#123;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-operator">!</span><span class="hljs-title function_">pred</span>(<span class="hljs-variable">x</span>)) &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">// break</span><br>		&#125;<br><br>		<span class="hljs-variable">result</span>[<span class="hljs-variable">i</span>] <span class="hljs-operator">=</span> <span class="hljs-variable">x</span>;<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;  <span class="hljs-comment">// continue</span><br>	&#125;);<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">result</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用迭代方法 forEach 和map替换for循环使得代码更可读，并且避免了重复循环控制逻辑</li>
+<li>使用自定义的迭代函数来抽象未被标准库支持的常见循环模式</li>
+<li>在需要提前终止循环的情况下， 仍然推荐使用传统的循环。另外，some和every方法也可用于提前退出</li>
+</ul>
+<h2 id="在类数组对象上复用通用的数组方法"><a href="#在类数组对象上复用通用的数组方法" class="headerlink" title="在类数组对象上复用通用的数组方法"></a>在类数组对象上复用通用的数组方法</h2><p><code>Array.prototype</code>中的标准方法被设计成其他对象可复用的方法，即使这些对象并没有继承Array,一个很好的例子 函数的arguments对象，它并没有继承Array.prototype，因此我们不能简单的调用arguments.forEach方法来遍历每一个参数。取而代之我们提取forEach方法对象的引用并使用其call方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 同样也可先转化为一个数组 var args = [].slice.call(arguments);</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">highlight</span>(<span class="hljs-params"></span>) &#123;<br>	[].<span class="hljs-property">forEach</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">arguments</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">widget</span>) &#123;<br>		widget.<span class="hljs-title function_">setBackground</span>(<span class="hljs-string">&quot;yellow&quot;</span>);<br>	&#125;)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>如何使一个对象“看起来像数组”，数组对象的基本契约总共有两个简单规则</p>
+<ul>
+<li>具有一个范围在0-2^32-1的整型length属性。</li>
+<li>length属性大于该对象的最大索引。索引的范围是0-2^32-2的整数，它的字符串表示就是该对象的一个key</li>
+</ul>
+<p>例子</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> arrayLike = &#123;<span class="hljs-number">0</span>: <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-number">1</span>: <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-number">2</span>: <span class="hljs-string">&quot;c&quot;</span>, <span class="hljs-attr">length</span>: <span class="hljs-number">3</span>&#125;<br><span class="hljs-keyword">var</span> result = <span class="hljs-built_in">Array</span>.prototype.<span class="hljs-built_in">map</span>.call(arrayLike, <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>	<span class="hljs-keyword">return</span> s.toUpperCase();<br>&#125;);<br><br><span class="hljs-comment">// [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]</span><br></code></pre></td></tr></table></figure>
+
+<p>字符串也表现为不可变的数组，因为它们是可索引的， 并且其长度也可以通过length属性获取。因此，Array.prototype中的方法操作字符串不回修改原始数组。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> result = <span class="hljs-built_in">Array</span>.prototype.<span class="hljs-built_in">map</span>.call(<span class="hljs-string">&quot;abc&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>	<span class="hljs-keyword">return</span> s.toUpperCase();	<br>&#125;);<br><br></code></pre></td></tr></table></figure>
+
+<p>对于使用Array.prototype中的方法，在增加或删除索引属性的时候它们都会强制的更新length属性。所有的Array.prototype方法在类数组中可以通用。</p>
+<p>只有一个Array方法不是通用的那就是数组连接方法concat。该方法可以由任意的类数组调用但是它会检查其参数的[[Class]]属性，如果是一个真实的数组才会连接，如果不是例子如下</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">nameColum</span>() &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-type">[&quot;Names&quot;].concat(arguments)</span>;<br>&#125;<br><br>namesColumn(<span class="hljs-string">&quot;Alice&quot;</span>,<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Chris&quot;</span>);<br><br><br>// [<span class="hljs-string">&quot;Names&quot;</span>, &#123;.<span class="hljs-number">0</span>: <span class="hljs-string">&quot;Alice&quot;</span>, <span class="hljs-number">1</span>: <span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-number">2</span>: <span class="hljs-string">&quot;Chris&quot;</span> &#125;]<br><br>这种时候我们可以使用数组转换的方法<br><span class="hljs-keyword">function</span> <span class="hljs-title">nameColum</span>() &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-type">[&quot;Names&quot;].concat([].slice.call(arguments))</span>;<br>&#125;<br><br>namesColumn(<span class="hljs-string">&quot;Alice&quot;</span>,<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Chris&quot;</span>);<br><br>// [<span class="hljs-string">&quot;Names&quot;</span>, <span class="hljs-string">&quot;Alice&quot;</span>,<span class="hljs-string">&quot;Bob&quot;</span>, <span class="hljs-string">&quot;Chris&quot;</span>]<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="数组字面量优于数组构造函数"><a href="#数组字面量优于数组构造函数" class="headerlink" title="数组字面量优于数组构造函数"></a>数组字面量优于数组构造函数</h2><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-keyword">var</span> a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>];<br><br>也可以使用数组构造函数来替代<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> <span class="hljs-type">Array</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>);<br><br><br>有这样几个问题<br>首先要保证没有人重新包装过<span class="hljs-keyword">Array</span>变量<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span></span>(<span class="hljs-keyword">Array</span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-type">Array</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>);<br>&#125;<br><br>f(<span class="hljs-keyword">String</span>);  <span class="hljs-comment">//  new String(1)</span><br><br>其次要确保没人修改过全局<span class="hljs-keyword">Array</span>变量<br><br><span class="hljs-keyword">Array</span> = <span class="hljs-keyword">String</span>;<br><span class="hljs-keyword">new</span> <span class="hljs-type">Array</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>); <span class="hljs-comment">// new String(1)</span><br><br><br><br>还有一个问题 <br><br>[<span class="hljs-string">&quot;hello&quot;</span>] 和 <span class="hljs-keyword">new</span> <span class="hljs-type">Array</span>(<span class="hljs-string">&quot;hello&quot;</span>) 行为虽然一致<br><br>但是<br><br>[<span class="hljs-number">17</span>] 和 <span class="hljs-keyword">new</span> <span class="hljs-type">Array</span>(<span class="hljs-number">17</span>) 行为完全不同了<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用数组字面量替代数组构造函数</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/28/2018-09-28-read-book-effective-ten/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Effective JavaScript (十)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/19/2018-09-19-read-book-effective-seven/">
+                        <span class="hidden-mobile">Effective JavaScript (七)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

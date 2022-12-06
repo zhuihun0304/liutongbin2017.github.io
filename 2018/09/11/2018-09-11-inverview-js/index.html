@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在浏览器输入 URL 回车之后发生了什么在浏览器输入 URL 回车之后发生了什么 变量提升123456a &#x3D; 2;var a;console.log(a);  &#x2F;&#x2F; 结果 即使是具名的函数表达式，名称标识符在赋值之前也无法在所在的作用域中使用 12345678910foo(); &#x2F;&#x2F; TypeErrorbar(); &#x2F;&#x2F; ReferenceErrtrvar foo &#x3D; function bar()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript面试题">
+<meta property="og:url" content="http://example.com/2018/09/11/2018-09-11-inverview-js/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="在浏览器输入 URL 回车之后发生了什么在浏览器输入 URL 回车之后发生了什么 变量提升123456a &#x3D; 2;var a;console.log(a);  &#x2F;&#x2F; 结果 即使是具名的函数表达式，名称标识符在赋值之前也无法在所在的作用域中使用 12345678910foo(); &#x2F;&#x2F; TypeErrorbar(); &#x2F;&#x2F; ReferenceErrtrvar foo &#x3D; function bar()">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:59:29.734Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>JavaScript面试题 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="一些好的JavaScript面试题总结">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-11 00:00" pubdate>
+        2018年9月11日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.4k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      45 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">一些好的JavaScript面试题总结</h1>
+            
+            <div class="markdown-body">
+              <h3 id="在浏览器输入-URL-回车之后发生了什么"><a href="#在浏览器输入-URL-回车之后发生了什么" class="headerlink" title="在浏览器输入 URL 回车之后发生了什么"></a>在浏览器输入 URL 回车之后发生了什么</h3><p><a target="_blank" rel="noopener" href="https://4ark.me/post/b6c7c0a2.html#%E5%89%8D%E8%A8%80">在浏览器输入 URL 回车之后发生了什么</a></p>
+<h3 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h3><figure class="highlight abnf"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><pre><code class="hljs abnf"><span class="hljs-attribute">a</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-comment">;</span><br><br>var a<span class="hljs-comment">;</span><br><br>console.log(a)<span class="hljs-comment">;  // 结果</span><br><br></code></pre></td></tr></table></figure>
+<p>即使是具名的函数表达式，名称标识符在赋值之前也无法在所在的作用域中使用</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br><br><br>foo(); <span class="hljs-regexp">//</span> TypeError<br>bar(); <span class="hljs-regexp">//</span> ReferenceErrtr<br><br>var foo = <span class="hljs-keyword">function</span> bar() &#123;<br>	<span class="hljs-regexp">//</span>...<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>函数优先提升, 重复的var会被忽略掉，但是后面的函数声明还是会覆盖前面</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs arcade">foo();<br><br><span class="hljs-keyword">var</span> foo;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">1</span>);<br>&#125;<br><br>foo = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">2</span>);<br>&#125;<br><span class="hljs-comment">// 输出结果是 1</span><br><br><br><br>foo();<br><br><span class="hljs-keyword">var</span> foo;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">1</span>);<br>&#125;<br><br>foo = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">2</span>);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">3</span>);<br>&#125;<br><br><span class="hljs-comment">// 输出结果 3</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="关于this"><a href="#关于this" class="headerlink" title="关于this"></a>关于this</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">num</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;foo:&quot;</span> + num);<br><br>	this.<span class="hljs-built_in">count</span>++;<br>&#125;<br><br>foo.<span class="hljs-built_in">count</span> = <span class="hljs-number">0</span>;<br><br><span class="hljs-keyword">var</span> i;<br><br><span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>	<span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">5</span>) &#123;<br>		foo(i);<br>	&#125;<br>&#125;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(foo.<span class="hljs-built_in">count</span>);<br><br></code></pre></td></tr></table></figure>
+
+<p>还有一个更好的例子</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>; <br>	<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">bar</span>();<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">a</span>);<br>&#125;<br><br><span class="hljs-title function_">foo</span>();<br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="动态作用域"><a href="#动态作用域" class="headerlink" title="动态作用域"></a>动态作用域</h3><p>JavaScript 只有词法作用域，没有动态作用域</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">var</span> a = <span class="hljs-number">3</span>;<br>	foo();<br>&#125;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br>bar();<br><br><br><span class="hljs-comment">// 输出结果是 2</span><br><br><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="使用立即调用函数IIFE创建局部作用域"><a href="#使用立即调用函数IIFE创建局部作用域" class="headerlink" title="使用立即调用函数IIFE创建局部作用域"></a>使用立即调用函数IIFE创建局部作用域</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapElements</span>(<span class="hljs-params">a</span>) &#123;<br>	<span class="hljs-keyword">var</span> result = [], i, n;<br>	<span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>, n = a.<span class="hljs-property">length</span>; i &lt; n; i++) &#123;<br>		result[i] = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123; <span class="hljs-keyword">return</span> a[i] &#125;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-keyword">var</span> wrapped = <span class="hljs-title function_">wrapElements</span>([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>]);<br><br><span class="hljs-keyword">var</span> f = wrapped[<span class="hljs-number">0</span>];<br><br><span class="hljs-title function_">f</span>();  <span class="hljs-comment">// ? 输出结果 undefined</span><br><br><br><span class="hljs-comment">// 更具有欺骗性的例子</span><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">wrapElements</span>(<span class="hljs-params">a</span>) &#123;<br>	<span class="hljs-keyword">var</span> result = [];<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = a.<span class="hljs-property">length</span>; i &lt; n; i++) &#123;<br>		result[i] = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123; <span class="hljs-keyword">return</span> a[i] &#125;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-keyword">var</span> wrapped = <span class="hljs-title function_">wrapElements</span>([<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>, <span class="hljs-number">40</span>, <span class="hljs-number">50</span>]);<br><br><span class="hljs-keyword">var</span> f = wrapped[<span class="hljs-number">0</span>];<br><br><br><span class="hljs-title function_">f</span>();  <span class="hljs-comment">// ? 输出结果 undefined</span><br><br><br></code></pre></td></tr></table></figure>
+
+<p>在流行的JavaScript的引擎中的另一个缺陷是函数命名表达式的声明进行提升。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> f = <span class="hljs-title function_">g</span>(<span class="hljs-params"></span>) &#123; returen <span class="hljs-number">17</span>; &#125;<br><span class="hljs-title function_">g</span>(); <span class="hljs-comment">// 17 (在非标准的环境中，标准环境会报错 g is not defined)</span><br><br><br>我们应该怎样做<br><span class="hljs-keyword">var</span> f = <span class="hljs-keyword">function</span> <span class="hljs-title function_">g</span>(<span class="hljs-params"></span>) &#123; <span class="hljs-keyword">return</span> <span class="hljs-number">17</span>; &#125;<br><span class="hljs-keyword">var</span> g = <span class="hljs-literal">null</span>;<br><br></code></pre></td></tr></table></figure>
+
+<p>方法调用</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">var</span> username=<span class="hljs-string">&quot;test&quot;</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">hello</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-string">&quot;use strict&quot;</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello, &quot;</span> + <span class="hljs-keyword">this</span>.username;<br>&#125;<br><br>hello(); <span class="hljs-string">&quot;hello, undefined&quot;</span><br><br></code></pre></td></tr></table></figure>
+
+
+<p>bind绑定方法接收者，下面例子返回什么结果， 用尽可能多的方法修复该例子</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> <span class="hljs-built_in">buffer</span> = &#123;<br>	<span class="hljs-attr">entries</span>: [],<br>	<span class="hljs-attr">add</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>		this.entries.<span class="hljs-built_in">push</span>(s);<br>	&#125;,<br>	<span class="hljs-attr">concat</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">return</span> this.entries.join(<span class="hljs-string">&quot;&quot;</span>);<br>	&#125;<br>&#125;<br><br><span class="hljs-keyword">var</span> source = [<span class="hljs-string">&quot;867&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;5309&quot;</span>];<br><br>source.forEach(<span class="hljs-built_in">buffer</span>.add);  <span class="hljs-comment">// error: entries is undefined</span><br><br><br></code></pre></td></tr></table></figure>
+
+
+<p>什么是函数柯里化？柯里化的作用</p>
+<ul>
+<li>延迟计算</li>
+<li>参数复用， 当在多次调用同一个函数，并且传递的参数绝大多数相同，那么该函数可能是一个很好的柯里化候选</li>
+<li>动态创建函数， 这可以是在部分计算出结果后，在此基础上动态生成新的函数处理后面的业务，这样省略了计算</li>
+</ul>
+<p>函数柯里化 一道有难度的面试题,完成plus函数 满足通过所有的测试条件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-meta"></span><br><span class="hljs-meta">&#x27;use strict&#x27;</span>;<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">plus</span>(<span class="hljs-params">n</span>)&#123;<br>  <br>&#125;<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = plus<br><span class="hljs-meta"></span><br><span class="hljs-meta"></span><br><span class="hljs-meta">&#x27;use strict&#x27;</span>;<br><span class="hljs-keyword">var</span> assert = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;assert&#x27;</span>)<br><br><span class="hljs-keyword">var</span> plus = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;../lib/assign-4&#x27;</span>)<br><br><span class="hljs-title function_">describe</span>(<span class="hljs-string">&#x27;闭包应用&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>  <span class="hljs-title function_">it</span>(<span class="hljs-string">&#x27;plus(0) === 0&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">0</span>,<span class="hljs-title function_">plus</span>(<span class="hljs-number">0</span>).<span class="hljs-title function_">toString</span>())<br>  &#125;)<br>  <span class="hljs-title function_">it</span>(<span class="hljs-string">&#x27;plus(1)(1)(2)(3)(5) === 12&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">12</span>,<span class="hljs-title function_">plus</span>(<span class="hljs-number">1</span>)(<span class="hljs-number">1</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>)(<span class="hljs-number">5</span>).<span class="hljs-title function_">toString</span>())<br>  &#125;)<br>  <span class="hljs-title function_">it</span>(<span class="hljs-string">&#x27;plus(1)(4)(2)(3) === 10&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">10</span>,<span class="hljs-title function_">plus</span>(<span class="hljs-number">1</span>)(<span class="hljs-number">4</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>).<span class="hljs-title function_">toString</span>())<br>  &#125;)<br>  <span class="hljs-title function_">it</span>(<span class="hljs-string">&#x27;方法引用&#x27;</span>,<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>    <span class="hljs-keyword">var</span> plus2 = <span class="hljs-title function_">plus</span>(<span class="hljs-number">1</span>)(<span class="hljs-number">1</span>)<br>    assert.<span class="hljs-title function_">equal</span>(<span class="hljs-number">12</span>,<span class="hljs-title function_">plus2</span>(<span class="hljs-number">1</span>)(<span class="hljs-number">4</span>)(<span class="hljs-number">2</span>)(<span class="hljs-number">3</span>).<span class="hljs-title function_">toString</span>())<br>  &#125;)<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<h3 id="创建一个原型为null的对象用作字典"><a href="#创建一个原型为null的对象用作字典" class="headerlink" title="创建一个原型为null的对象用作字典"></a>创建一个原型为null的对象用作字典</h3><p>防止原型污染的最简单的方式之一就是一开始就不使用原型。但是ES5发布之前并没有一个标准的方式创建一个空原型的新对象。你可能会这样做<br>该例子是否能创建一个原型为null的对象。不能的话要怎么做</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">C</span>(<span class="hljs-params"></span>) &#123; &#125;<br><br>C.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> = <span class="hljs-literal">null</span>;<br><br><span class="hljs-keyword">var</span> o = <span class="hljs-keyword">new</span> <span class="hljs-title function_">C</span>();<br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getPrototypeOf</span>(o) === <span class="hljs-literal">null</span>; <span class="hljs-comment">// false</span><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getPrototypeOf</span>(o) === <span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span> <span class="hljs-comment">// true</span><br><br><span class="hljs-comment">// ES5之后应该这样做</span><br><span class="hljs-keyword">var</span> x = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-literal">null</span>);<br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">getPrototypeOf</span>(o) === <span class="hljs-literal">null</span>; <span class="hljs-comment">// true</span><br><br>在不支持<span class="hljs-title class_">Object</span>.<span class="hljs-property">create</span>的<span class="hljs-title class_">JavaScript</span>环境中特殊对象__proto__提供了对对象内部原型链的读写访问<br><br><span class="hljs-keyword">var</span> x = &#123; <span class="hljs-attr">__proto__</span>: <span class="hljs-literal">null</span> &#125;;<br><br>x <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Object</span>;  <span class="hljs-comment">// false;</span><br><br></code></pre></td></tr></table></figure>
+<p>第二种貌似更方便，但是有了Object.create函数后，Object.create是更值得推荐的方式。</p>
+<h3 id="看下面代码mean的输出值时多少？"><a href="#看下面代码mean的输出值时多少？" class="headerlink" title="看下面代码mean的输出值时多少？"></a>看下面代码mean的输出值时多少？</h3><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-keyword">var</span> scores = [98, 74, 85, 77, 93, 100, 89];<br><br><span class="hljs-keyword">var</span> <span class="hljs-keyword">total</span> = 0;<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">score</span> <span class="hljs-keyword">in</span> scores) &#123;<br>	<span class="hljs-keyword">total</span> += <span class="hljs-keyword">score</span>;<br>&#125;<br><br><span class="hljs-keyword">var</span> <span class="hljs-keyword">mean</span> = <span class="hljs-keyword">total</span> / socres.length;<br><br><br><span class="hljs-keyword">mean</span>; <span class="hljs-comment">// ?   </span><br><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="JavaScript位操作符的诀窍"><a href="#JavaScript位操作符的诀窍" class="headerlink" title="JavaScript位操作符的诀窍"></a>JavaScript位操作符的诀窍</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs awk">无符号右移自动转换成数字<br><span class="hljs-string">&quot;&quot;</span> &gt;&gt;&gt; <span class="hljs-number">0</span>.  <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br><span class="hljs-string">&quot;sdsd&quot;</span> &gt;&gt;&gt; <span class="hljs-number">0</span>   <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br><br>NaN &gt;&gt;&gt; <span class="hljs-number">0</span> <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br><br>undefined &gt;&gt;&gt; <span class="hljs-number">0</span>  <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br> <br>null &gt;&gt;&gt; <span class="hljs-number">0</span> <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br><br>[] &gt;&gt;&gt; <span class="hljs-number">0</span>  <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br><br><span class="hljs-string">&quot;70&quot;</span> &gt;&gt;&gt; <span class="hljs-number">0</span> <span class="hljs-regexp">//</span> <span class="hljs-number">70</span><br><br>&#123;&#125; &gt;&gt;&gt; <span class="hljs-number">0</span>. <span class="hljs-regexp">//</span> Uncaught SyntaxError: Unexpected token &gt;&gt;&gt;<br><br>～操作自动转换数字<br>负数转正数减一， 整数转负数减一， 其他-<span class="hljs-number">1</span><br><br>~<span class="hljs-string">&quot;sdsd&quot;</span> <span class="hljs-regexp">//</span> -<span class="hljs-number">1</span><br>~<span class="hljs-string">&quot;0&quot;</span>    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~<span class="hljs-number">0</span>     <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~NaN    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~null    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~undefined    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~[]    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~&#123;&#125;    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~<span class="hljs-string">&quot;sdsd&quot;</span>    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~<span class="hljs-string">&quot;45sdsd&quot;</span>    <span class="hljs-regexp">//</span>-<span class="hljs-number">1</span><br>~<span class="hljs-string">&quot;-1&quot;</span> <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br>~<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-regexp">//</span> -<span class="hljs-number">2</span><br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="隐式转换一个题目"><a href="#隐式转换一个题目" class="headerlink" title="隐式转换一个题目"></a>隐式转换一个题目</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs arcade">如果想输出success英国如何定义a<br><span class="hljs-keyword">if</span>(a == <span class="hljs-number">2</span> &amp;&amp; a == <span class="hljs-number">3</span>)  &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;success&quot;</span>)<br>&#125;<br><br><br><span class="hljs-keyword">var</span> i = <span class="hljs-number">2</span>;<br><span class="hljs-built_in">Number</span>.prototype.valueOf = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">return</span> i++;<br>&#125;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Number</span>( <span class="hljs-number">42</span> );<br><br></code></pre></td></tr></table></figure>
+<h3 id="“1”-”12”-”121”-map-parseInt"><a href="#“1”-”12”-”121”-map-parseInt" class="headerlink" title="[“1”,”12”,”121”].map(parseInt)"></a>[“1”,”12”,”121”].map(parseInt)</h3><p>这是一个很有意思的题目乍一看认为可能会输出[1,12,123] 其实不然输入结果为:</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-string">[1,NaN, 1]</span><br><br></code></pre></td></tr></table></figure>
+<p> 为什么会这样呢，我们知道parseInt方法可以将数字转为10进制的数值，parseInt(string, radix);其中第二个参数是基数<br> An integer between 2 and 36 that represents the radix (the base in mathematical numeral systems) of the string. Be careful — this does not default to 10.</p>
+<p>而Array的map方法可以接受三个参数<br> <figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> new_array = arr.<span class="hljs-built_in">map</span>(<span class="hljs-keyword">function</span> <span class="hljs-title function_">callback</span>(<span class="hljs-params">currentValue[, index[, array]]</span>) &#123;<br>    <span class="hljs-comment">// Return element for new_array</span><br>&#125;[, thisArg])<br><br>这里不写参数默认将index作为基数传给了parseInt所以输出结果时并不是按照我们所想的 <br><br>[<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;12&quot;</span>,<span class="hljs-string">&quot;121&quot;</span>].<span class="hljs-built_in">map</span>(<span class="hljs-function"><span class="hljs-params">val</span> =&gt;</span> parseInt(val)); 来输出的因为你发现这样写结果反而没有问题<br><br>真实结果是这样<br>[<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;12&quot;</span>,<span class="hljs-string">&quot;121&quot;</span>].<span class="hljs-built_in">map</span>(<span class="hljs-function">(<span class="hljs-params">val,index,<span class="hljs-built_in">array</span></span>) =&gt;</span> parseInt(val, index));<br><br></code></pre></td></tr></table></figure></p>
+<h3 id="HTTP请求307什么时候会发生"><a href="#HTTP请求307什么时候会发生" class="headerlink" title="HTTP请求307什么时候会发生"></a>HTTP请求307什么时候会发生</h3><p>HTTP Strict Transport Security <code>HSTS</code>, 当在浏览器输入一个域名baidu.com, nginx启用了HSTS,重定向了 <a target="_blank" rel="noopener" href="https://baidu.com,这时浏览器控制台会看到307/">https://baidu.com,这时浏览器控制台会看到307</a></p>
+<h3 id="什么是DNS劫持和DNS污染"><a href="#什么是DNS劫持和DNS污染" class="headerlink" title="什么是DNS劫持和DNS污染"></a>什么是DNS劫持和DNS污染</h3><h3 id="babel的polyfill和runtime的区别"><a href="#babel的polyfill和runtime的区别" class="headerlink" title="babel的polyfill和runtime的区别"></a>babel的polyfill和runtime的区别</h3><h3 id="Promise为什么需要一个catch-done方法是干什么用的"><a href="#Promise为什么需要一个catch-done方法是干什么用的" class="headerlink" title="Promise为什么需要一个catch done方法是干什么用的"></a>Promise为什么需要一个catch done方法是干什么用的</h3><p>如果捕获promise的异常</p>
+<h3 id="webpack-tree-shaking用来做什么的"><a href="#webpack-tree-shaking用来做什么的" class="headerlink" title="webpack  tree shaking用来做什么的"></a>webpack  tree shaking用来做什么的</h3>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/11/2018-09-11-inverview-html/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HTML面试题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/11/2018-09-11-read-book-effective-five/">
+                        <span class="hidden-mobile">Effective JavaScript (五)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

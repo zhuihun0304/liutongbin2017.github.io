@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Object.assign()该方法用于将所有可枚举属性的值从一个或多个源对象分配到目标对象。它将返回目标对象 123456789101112131415161718192021222324252627282930313233343536373839const target &#x3D; &amp;#123; a: 1, b: 2 &amp;#125;;const source &#x3D; &amp;#123; b: 4, c: 5 &amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS Object">
+<meta property="og:url" content="http://example.com/2021/01/06/2021-01-06-object/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="Object.assign()该方法用于将所有可枚举属性的值从一个或多个源对象分配到目标对象。它将返回目标对象 123456789101112131415161718192021222324252627282930313233343536373839const target &#x3D; &amp;#123; a: 1, b: 2 &amp;#125;;const source &#x3D; &amp;#123; b: 4, c: 5 &amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-18T08:50:24.504Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>JS Object - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="object">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-06 00:00" pubdate>
+        2021年1月6日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">object</h1>
+            
+            <div class="markdown-body">
+              <h3 id="Object-assign"><a href="#Object-assign" class="headerlink" title="Object.assign()"></a>Object.assign()</h3><p>该方法用于将所有可枚举属性的值从一个或多个源对象分配到目标对象。它将返回目标对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></div></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> target = &#123; <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> &#125;;<br><span class="hljs-keyword">const</span> source = &#123; <span class="hljs-attr">b</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">5</span> &#125;;<br><br><span class="hljs-keyword">const</span> returnedTarget = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(target, source);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(target);<br><span class="hljs-comment">// expected output: Object &#123; a: 1, b: 4, c: 5 &#125;</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(returnedTarget);<br><span class="hljs-comment">// expected output: Object &#123; a: 1, b: 4, c: 5 &#125;</span><br><br><span class="hljs-string">`Object.assign()第一级是深拷贝，第二级及其他就变成浅拷贝，因为assign()拷贝的是（可枚举）属性值`</span><br><span class="hljs-keyword">let</span> obj1 = &#123; <span class="hljs-attr">a</span>: <span class="hljs-number">0</span> , <span class="hljs-attr">b</span>: &#123; <span class="hljs-attr">c</span>: <span class="hljs-number">0</span>&#125;&#125;;<br><span class="hljs-keyword">let</span> obj2 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">assign</span>(&#123;&#125;, obj1);<br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj2));<br><span class="hljs-comment">// &#123; a: 0, b: &#123; c: 0&#125;&#125;</span><br>obj1.<span class="hljs-property">a</span> = <span class="hljs-number">1</span>;<br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj1));<br><span class="hljs-comment">// &#123; a: 1, b: &#123; c: 0&#125;&#125;</span><br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj2));<br><span class="hljs-comment">// &#123; a: 0, b: &#123; c: 0&#125;&#125;</span><br><br>obj2.<span class="hljs-property">a</span> = <span class="hljs-number">2</span>;<br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj1));<br><span class="hljs-comment">// &#123; a: 1, b: &#123; c: 0&#125;&#125;</span><br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj2));<br><span class="hljs-comment">// &#123; a: 2, b: &#123; c: 0&#125;&#125;</span><br><br>obj2.<span class="hljs-property">b</span>.<span class="hljs-property">c</span> = <span class="hljs-number">3</span>;<br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj1));<br><span class="hljs-comment">// &#123; a: 1, b: &#123; c: 3&#125;&#125;</span><br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj2));<br><span class="hljs-comment">// &#123; a: 2, b: &#123; c: 3&#125;&#125;</span><br><br><span class="hljs-comment">// Deep Clone</span><br>obj1 = &#123; <span class="hljs-attr">a</span>: <span class="hljs-number">0</span> , <span class="hljs-attr">b</span>: &#123; <span class="hljs-attr">c</span>: <span class="hljs-number">0</span>&#125;&#125;;<br><span class="hljs-keyword">let</span> obj3 = <span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj1));<br>obj1.<span class="hljs-property">a</span> = <span class="hljs-number">4</span>;<br>obj1.<span class="hljs-property">b</span>.<span class="hljs-property">c</span> = <span class="hljs-number">4</span>;<br><span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(obj3));<br><span class="hljs-comment">// &#123; a: 0, b: &#123; c: 0&#125;&#125;</span><br></code></pre></td></tr></table></figure>
+<h3 id="Object-entries"><a href="#Object-entries" class="headerlink" title="Object.entries()"></a>Object.entries()</h3><p>该方法返回一个给定对象自身可枚举属性的键值对数组，其排列与使用for…in循环遍历该对象时返回的顺序一致（区别在于for-in循环还会枚举原型链中的属性）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> object1 = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-string">&#x27;someString&#x27;</span>,<br>  <span class="hljs-attr">b</span>: <span class="hljs-number">42</span><br>&#125;;<br><br><span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> [key, value] <span class="hljs-keyword">of</span> object1) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">$&#123;key&#125;</span>: <span class="hljs-subst">$&#123;value&#125;</span>`</span>);<br>&#125;<br><span class="hljs-comment">// &quot;a: someString&quot;</span><br><span class="hljs-comment">// &quot;b: 42&quot;</span><br><br><span class="hljs-string">`Object.entries()返回一个数组，其元素是与直接在object上找到的可枚举属性键值对相对应的数组。属性的顺序与通过手动循环对象的属性值所给出的顺序相同`</span><br><span class="hljs-keyword">const</span> obj = &#123; <span class="hljs-attr">foo</span>: <span class="hljs-string">&#x27;bar&#x27;</span>, <span class="hljs-attr">baz</span>: <span class="hljs-number">42</span> &#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(obj)); <span class="hljs-comment">// [ [&#x27;foo&#x27;, &#x27;bar&#x27;], [&#x27;baz&#x27;, 42] ]</span><br><br><span class="hljs-keyword">const</span> obj = &#123; <span class="hljs-number">0</span>: <span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">1</span>: <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-number">2</span>: <span class="hljs-string">&#x27;c&#x27;</span> &#125;;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(obj)); <span class="hljs-comment">// [ [&#x27;0&#x27;, &#x27;a&#x27;], [&#x27;1&#x27;, &#x27;b&#x27;], [&#x27;2&#x27;, &#x27;c&#x27;] ]</span><br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(obj).<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">[key, value]</span>) =&gt;</span> &#123;<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`<span class="hljs-subst">$&#123;key&#125;</span> <span class="hljs-subst">$&#123;value&#125;</span>`</span>); <span class="hljs-comment">// &quot;a 5&quot;, &quot;b 7&quot;, &quot;c 9&quot;</span><br>&#125;);<br></code></pre></td></tr></table></figure>
+<h3 id="Object-freeze"><a href="#Object-freeze" class="headerlink" title="Object.freeze()"></a>Object.freeze()</h3><p>该方法可以冻结一个对象。一个被冻结的对象再也不能被修改；冻结了一个对象则不能向这个对象添加属性，不能删除已有属性，不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> obj = &#123;<br>  <span class="hljs-attr">prop</span>: <span class="hljs-number">42</span><br>&#125;;<br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">freeze</span>(obj);<br><br>obj.<span class="hljs-property">prop</span> = <span class="hljs-number">33</span>;<br><span class="hljs-comment">// Throws an error in strict mode</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj.<span class="hljs-property">prop</span>);<br><span class="hljs-comment">// expected output: 42</span><br></code></pre></td></tr></table></figure>
+<h3 id="Object-fromEntries"><a href="#Object-fromEntries" class="headerlink" title="Object.fromEntries()"></a>Object.fromEntries()</h3><p>把键值对列表转换成一个对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// Map转化为Object</span><br><span class="hljs-keyword">const</span> map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>([ [<span class="hljs-string">&#x27;foo&#x27;</span>, <span class="hljs-string">&#x27;bar&#x27;</span>], [<span class="hljs-string">&#x27;baz&#x27;</span>, <span class="hljs-number">42</span>] ]);<br><span class="hljs-keyword">const</span> obj = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">fromEntries</span>(map);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj); <span class="hljs-comment">// &#123; foo: &quot;bar&quot;, baz: 42 &#125;</span><br><span class="hljs-comment">// Array转化为Object</span><br><span class="hljs-keyword">const</span> arr = [ [<span class="hljs-string">&#x27;0&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>], [<span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>], [<span class="hljs-string">&#x27;2&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>] ];<br><span class="hljs-keyword">const</span> obj = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">fromEntries</span>(arr);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(obj); <span class="hljs-comment">// &#123; 0: &quot;a&quot;, 1: &quot;b&quot;, 2: &quot;c&quot; &#125;</span><br><br></code></pre></td></tr></table></figure>
+<h3 id="Object-is"><a href="#Object-is" class="headerlink" title="Object.is()"></a>Object.is()</h3><p>判断两个值是否为同一个值<br><code>Object.is(value1,value2) //返回值：一个 Boolean 类型标示两个参数是否是同一个值。</code><br><code>// value1:被比较的第一个参数</code><br><code>// value2:被比较的第二个参数</code></p>
+<h3 id="Object-isExtensible"><a href="#Object-isExtensible" class="headerlink" title="Object.isExtensible()"></a>Object.isExtensible()</h3><p>判断一个对象是否是可扩展（是否可以哎它上面添加新的属性）<br><code>Object.isExtensible(obj)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 新对象默认是可扩展的.</span><br><span class="hljs-keyword">var</span> empty = &#123;&#125;;<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isExtensible</span>(empty); <span class="hljs-comment">// === true</span><br><br><span class="hljs-comment">// ...可以变的不可扩展.</span><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">preventExtensions</span>(empty);<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isExtensible</span>(empty); <span class="hljs-comment">// === false</span><br><br><span class="hljs-comment">// 密封对象是不可扩展的.</span><br><span class="hljs-keyword">var</span> sealed = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">seal</span>(&#123;&#125;);<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isExtensible</span>(sealed); <span class="hljs-comment">// === false</span><br><br><span class="hljs-comment">// 冻结对象也是不可扩展.</span><br><span class="hljs-keyword">var</span> frozen = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">freeze</span>(&#123;&#125;);<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isExtensible</span>(frozen); <span class="hljs-comment">// === false</span><br></code></pre></td></tr></table></figure>
+<h3 id="Object-isFrozen"><a href="#Object-isFrozen" class="headerlink" title="Object.isFrozen()"></a>Object.isFrozen()</h3><p>判断一个对象是否被冻结<br><code>Object.isFrozen(obj)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 一个对象默认是可扩展的,所以它也是非冻结的.</span><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isFrozen</span>(&#123;&#125;); <span class="hljs-comment">// === false</span><br><br><span class="hljs-comment">// 一个不可扩展的空对象同时也是一个冻结对象.</span><br><span class="hljs-keyword">var</span> vacuouslyFrozen = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">preventExtensions</span>(&#123;&#125;);<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isFrozen</span>(vacuouslyFrozen) <span class="hljs-comment">//=== true;</span><br><br><span class="hljs-comment">// 一个非空对象默认也是非冻结的.</span><br><span class="hljs-keyword">var</span> oneProp = &#123; <span class="hljs-attr">p</span>: <span class="hljs-number">42</span> &#125;;<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isFrozen</span>(oneProp) <span class="hljs-comment">//=== false</span><br><br><span class="hljs-comment">// 让这个对象变的不可扩展,并不意味着这个对象变成了冻结对象,</span><br><span class="hljs-comment">// 因为p属性仍然是可以配置的(而且可写的).</span><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">preventExtensions</span>(oneProp);<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isFrozen</span>(oneProp) <span class="hljs-comment">//=== false</span><br><br><span class="hljs-comment">// 此时,如果删除了这个属性,则它会成为一个冻结对象.</span><br><span class="hljs-keyword">delete</span> oneProp.<span class="hljs-property">p</span>;<br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">isFrozen</span>(oneProp) <span class="hljs-comment">//=== true</span><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/06/2022-05-06-hexo/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">hexo主题</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/01/01/2021-01-01-array/">
+                        <span class="hidden-mobile">JS Array</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

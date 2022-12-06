@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="git的高级使用教程记录一些git的高级用法 修改tag代码在项目中我们会有这样的要求，发布了一个tag v1.0现在这个tag有bug需要修复应该如何操作呢tag其实是一个快照是不能修改代码的但是可以基于tag新建一个分支来修改，这样修改完毕基于新的分支再打tag即可得到修复后的tag 123456$ git fetch origin v1.0$ git checkout -b branch_n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git的使用教程(三)">
+<meta property="og:url" content="http://example.com/2017/10/22/2017-10-22-git-senior/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="git的高级使用教程记录一些git的高级用法 修改tag代码在项目中我们会有这样的要求，发布了一个tag v1.0现在这个tag有bug需要修复应该如何操作呢tag其实是一个快照是不能修改代码的但是可以基于tag新建一个分支来修改，这样修改完毕基于新的分支再打tag即可得到修复后的tag 123456$ git fetch origin v1.0$ git checkout -b branch_n">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/git-senior/rebase.svg">
+<meta property="article:published_time" content="2017-10-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:57:23.126Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.darknights.cn/assets/images/in-post/git-senior/rebase.svg">
+  
+  
+  <title>git的使用教程(三) - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="git的高级教程以及正规开发中的工作流程">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-10-22 00:00" pubdate>
+        2017年10月22日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">git的高级教程以及正规开发中的工作流程</h1>
+            
+            <div class="markdown-body">
+              <h2 id="git的高级使用教程"><a href="#git的高级使用教程" class="headerlink" title="git的高级使用教程"></a>git的高级使用教程</h2><p>记录一些git的高级用法</p>
+<h2 id="修改tag代码"><a href="#修改tag代码" class="headerlink" title="修改tag代码"></a>修改tag代码</h2><p>在项目中我们会有这样的要求，发布了一个tag v1.0现在这个tag有bug需要修复应该如何操作呢<br>tag其实是一个快照是不能修改代码的但是可以基于tag新建一个分支来修改，这样修改完毕基于新的分支再打tag即可得到修复后的tag</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><pre><code class="hljs crmsh">$ git fetch origin v1.<span class="hljs-number">0</span><br><br>$ git checkout -b branch_name tag_name //这样会从 <span class="hljs-keyword">tag</span> <span class="hljs-title">创建一个分支，然后就和普通的 git</span> 操作一样了,该分支是基于<span class="hljs-keyword">tag</span>的而不是基于<span class="hljs-literal">master</span>的<br><br>$ git push origin branch_name  //直接将修改好的分支推上去 或者重新打<span class="hljs-keyword">tag</span><br><span class="hljs-title"></span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="回滚错误的修改"><a href="#回滚错误的修改" class="headerlink" title="回滚错误的修改"></a>回滚错误的修改</h2><p>建议仔细阅读<a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki/2.6-%E5%9B%9E%E6%BB%9A%E9%94%99%E8%AF%AF%E7%9A%84%E4%BF%AE%E6%94%B9#git-revert">git-revert</a><br>该命令只回滚了一个单独的提交，并没有移除后面的提交，并且保留了提交历史。 但是reset直接把状态回调bug之前之后所有的提交都会遗弃，这样并不安全。</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>git revert &lt;commit&gt;<br><br><br><span class="hljs-comment"># 编辑一些跟踪的文件</span><br><br><span class="hljs-comment"># 提交一份快照</span><br><span class="hljs-variable">$ </span>git commit -m <span class="hljs-string">&quot;Make some changes that will be undone&quot;</span><br><br><span class="hljs-comment"># 撤销刚刚的提交</span><br><span class="hljs-variable">$ </span>git revert <span class="hljs-title class_">HEAD</span><br></code></pre></td></tr></table></figure>
+<p>确保你只对本地的修改使用 git reset，而不是公共更改。如果你需要修复一个公共提交，git revert 命令正是被设计来做这个的</p>
+<h2 id="重写项目历史"><a href="#重写项目历史" class="headerlink" title="重写项目历史"></a>重写项目历史</h2><h3 id="git-commit-–amend"><a href="#git-commit-–amend" class="headerlink" title="git commit –amend"></a>git commit –amend</h3><p>git commit –amend 命令是修复最新提交的便捷方式，如有需要请在本地使用不要修改公共历史。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">$ git <span class="hljs-keyword">log</span><br><br><span class="hljs-keyword">commit</span> eeeab2ca5f30d70667d6d12ab71f19dd7b958d1c (HEAD -&gt; master)<br>Author: xxx &lt;xxx@xxx.com&gt;<br><span class="hljs-type">Date</span>:   Mon Nov <span class="hljs-number">6</span> <span class="hljs-number">15</span>:<span class="hljs-number">30</span>:<span class="hljs-number">43</span> <span class="hljs-number">2017</span> +<span class="hljs-number">0800</span><br><br>    fix(测试): 测试提交<br><br>    测试提交<br><br>    Signed-<span class="hljs-keyword">off</span>-<span class="hljs-keyword">by</span>: xxx &lt;xxx@xxx.com&gt;<br><br><br>$ git <span class="hljs-keyword">commit</span> <span class="hljs-comment">--amend</span><br><br># 该命令修改后再使用git <span class="hljs-keyword">log</span>得到如下<br><br><span class="hljs-keyword">commit</span> eeeab2ca5f30d70667d6d12ab71f19dd7b958d1c (HEAD -&gt; master)<br>Author: xxx &lt;xxx@xxx.com&gt;<br><span class="hljs-type">Date</span>:   Mon Nov <span class="hljs-number">6</span> <span class="hljs-number">15</span>:<span class="hljs-number">30</span>:<span class="hljs-number">43</span> <span class="hljs-number">2017</span> +<span class="hljs-number">0800</span><br><br>    fix(测试): 测试提交sss<br><br>    测试提交sss<br><br>    Signed-<span class="hljs-keyword">off</span>-<span class="hljs-keyword">by</span>: xxx &lt;xxx@xxx.com&gt;<br><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="git-rebase"><a href="#git-rebase" class="headerlink" title="git rebase"></a>git rebase</h3><p>变基（rebase, 事实上这个名字十分诡异, 所以在大多数时候直接用英文术语）是将分支移到一个新的基提交的过程。事实上重写了你的项目历史,过程一般如下所示<br><img src="https://cdn.darknights.cn/assets/images/in-post/git-senior/rebase.svg" srcset="/img/loading.gif" lazyload></p>
+<p>用法：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml">git rebase <span class="hljs-tag">&lt;<span class="hljs-name">base</span>&gt;</span><br><br># 将当前分支 rebase 到 <span class="hljs-tag">&lt;<span class="hljs-name">base</span>&gt;</span>，这里可以是任何类型的提交引用（ID、分支名、标签，或是 HEAD 的相对引用）<br></code></pre></td></tr></table></figure>
+
+<p>一个🌰</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-comment"># 开始新的功能分支</span><br>$ git checkout -b feat <span class="hljs-keyword">master</span><br><span class="hljs-title"># 编辑文件</span><br><span class="hljs-title">$</span> git commit -a -m <span class="hljs-string">&quot;Start developing a feature&quot;</span><br><br><span class="hljs-comment"># 在 feature 分支开发了一半的时候，我们意识到项目中有一个安全漏洞:</span><br><br><span class="hljs-comment"># 基于master分支创建一个快速修复分支</span><br>$ git checkout -b bug <span class="hljs-keyword">master</span><br><span class="hljs-title"># 编辑文件</span><br><span class="hljs-title">$</span> git commit -a -m <span class="hljs-string">&quot;Fix security hole&quot;</span><br><span class="hljs-comment"># 合并回master</span><br>$ git checkout <span class="hljs-keyword">master</span><br><span class="hljs-title">$</span> git merge bug<br>$ git branch -d bug<br><br><span class="hljs-comment"># 将 hotfix 分支并回之后 master，我们有了一个分叉的项目历史。</span><br><span class="hljs-comment"># 我们用 rebase 整合 feature 分支以获得线性的历史，而不是使用普通的 git merge。</span><br>$ git checkout feat<br>$ git rebase <span class="hljs-keyword">master</span><br><br><span class="hljs-title">$</span> git checkout <span class="hljs-keyword">master</span><br><span class="hljs-title">$</span> git merge feat<br><br></code></pre></td></tr></table></figure>
+
+<p>另一个🌰</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-comment"># 开始新的功能分支</span><br>$ git checkout -b feat <span class="hljs-keyword">master</span><br><span class="hljs-title"># 编辑文件</span><br><span class="hljs-title">$</span> git commit -a -m <span class="hljs-string">&quot;Start developing a feature&quot;</span><br><span class="hljs-comment"># 编辑更多文件</span><br>$ git commit -a -m <span class="hljs-string">&quot;Fix something from the previous commit&quot;</span><br><br><span class="hljs-comment"># 直接在 master 上添加文件</span><br>$ git checkout <span class="hljs-keyword">master</span><br><span class="hljs-title"># 编辑文件</span><br><span class="hljs-title">$</span> git commit -a -m <span class="hljs-string">&quot;Fix security hole&quot;</span><br><br><span class="hljs-comment"># 开始交互式 rebase</span><br>$ git checkout feat<br>$ git rebase -i <span class="hljs-keyword">master</span><br><br><span class="hljs-title">最后的那个命令会打开一个编辑器，包含 feat</span> 的两个提交，和一些指示：<br><br>pick <span class="hljs-number">32618</span>c4 <span class="hljs-literal">Start</span> developing a feature<br>pick <span class="hljs-number">62</span>eed47 Fix something from the previous commit<br><br><span class="hljs-comment"># 你可以更改每个提交前的 pick 命令来决定在 rebase 时提交移动的方式。</span><br><span class="hljs-comment"># 在我们的例子中，我们只需要用 squash 命令把两个提交并在一起就可以了：</span><br><br>pick <span class="hljs-number">32618</span>c4 <span class="hljs-literal">Start</span> developing a feature<br>squash <span class="hljs-number">62</span>eed47 Fix something from the previous commit<br><br><span class="hljs-comment"># 保存并关闭编辑器以开始 rebase</span><br><span class="hljs-comment"># 最后，你可以执行一个快速向前的合并，来将完善的 feature 分支整合进主代码库：</span><br><br>git checkout <span class="hljs-keyword">master</span><br><span class="hljs-title">git</span> merge feat<br><br></code></pre></td></tr></table></figure>
+
+<p>通常情况下建议使用rebase而非merge来拉取上游代码。这样所有的记录会被合并为一次commit,而且没有一些不重要的合并来污染提交的时间线</p>
+<h3 id="本地清理"><a href="#本地清理" class="headerlink" title="本地清理"></a>本地清理</h3><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-variable">$ </span>git rebase -i <span class="hljs-variable constant_">HEAD</span>~<span class="hljs-number">3</span><br><br><span class="hljs-variable">$ </span>git rebase -i <span class="hljs-variable constant_">HEAD</span>~~~ <span class="hljs-regexp">//</span>这两条一个意思合并注释<br><br></code></pre></td></tr></table></figure>
+
+<p>参考<a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki/5.1-%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%EF%BC%9AMerge%E3%80%81Rebase-%E7%9A%84%E9%80%89%E6%8B%A9">代码合并：Merge、Rebase 的选择</a></p>
+<h3 id="合并分支commit"><a href="#合并分支commit" class="headerlink" title="合并分支commit"></a>合并分支commit</h3><p>当你在新的feat功能开发时可能会有各种commit最后功能完成我可能想将所有commit合成一个，这样历史会比较简洁。这是可能会使用这条命令</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ git merge-base feat master  <span class="hljs-regexp">//</span>该命令找出feat 分支开始分叉的基 返回基提交的ID，然后可以酱紫<br><br>$ git rebase -i IDXXX <span class="hljs-regexp">//</span>此时选择suqash 就可以重新写历史了 当然合并后最后一次的历史也可以使用 git commit --amend改写<br><br><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h3><p>在基于 Git 的协作工作流中，将上游更改合并到你的本地仓库是一个常见的工作。我们已经知道应该使用 git fetch，然后是 git merge，但是 git pull 将这两个命令合二为一。</p>
+<p>基于 Rebase 的 Pull</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-symbol">$</span> git pull --rebase &lt;remote&gt;  <span class="hljs-comment">//此命令会合并远程分支和本地分支而非使用git merge;</span><br><br><span class="hljs-symbol">$</span> git checkout master<br><span class="hljs-symbol">$</span> git pull --rebase origin  <span class="hljs-comment">//简单地将你本地的更改放到其他人已经提交的更改之后。</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="分离HEAD"><a href="#分离HEAD" class="headerlink" title="分离HEAD"></a>分离HEAD</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">// 可以直接使用 -f 选项让分支指向另一个提交 该命令会将 <span class="hljs-keyword">master</span> <span class="hljs-title">分支强制指向 HEAD</span> 的第 <span class="hljs-number">3</span> 级父提交。<br>$ git branch -f <span class="hljs-keyword">master</span> <span class="hljs-title">HEAD</span>~<span class="hljs-number">3</span><br><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="Reset还是Checkout"><a href="#Reset还是Checkout" class="headerlink" title="Reset还是Checkout"></a>Reset还是Checkout</h3><p><a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki/5.2-%E4%BB%A3%E7%A0%81%E5%9B%9E%E6%BB%9A%EF%BC%9AReset%E3%80%81Checkout%E3%80%81Revert-%E7%9A%84%E9%80%89%E6%8B%A9">参考此文章</a></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th align="center">作用域</th>
+<th align="center">常用情景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>git reset</td>
+<td align="center">提交层面</td>
+<td align="center">在私有分支上舍弃一些没有提交的更改</td>
+</tr>
+<tr>
+<td>git reset</td>
+<td align="center">文件层面</td>
+<td align="center">将文件从缓存区中移除</td>
+</tr>
+<tr>
+<td>git checkout</td>
+<td align="center">提交层面</td>
+<td align="center">切换分支或查看旧版本</td>
+</tr>
+<tr>
+<td>git checkout</td>
+<td align="center">文件层面</td>
+<td align="center">舍弃工作目录中的更改</td>
+</tr>
+<tr>
+<td>git revert</td>
+<td align="center">提交层面</td>
+<td align="center">在公共分支上回滚更改</td>
+</tr>
+<tr>
+<td>git revert</td>
+<td align="center">文件层面</td>
+<td align="center">（然而并没有）</td>
+</tr>
+</tbody></table>
+<h3 id="git-cherry-pick"><a href="#git-cherry-pick" class="headerlink" title="git cherry-pick"></a>git cherry-pick</h3><p>git cherry-pick 命令「复制」一个提交节点并在当前分支做一次完全一样的新提交。<br>只想将远程仓库的一个特定提交合并到自己的分支中该怎么做呢？可以使用git cherry-pick 来选择给定SHA值的提交，然后将其合并到当前分支中：</p>
+<h2 id="常见的工作流"><a href="#常见的工作流" class="headerlink" title="常见的工作流"></a><a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki/3.5-%E5%B8%B8%E8%A7%81%E5%B7%A5%E4%BD%9C%E6%B5%81%E6%AF%94%E8%BE%83">常见的工作流</a></h2><p><a target="_blank" rel="noopener" href="https://mritd.me/2017/09/05/git-flow-note/">参考此文章</a>总结一下工具</p>
+<h3 id="Git-flow工具"><a href="#Git-flow工具" class="headerlink" title="Git flow工具"></a>Git flow工具</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html">Git-flow</a> 是一个 git 扩展集，按 Vincent Driessen 的分支模型提供高层次的库操作；使用 git-flow 工具可以以更加简单的命令完成对 Vincent Driessen 分支模型的实践</li>
+<li>另一个工具是 <a target="_blank" rel="noopener" href="https://github.com/tj/git-extras">Git-extras</a>，该工具没有 git-flow 那么简单化，不过其提供更加强大的命令支持</li>
+</ul>
+<h3 id="Git-Commit-Message"><a href="#Git-Commit-Message" class="headerlink" title="Git Commit Message"></a>Git Commit Message</h3><p>我们遵循<a target="_blank" rel="noopener" href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#heading=h.greljkmo14y0"> Angular 社区规范</a>格式来提交代码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>(<span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>): <span class="hljs-tag">&lt;<span class="hljs-name">subject</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">BLANK</span> <span class="hljs-attr">LINE</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">BLANK</span> <span class="hljs-attr">LINE</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">footer</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>type: 本次提交类型</li>
+<li>scope: 本次提交影响范围，一般标明影响版本号或者具体的范围如 $browser, $compile, $rootScope, ngHref, ngClick, ngView, etc…</li>
+<li>subject: 本次提交简短说明</li>
+</ul>
+<p>关于 type 提交类型，有如下几种值:</p>
+<ul>
+<li>feat：新功能(feature)</li>
+<li>fix：修补 bug</li>
+<li>docs：文档(documentation)</li>
+<li>style： 格式(不影响代码运行的变动)</li>
+<li>refactor：重构(即不是新增功能，也不是修改 bug 的代码变动)</li>
+<li>test：增加测试</li>
+<li>chore：构建过程或辅助工具的变动</li>
+</ul>
+<h3 id="Commit小工具"><a href="#Commit小工具" class="headerlink" title="Commit小工具"></a>Commit小工具</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://commitizen.github.io/cz-cli/">commitizen-cli</a>比较有名采用node.js编写执行<code>git cz</code>能生成commit模板进行选择</li>
+<li><a target="_blank" rel="noopener" href="https://cimhealth.github.io/git-toolkit/">Git-toolkit</a> 基于shell编写执行<code>git ci</code>产生提交模板</li>
+</ul>
+<h2 id="Git-钩子"><a href="#Git-钩子" class="headerlink" title="Git 钩子"></a><a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki/5.4-Git-%E9%92%A9%E5%AD%90%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%A0%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81">Git 钩子</a></h2><h2 id="Git引用日志"><a href="#Git引用日志" class="headerlink" title="Git引用日志"></a><a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki/5.5-Git-%E6%8F%90%E4%BA%A4%E5%BC%95%E7%94%A8%E5%92%8C%E5%BC%95%E7%94%A8%E6%97%A5%E5%BF%97#%E5%93%88%E5%B8%8C%E5%AD%97%E4%B8%B2">Git引用日志</a></h2><h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/geeeeeeeeek/git-recipes/wiki">git-recipes</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html">Git 工作流程</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/08/git-use-process.html">Git 使用规范流程</a></li>
+<li><a target="_blank" rel="noopener" href="http://rogerdudler.github.io/git-guide/index.zh.html">git - 简明指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">git教程</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.infoq.com/cn/news/2016/01/12-git-advanced-commands">你需要知道的12个Git高级命令</a></li>
+</ul>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/">版本控制</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+                    
+                      <a class="hover-with-bg" href="/tags/git/">git</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/10/29/2017-10-29-entertainment/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">娱乐</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/10/21/2017-10-21-git-medium/">
+                        <span class="hidden-mobile">git的使用教程(二)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

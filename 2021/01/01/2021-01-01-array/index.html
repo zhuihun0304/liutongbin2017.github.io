@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="from()从类数组对象或者可迭代对象中创建一个新的数组实例（属于浅拷贝） 1234Array.form(&amp;#x27;foo&amp;#x27;)&#x2F;&#x2F; [&amp;#x27;f&amp;#x27;,&amp;#x27;o&amp;#x27;,&amp;#x27;o&amp;#x27;]Array.from(&amp;#x27;1&amp;#x27;,&amp;#x27;2&amp;#x27;,&amp;#x27;3&amp;#x27;)&#x2F;&#x2F; [&amp;#x27;1&amp;#x27;,&amp;#x27;2&amp;#x27;,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS Array">
+<meta property="og:url" content="http://example.com/2021/01/01/2021-01-01-array/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="from()从类数组对象或者可迭代对象中创建一个新的数组实例（属于浅拷贝） 1234Array.form(&amp;#x27;foo&amp;#x27;)&#x2F;&#x2F; [&amp;#x27;f&amp;#x27;,&amp;#x27;o&amp;#x27;,&amp;#x27;o&amp;#x27;]Array.from(&amp;#x27;1&amp;#x27;,&amp;#x27;2&amp;#x27;,&amp;#x27;3&amp;#x27;)&#x2F;&#x2F; [&amp;#x27;1&amp;#x27;,&amp;#x27;2&amp;#x27;,">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-18T07:53:12.831Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>JS Array - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="array">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-01-01 00:00" pubdate>
+        2021年1月1日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">array</h1>
+            
+            <div class="markdown-body">
+              <h3 id="from"><a href="#from" class="headerlink" title="from()"></a>from()</h3><p>从类数组对象或者可迭代对象中创建一个新的数组实例（属于浅拷贝）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">Array</span>.<span class="hljs-title function_">form</span>(<span class="hljs-string">&#x27;foo&#x27;</span>)<br><span class="hljs-comment">// [&#x27;f&#x27;,&#x27;o&#x27;,&#x27;o&#x27;]</span><br><span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(<span class="hljs-string">&#x27;1&#x27;</span>,<span class="hljs-string">&#x27;2&#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>)<br><span class="hljs-comment">// [&#x27;1&#x27;,&#x27;2&#x27;,&#x27;3&#x27;]</span><br></code></pre></td></tr></table></figure>
+<h3 id="fill"><a href="#fill" class="headerlink" title="fill()"></a>fill()</h3><p>用一个固定值填充一个数组中从起始索引到终止索引内的全部元素</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript">array.<span class="hljs-title function_">fill</span>(value,start,end)<span class="hljs-string">`</span><br><span class="hljs-string">1. Value:用来填充数数组元素的值；</span><br><span class="hljs-string">2. Start：起始索引，默认是0；可选</span><br><span class="hljs-string">3. End：终止索引，默认为this.length 可选</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> array = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]<br><span class="hljs-comment">// array.fill(0,2,4)</span><br><span class="hljs-comment">// [1,2,0,0,5]</span><br><span class="hljs-comment">// array.fill(5,1)</span><br><span class="hljs-comment">// [1,5,5,5,5]</span><br><span class="hljs-comment">// array.fill(6)</span><br><span class="hljs-comment">// [6,6,6,6,6]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h3><p>创建一个新的数组，其包含通过所提供函数实现的测试的所有元素,不会    改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> words = [<span class="hljs-string">&#x27;spray&#x27;</span>, <span class="hljs-string">&#x27;limit&#x27;</span>, <span class="hljs-string">&#x27;elite&#x27;</span>, <span class="hljs-string">&#x27;exuberant&#x27;</span>, <span class="hljs-string">&#x27;destruction&#x27;</span>, <span class="hljs-string">&#x27;present&#x27;</span>];<br><span class="hljs-keyword">const</span> result = words.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">word</span> =&gt;</span> word.<span class="hljs-property">length</span> &gt; <span class="hljs-number">6</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(result);<br><span class="hljs-comment">// expected output: Array [&quot;exuberant&quot;, &quot;destruction&quot;, &quot;present&quot;]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="find"><a href="#find" class="headerlink" title="find()"></a>find()</h3><p>返回数组中满足提供的测试函数的第一个元素的值，不会改变原数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> array = [<span class="hljs-number">5</span>,<span class="hljs-number">12</span>,<span class="hljs-number">8</span>,<span class="hljs-number">130</span>,<span class="hljs-number">44</span>]<br>array.<span class="hljs-title function_">find</span>(<span class="hljs-function"><span class="hljs-params">element</span> =&gt;</span> element &gt; <span class="hljs-number">100</span>)<br><span class="hljs-comment">// 130</span><br><span class="hljs-comment">// array [5,12,8,130,44] 未改变原数组</span><br></code></pre></td></tr></table></figure>
+<h3 id="findIndex"><a href="#findIndex" class="headerlink" title="findIndex()"></a>findIndex()</h3><p>返回数组中满足提供的测试函数的第一个元素的索引，若没有找到对应元素则返回-1</p>
+<h4 id="应用场景：检索元素是否存在，用-1来做判断"><a href="#应用场景：检索元素是否存在，用-1来做判断" class="headerlink" title="应用场景：检索元素是否存在，用-1来做判断"></a>应用场景：检索元素是否存在，用-1来做判断</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> array = [<span class="hljs-number">5</span>,<span class="hljs-number">12</span>,<span class="hljs-number">8</span>,<span class="hljs-number">130</span>,<span class="hljs-number">44</span>]<br>array.<span class="hljs-title function_">findIndex</span>(<span class="hljs-function"><span class="hljs-params">element</span> =&gt;</span> element &gt; <span class="hljs-number">13</span>)<br><span class="hljs-comment">// 3</span><br>array.<span class="hljs-title function_">findIndex</span>(<span class="hljs-function"><span class="hljs-params">element</span> =&gt;</span> element &gt; <span class="hljs-number">200</span>)<br><span class="hljs-comment">// -1</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="flat"><a href="#flat" class="headerlink" title="flat()"></a>flat()</h3><p>用于将嵌套的数组拉平，组成一个新数组<br><code>var newArray = arr.flat([depth]),depth:指定要提取嵌套数组的结构深度，默认    值是1 ,(Infinity，比较特殊，无论嵌套多少层都会转换成1维数组i)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> arr = [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]]<br>arr.<span class="hljs-title function_">flat</span>()<br><span class="hljs-comment">// [0,1,2,3,4]</span><br><span class="hljs-keyword">var</span> arr2 = [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,[[[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]]]]<br>arr2.<span class="hljs-title function_">flat</span>(<span class="hljs-number">2</span>)<br><span class="hljs-comment">// [0,1,2,[3,4]]</span><br>arr2.<span class="hljs-title function_">flat</span>(<span class="hljs-number">3</span>)<br><span class="hljs-comment">// [0,1,2,3,4]</span><br>arr2.<span class="hljs-title function_">flat</span>(<span class="hljs-title class_">Infinity</span>)<br><span class="hljs-comment">// [0,1,2,3,4,5]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap()"></a>flatMap()</h3><p>对原数组的每个成员执行一个函数，对返回值组成的数组执行一次flat方法，flatMap只能展开一层数组</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>];<br>arr.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> [x * <span class="hljs-number">2</span>])<br><span class="hljs-comment">// [[2],[4],[6],[8]]</span><br>arr.<span class="hljs-title function_">flatMap</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> [x * <span class="hljs-number">2</span>])<br><span class="hljs-comment">// [2,4,6,8]</span><br>arr.<span class="hljs-title function_">flatMap</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> [[x * <span class="hljs-number">2</span>]])<br><span class="hljs-comment">// [[2],[4],[6],[8]]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="includes"><a href="#includes" class="headerlink" title="includes()"></a>includes()</h3><p>判断一个数组中是否包含一个指定的值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>];<br>array.<span class="hljs-title function_">includes</span>(<span class="hljs-number">2</span>)<br><span class="hljs-comment">// true</span><br><span class="hljs-keyword">const</span> pets = [<span class="hljs-string">&#x27;cat&#x27;</span>,<span class="hljs-string">&#x27;dog&#x27;</span>,<span class="hljs-string">&#x27;bat&#x27;</span>]<br>pets.<span class="hljs-title function_">includes</span>(<span class="hljs-string">&#x27;cat&#x27;</span>)<br><span class="hljs-comment">// true</span><br>pets.<span class="hljs-title function_">includes</span>(<span class="hljs-string">&#x27;at&#x27;</span>)<br><span class="hljs-comment">// false</span><br></code></pre></td></tr></table></figure>
+<h3 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf()"></a>indexOf()</h3><p>返回在数组中可以找到一个给定元素的第一个索引，如果不存在，返回(-1)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> beasts= [<span class="hljs-string">&#x27;ant&#x27;</span>,<span class="hljs-string">&#x27;bison&#x27;</span>,<span class="hljs-string">&#x27;camel&#x27;</span>,<span class="hljs-string">&#x27;duck&#x27;</span>,<span class="hljs-string">&#x27;bison&#x27;</span>]<br>beasts.<span class="hljs-title function_">includes</span>(<span class="hljs-string">&#x27;ant&#x27;</span>)<br><span class="hljs-comment">// true</span><br>beasts.<span class="hljs-title function_">includes</span>(<span class="hljs-string">&#x27;camel&#x27;</span>)<br><span class="hljs-comment">// true</span><br>beasts.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;camel&#x27;</span>)<br><span class="hljs-comment">// 2</span><br>beasts.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;bison&#x27;</span>)<br><span class="hljs-comment">// 1</span><br>beasts.<span class="hljs-title function_">indexOf</span>(<span class="hljs-string">&#x27;sss&#x27;</span>)<br><span class="hljs-comment">// -1</span><br></code></pre></td></tr></table></figure>
+<h3 id="lastIndexOf"><a href="#lastIndexOf" class="headerlink" title="lastIndexOf()"></a>lastIndexOf()</h3><p>返回指定元素在数组中的最后一个的索引，如果不存在返回-1</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> animals = [<span class="hljs-string">&#x27;Dodo&#x27;</span>,<span class="hljs-string">&#x27;Tiger&#x27;</span>,<span class="hljs-string">&#x27;Penguin&#x27;</span>,<span class="hljs-string">&#x27;Dodo&#x27;</span>]<br>animals.<span class="hljs-title function_">lastIndexOf</span>(<span class="hljs-string">&#x27;Dodo&#x27;</span>)<br><span class="hljs-comment">// 3</span><br>animals.<span class="hljs-title function_">lastIndexOf</span>(<span class="hljs-string">&#x27;Tiger&#x27;</span>)<br><span class="hljs-comment">// 1</span><br></code></pre></td></tr></table></figure>
+<h3 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h3><p>将一个数组的所有元素连接成一个字符串并返回这个字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> elements = [<span class="hljs-string">&#x27;Fire&#x27;</span>,<span class="hljs-string">&#x27;Air&#x27;</span>,<span class="hljs-string">&#x27;Water&#x27;</span>];<br>elements.<span class="hljs-title function_">join</span>()<br><span class="hljs-comment">// &quot;Fire,Air,Water&quot;</span><br>elements.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>)<br><span class="hljs-comment">// &quot;FireAirWater&quot;</span><br>elements.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;-&#x27;</span>)<br><span class="hljs-comment">// &quot;Fire-Air-Water&quot;</span><br></code></pre></td></tr></table></figure>
+<h3 id="pop"><a href="#pop" class="headerlink" title="pop()"></a>pop()</h3><p>从一个数组中删除并返回最后一个元素，原数组会被改变</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> plants = [<span class="hljs-string">&#x27;broccoli&#x27;</span>,<span class="hljs-string">&#x27;cauliflower&#x27;</span>,<span class="hljs-string">&#x27;cabbage&#x27;</span>,<span class="hljs-string">&#x27;kale&#x27;</span>,<span class="hljs-string">&#x27;tomato&#x27;</span>]<br>plants.<span class="hljs-title function_">pop</span>() <span class="hljs-comment">//会改变原数组</span><br><span class="hljs-comment">// tomato</span><br>plants<br><span class="hljs-comment">// [&#x27;broccoli&#x27;,&#x27;cauliflower&#x27;,&#x27;cabbage&#x27;,&#x27;kale&#x27;]</span><br></code></pre></td></tr></table></figure>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h3><p>对数组中的每个元素执行一个由您提供的reducer函数，将其结果汇总为单个返回值<br><code>arr.reduce(function(pre,cur) &#123;     ... &#125;,init)</code></p>
+<ol>
+<li>arr:表示原数组；</li>
+<li>pre:表示上一次调用回调时的返回值，或者初始值init;</li>
+<li>cur:表示正在处理的数组元素</li>
+<li>Index:表示当前正在处理的数组元素的索引，若提供init值，则索引为0，否则索引为1；</li>
+<li>Init:表示初始值<h4 id="最长用到的就是pre和cur-用法实例"><a href="#最长用到的就是pre和cur-用法实例" class="headerlink" title="最长用到的就是pre和cur 用法实例"></a>最长用到的就是pre和cur 用法实例</h4><code>var arr = [3,9,4,3,6,0,9]</code> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">求数组项之和 <br><span class="hljs-keyword">var</span> sum = arr.<span class="hljs-title function_">reduce</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">prev,cur</span>)&#123;<br>    <span class="hljs-keyword">return</span> pre + cur<br>&#125;,<span class="hljs-number">0</span>)<br><span class="hljs-comment">//0+3+9+3+6+0+9</span><br></code></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript">求数组项最大值<br><span class="hljs-keyword">var</span> max = arr.<span class="hljs-title function_">reduce</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">prev,cur</span>)&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(prev,cur)<br>&#125;)<br>由于未传入初始值，所以开始时prev的值为数组第一项<span class="hljs-number">3</span>，cur的值为数组第二项<span class="hljs-number">9</span>，取最大值后继续进入下一轮回调<br></code></pre></td></tr></table></figure>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript">   数组去重<br>   <span class="hljs-keyword">var</span> newArr = arr.<span class="hljs-title function_">reduce</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">prev,cur</span>) &#123;<br>       prev.<span class="hljs-title function_">indexOf</span>(cur) === -<span class="hljs-number">1</span> &amp;&amp; prev.<span class="hljs-title function_">push</span>(cur);<br>       <span class="hljs-keyword">return</span> prev<br>   &#125;,[])<br>   实现原理：<br>   ① 初始化一个空数组<br>   ② 将需要去重处理的数组中的第<span class="hljs-number">1</span>项在初始化数组中查找，如果找不到（空数组中	肯定找不到），就将该项添加到初始化数组中<br>   ③ 将需要去重处理的数组中的第<span class="hljs-number">2</span>项在初始化数组中查找，如果找不到，就将该项	继续添加到初始化数组中<br>   ④ ……<br>⑤ 将需要去重处理的数组中的第n项在初始化数组中查找，如果找不到，就将该项	继续添加到初始化数组中<br>⑥ 将这个初始化数组返回<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="shift"><a href="#shift" class="headerlink" title="shift()"></a>shift()</h3><p>从数组中删除第一个元素，并返回该元素，原始数组会被更改</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> array = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>];<br>array.<span class="hljs-title function_">shift</span>()<br><span class="hljs-comment">// 1</span><br>array<br><span class="hljs-comment">//[2,3]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice()"></a>slice()</h3><p>返回一个新的数组对象，这一对象是一个由begin和end决定的原数组的浅拷贝，(包括begin，不包括end)，原始数组不变</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs javascript">arr.<span class="hljs-title function_">slice</span>(begin,end)<br><span class="hljs-comment">// 当begin为负数时，表示从倒数第几个元素开始提取</span><br><span class="hljs-keyword">const</span> animals = [<span class="hljs-string">&#x27;ant&#x27;</span>, <span class="hljs-string">&#x27;bison&#x27;</span>, <span class="hljs-string">&#x27;camel&#x27;</span>, <span class="hljs-string">&#x27;duck&#x27;</span>, <span class="hljs-string">&#x27;elephant&#x27;</span>];<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(animals.<span class="hljs-title function_">slice</span>(<span class="hljs-number">2</span>));<br><span class="hljs-comment">// expected output: Array [&quot;camel&quot;, &quot;duck&quot;, &quot;elephant&quot;]</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(animals.<span class="hljs-title function_">slice</span>(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>));<br><span class="hljs-comment">// expected output: Array [&quot;camel&quot;, &quot;duck&quot;]</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(animals.<span class="hljs-title function_">slice</span>(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>));<br><span class="hljs-comment">// expected output: Array [&quot;bison&quot;, &quot;camel&quot;, &quot;duck&quot;, &quot;elephant&quot;]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="some"><a href="#some" class="headerlink" title="some()"></a>some()</h3><p>测试数组中是不是至少有一个元素通过了被提供的函数测试，返回Boolean类型的值，方法数组中只要有一个为真，返回的就是true，反之则为false</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript">[<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">8</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>].<span class="hljs-title function_">some</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &gt; <span class="hljs-number">10</span>);  <span class="hljs-comment">// false</span><br>[<span class="hljs-number">12</span>, <span class="hljs-number">5</span>, <span class="hljs-number">8</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>].<span class="hljs-title function_">some</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &gt; <span class="hljs-number">10</span>); <span class="hljs-comment">// true</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="splice"><a href="#splice" class="headerlink" title="splice()"></a>splice()</h3><p>通过删除或者替换现有元素或者原地添加新的元素来修改数组，并以数组形式返回被修改的内容，原数组会改变</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> months = [<span class="hljs-string">&#x27;Jan&#x27;</span>, <span class="hljs-string">&#x27;March&#x27;</span>, <span class="hljs-string">&#x27;April&#x27;</span>, <span class="hljs-string">&#x27;June&#x27;</span>];<br>months.<span class="hljs-title function_">splice</span>(<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;Feb&#x27;</span>);<br><span class="hljs-comment">// inserts at index 1</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(months);<br><span class="hljs-comment">// expected output: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;, &quot;April&quot;, &quot;June&quot;]</span><br><br>months.<span class="hljs-title function_">splice</span>(<span class="hljs-number">4</span>, <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;May&#x27;</span>);<br><span class="hljs-comment">// replaces 1 element at index 4</span><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(months);<br><span class="hljs-comment">// expected output: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;]</span><br></code></pre></td></tr></table></figure>
+<h3 id="toLocalString"><a href="#toLocalString" class="headerlink" title="toLocalString()"></a>toLocalString()</h3><p>返回一个字符串表示数组中的元素，数组中的元素将使用各自的toLocaleString方法转换成字符串吗，这些字符串将使用一个特定语言环境的字符串</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> array = [<span class="hljs-number">1</span>,<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>(<span class="hljs-string">&#x27;12 Dec 1997 14:12:00 UTC&#x27;</span>)];<br><span class="hljs-comment">// [1, &quot;a&quot;, Fri Dec 12 1997 22:12:00 GMT+0800 (中国标准时间)]</span><br><span class="hljs-keyword">const</span> localeString = array.<span class="hljs-title function_">toLocaleString</span>(<span class="hljs-string">&#x27;en&#x27;</span>,&#123;<span class="hljs-attr">timeZone</span>:<span class="hljs-string">&#x27;UTC&#x27;</span>&#125;);<br><span class="hljs-comment">// &quot;1,a,12/12/1997, 2:12:00 PM&quot;</span><br><span class="hljs-comment">// en:代表时间格式：英国、美国等默认的时间格式</span><br><span class="hljs-comment">// timeZone:代表的是时区，UTC代表的是默认时区</span><br></code></pre></td></tr></table></figure>
+<h3 id="toSource"><a href="#toSource" class="headerlink" title="toSource()"></a>toSource()</h3><p>返回一个字符串，代表该数组的源代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// array.toSource()</span><br><span class="hljs-keyword">var</span> alpha = <span class="hljs-title function_">newArray</span>(<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>);<br>alpha.<span class="hljs-title function_">toSource</span>()<br><span class="hljs-comment">// [&#x27;a&#x27;,&#x27;b&#x27;,&#x27;c&#x27;]</span><br></code></pre></td></tr></table></figure>
+<h3 id="values"><a href="#values" class="headerlink" title="values()"></a>values()</h3><p>返回一个新的array iterator对象，该对象包含每个索引的值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> array = [<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-string">&#x27;b&#x27;</span>,<span class="hljs-string">&#x27;c&#x27;</span>];<br><span class="hljs-keyword">const</span> iterator = array.<span class="hljs-title function_">values</span>() <span class="hljs-comment">// 返回的是一个对象</span><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">const</span> value <span class="hljs-keyword">of</span> iterator) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(value)<br>&#125;<br><span class="hljs-comment">// &quot;a&quot;</span><br><span class="hljs-comment">// &quot;b&quot;</span><br><span class="hljs-comment">// &quot;c&quot;</span><br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/06/2021-01-06-object/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JS Object</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/11/2020-5-11-react/">
+                        <span class="hidden-mobile">REACT</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="工欲善其事必先利其器快捷键总结项目相关的快捷键Ctrl + Shift + B &#x3D; 生成项目 Ctrl + Alt + L &#x3D; 显示Solution Explorer（解决方案资源管理器） Shift + Alt+ C &#x3D; 添加新类 Shift + Alt + A &#x3D; 添加新项目到项目 编辑相关的键盘快捷键Ctrl + Enter &#x3D; 在当前行插入空行 Ctrl + Shift + Enter &#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Visual Studio快捷键">
+<meta property="og:url" content="http://example.com/2017/11/15/2017-10-31-quick-key/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="工欲善其事必先利其器快捷键总结项目相关的快捷键Ctrl + Shift + B &#x3D; 生成项目 Ctrl + Alt + L &#x3D; 显示Solution Explorer（解决方案资源管理器） Shift + Alt+ C &#x3D; 添加新类 Shift + Alt + A &#x3D; 添加新项目到项目 编辑相关的键盘快捷键Ctrl + Enter &#x3D; 在当前行插入空行 Ctrl + Shift + Enter &#x3D;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://msdn.microsoft.com/zh-cn/library/dn320181.aspx">
+<meta property="article:published_time" content="2017-11-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T04:00:34.452Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="生产工具">
+<meta property="article:tag" content="IDE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://msdn.microsoft.com/zh-cn/library/dn320181.aspx">
+  
+  
+  <title>Visual Studio快捷键 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="工欲善其事必先利其器快捷键总结">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-11-15 00:00" pubdate>
+        2017年11月15日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      806 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      7 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">工欲善其事必先利其器快捷键总结</h1>
+            
+            <div class="markdown-body">
+              <h3 id="工欲善其事必先利其器快捷键总结"><a href="#工欲善其事必先利其器快捷键总结" class="headerlink" title="工欲善其事必先利其器快捷键总结"></a>工欲善其事必先利其器快捷键总结</h3><h3 id="项目相关的快捷键"><a href="#项目相关的快捷键" class="headerlink" title="项目相关的快捷键"></a>项目相关的快捷键</h3><p>Ctrl + Shift + B = 生成项目</p>
+<p>Ctrl + Alt + L = 显示Solution Explorer（解决方案资源管理器）</p>
+<p>Shift + Alt+ C = 添加新类</p>
+<p>Shift + Alt + A = 添加新项目到项目</p>
+<h3 id="编辑相关的键盘快捷键"><a href="#编辑相关的键盘快捷键" class="headerlink" title="编辑相关的键盘快捷键"></a>编辑相关的键盘快捷键</h3><p>Ctrl + Enter = 在当前行插入空行</p>
+<p>Ctrl + Shift + Enter = 在当前行下方插入空行</p>
+<p>Ctrl +空格键 = 使用IntelliSense（智能感知）自动完成</p>
+<p>Alt + Shift +箭头键(←,↑,↓,→) = 选择代码的自定义部分</p>
+<p>Ctrl + } = 匹配大括号、括号</p>
+<p>Ctrl + Shift +} = 在匹配的括号、括号内选择文本</p>
+<p>Ctrl + Shift + S = 保存所有文件和项目</p>
+<p>Ctrl + K，Ctrl + C = 注释选定行</p>
+<p>Ctrl + K，Ctrl + U = 取消选定行的注释</p>
+<p>Ctrl + K，Ctrl + D = 正确对齐所有代码</p>
+<p>Shift + End = 从头到尾选择整行</p>
+<p>Shift + Home = 从尾到头选择整行</p>
+<p>Ctrl + Delete = 删除光标右侧的所有字</p>
+<h3 id="导航相关的键盘快捷键"><a href="#导航相关的键盘快捷键" class="headerlink" title="导航相关的键盘快捷键"></a>导航相关的键盘快捷键</h3><p>Ctrl +Up/Down = 滚动窗口但不移动光标</p>
+<p>Ctrl + - = 让光标移动到它先前的位置</p>
+<p>Ctrl ++ = 让光标移动到下一个位置</p>
+<p>F12 = 转到定义</p>
+<h3 id="调试相关的键盘快捷键"><a href="#调试相关的键盘快捷键" class="headerlink" title="调试相关的键盘快捷键"></a>调试相关的键盘快捷键</h3><p>Ctrl + Alt + P = 附加到进程</p>
+<p>F10 = 调试单步执行</p>
+<p>F5 = 开始调试</p>
+<p>Shift + F5 = 停止调试</p>
+<p>Ctrl + Alt + Q = 添加快捷匹配</p>
+<p>F9 = 设置或删除断点</p>
+<h3 id="搜索相关的键盘快捷键"><a href="#搜索相关的键盘快捷键" class="headerlink" title="搜索相关的键盘快捷键"></a>搜索相关的键盘快捷键</h3><p>Ctrl + K  Ctrl + K = 将当前行添加书签</p>
+<p>Ctrl + K  Ctrl + N = 导航至下一个书签</p>
+<p>Ctrl + . = 如果你键入一个类名如Collection<string>，且命名空间导入不正确的话，那么这个快捷方式组合将自动插入导入</p>
+<p>Ctrl + Shift + F = 在文件中查找</p>
+<p>Shift  + F12 = 查找所有引用</p>
+<p>Ctrl + F = 显示查找对话框</p>
+<p>Ctrl + H = 显示替换对话框</p>
+<p>Ctrl + G = 跳转到行号或行</p>
+<p>Ctrl + Shift + F = 查找所选条目在整个解决方案中的引用</p>
+<h3 id="參考文章"><a href="#參考文章" class="headerlink" title="參考文章"></a>參考文章</h3><p><img src="https://msdn.microsoft.com/zh-cn/library/dn320181.aspx" srcset="/img/loading.gif" lazyload alt="Visual Studio 的提示和技巧"></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%94%9F%E4%BA%A7%E5%B7%A5%E5%85%B7/">生产工具</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%94%9F%E4%BA%A7%E5%B7%A5%E5%85%B7/">生产工具</a>
+                    
+                      <a class="hover-with-bg" href="/tags/IDE/">IDE</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/11/16/2017-11-16-lodash-one/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Lodash.js源码阅读分析（一）</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/11/15/2017-11-15-idea-quick/">
+                        <span class="hidden-mobile">IDEA快捷键</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

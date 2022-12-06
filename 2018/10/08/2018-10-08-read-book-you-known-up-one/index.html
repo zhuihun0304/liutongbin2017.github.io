@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本书是读完 Effective JavaScript之后开的进行的阅读，整理自己需要注意的点。方便以后巩固。 作用域JavaScript没有块级作用域的相关功能。但是使用with、try...catch可以创建块级作用域 变量提升提升时函数优先 12345678910111213foo();var foo;foo &#x3D; function() &amp;#123;  console.log(2);&amp;#125;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你不知道的JavaScript上卷">
+<meta property="og:url" content="http://example.com/2018/10/08/2018-10-08-read-book-you-known-up-one/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="本书是读完 Effective JavaScript之后开的进行的阅读，整理自己需要注意的点。方便以后巩固。 作用域JavaScript没有块级作用域的相关功能。但是使用with、try...catch可以创建块级作用域 变量提升提升时函数优先 12345678910111213foo();var foo;foo &#x3D; function() &amp;#123;  console.log(2);&amp;#125;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-10-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T04:00:06.276Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="读书总结">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>你不知道的JavaScript上卷 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="你不知道的JavaScript上卷-基础篇">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-10-08 00:00" pubdate>
+        2018年10月8日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      16k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      135 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">你不知道的JavaScript上卷-基础篇</h1>
+            
+            <div class="markdown-body">
+              <p>本书是读完 Effective JavaScript之后开的进行的阅读，整理自己需要注意的点。方便以后巩固。</p>
+<h2 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h2><p>JavaScript没有块级作用域的相关功能。但是使用<code>with</code>、<code>try...catch</code>可以创建块级作用域</p>
+<h2 id="变量提升"><a href="#变量提升" class="headerlink" title="变量提升"></a>变量提升</h2><p>提升时函数优先</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><pre><code class="hljs arcade">foo();<br><br><span class="hljs-keyword">var</span> foo;<br><br>foo = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">2</span>);<br>&#125;<br><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">1</span>);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>输入结果是1，函数声明优先，同名的var变量会被忽略，但是后面的重新赋值仍然有效，第二次执行foo得到的结果就是2了。</p>
+<h2 id="作用域闭包"><a href="#作用域闭包" class="headerlink" title="作用域闭包"></a>作用域闭包</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br>  <span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a);<br>  &#125;<br><br>  bar();<br>&#125;<br><br>foo();<br><br></code></pre></td></tr></table></figure>
+
+<p>这个是闭包吗？ 从技术上来讲，也许是。但是确切的说不是。准确的说bar()对a的引用方法是词法作用域的查找规则，这些规则只是闭包的一部分。但确实是非常重要的一部分。</p>
+<p>来看一个清晰的闭包例子</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br>  <span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a);<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> bar;<br>&#125;<br><br><br><span class="hljs-keyword">var</span> baz = foo();<br><br>baz(); <span class="hljs-comment">// 2  这是一个闭包的效果</span><br></code></pre></td></tr></table></figure>
+<p>函数 bar() 的词法作用域能够访问foo() 的内部作用域。然后我们将bar()函数本身当作一个值类型进行传递， 在这个例子中，我们将bar所引用的函数对象本身当作返回值。</p>
+<h2 id="动态作用域"><a href="#动态作用域" class="headerlink" title="动态作用域"></a>动态作用域</h2><p>JavaScript只有词法作用域，并没有动态作用域</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">3</span>;<br>  foo();<br>&#125;<br><br><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br>bar();  <span class="hljs-comment">// 输出结果为2</span><br><br></code></pre></td></tr></table></figure>
+<p>词法作用域，让foo在查找a时，只在全局作用域找到 <code>var a = 2</code>, 所以这里显示2。 这里可能会疑惑为什么没有找到bar方法内部， 因为这里只是执行foo方法，如果像下面这样写，才会读到a = 3</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">var</span> a = <span class="hljs-number">3</span>;<br><br>  <span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a);<br>  &#125;<br><br>  foo();<br>&#125;<br><br><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br>bar();<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="块级作用域的替代方案"><a href="#块级作用域的替代方案" class="headerlink" title="块级作用域的替代方案"></a>块级作用域的替代方案</h2><p>ES5之前块级作用域的解决方案catch或with</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">try</span>&#123; <span class="hljs-keyword">throw</span> <span class="hljs-number">2</span> &#125; <span class="hljs-keyword">catch</span>(a)&#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);  <span class="hljs-comment">// 2</span><br>&#125;<br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(a);<br><br></code></pre></td></tr></table></figure>
+
+<p>let作用域或着let声明还可以这样用</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs arcade">let(a = <span class="hljs-number">2</span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a); <span class="hljs-comment">// 2</span><br>&#125;<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(a); <span class="hljs-comment">// ReferenceError</span><br><br></code></pre></td></tr></table></figure>
+<p>与隐式的劫持一个已经存在的作用域不同， let声明会显示的创建一个作用域并与其进行绑定。显示作用域不仅更突出，在代码重构时也表现更加健壮。<br>但是ES6语法不包含这个我们可以选择，合法的ES6语法，</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abnf">&#123;<br>  let a <span class="hljs-operator">=</span> <span class="hljs-number">2</span><span class="hljs-comment">;</span><br>  console.log(a)<span class="hljs-comment">;</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>还可以选择使用bable转换器 let-er这个转换器然后开启 这个设置项 。这样就可以直接使用了。</p>
+<h2 id="关于this"><a href="#关于this" class="headerlink" title="关于this"></a>关于this</h2><p>为什么要使用this？ this提供了一种更优雅的方式来隐式的传递对象引用，因此可以将API设计的更加简洁并且易于复用。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">num</span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;foo:&quot;</span> + num);<br>  this.<span class="hljs-built_in">count</span>++;<br>&#125;<br><br>foo.<span class="hljs-built_in">count</span> = <span class="hljs-number">0</span>;<br><br><span class="hljs-keyword">var</span> i;<br><br><span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>  <span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">5</span>) &#123;<br>    foo(i);<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//foo: 6</span><br><span class="hljs-comment">//foo: 7</span><br><span class="hljs-comment">//foo: 8</span><br><span class="hljs-comment">//foo: 9</span><br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(foo.<span class="hljs-built_in">count</span>); <span class="hljs-comment">// 0</span><br><br></code></pre></td></tr></table></figure>
+
+<p>这里的this并没有指向自身， foo被当作方法调用时，this代表的是函数的接收者。 这里非严格模式下指向的是全局对象，然而全局对象进行++运算结果是NaN，foo.count作为foo这个函数对象的一个属性从来没有改变过。</p>
+<p>我们可以这样来改进x</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">num</span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;foo:&quot;</span> + num);<br>  data.<span class="hljs-built_in">count</span>++;<br>&#125;<br><br><span class="hljs-keyword">var</span> data = &#123;<br>  <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-keyword">var</span> i;<br><br><span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>  <span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">5</span>) &#123;<br>    foo(i);<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//foo: 6</span><br><span class="hljs-comment">//foo: 7</span><br><span class="hljs-comment">//foo: 8</span><br><span class="hljs-comment">//foo: 9</span><br><br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(foo.<span class="hljs-built_in">count</span>); <span class="hljs-comment">// 4</span><br><br></code></pre></td></tr></table></figure>
+
+<p>这样貌似解决了问题，但是忽略了真正的问题，无法理解this的含义和工作原理而是返回了舒适区。</p>
+<p>另一种结局方案是使用foo标识符来替代this引用函数对象，但是同样回避了this的问题，并且完全依赖于变量foo的词法作用域</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">num</span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;foo:&quot;</span> + num);<br>  foo.<span class="hljs-built_in">count</span>++;<br>&#125;<br><br>foo.<span class="hljs-built_in">count</span> = <span class="hljs-number">0</span>;<br><br><span class="hljs-keyword">var</span> i;<br><br><span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>  <span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">5</span>) &#123;<br>    foo(i);<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//foo: 6</span><br><span class="hljs-comment">//foo: 7</span><br><span class="hljs-comment">//foo: 8</span><br><span class="hljs-comment">//foo: 9</span><br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(foo.<span class="hljs-built_in">count</span>); <span class="hljs-comment">// 4</span><br><br></code></pre></td></tr></table></figure>
+
+<p>我们可以强制使用this执行foo函数对象</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">num</span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;foo:&quot;</span> + num);<br>  data.<span class="hljs-built_in">count</span>++;<br>&#125;<br><br><span class="hljs-keyword">var</span> data = &#123;<br>  <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-keyword">var</span> i;<br><br><span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>  <span class="hljs-keyword">if</span>(i &gt; <span class="hljs-number">5</span>) &#123;<br>    foo.call(foo,i);<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//foo: 6</span><br><span class="hljs-comment">//foo: 7</span><br><span class="hljs-comment">//foo: 8</span><br><span class="hljs-comment">//foo: 9</span><br><br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(foo.<span class="hljs-built_in">count</span>); <span class="hljs-comment">// 4</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="this的绑定规则"><a href="#this的绑定规则" class="headerlink" title="this的绑定规则"></a>this的绑定规则</h2><h3 id="默认绑定"><a href="#默认绑定" class="headerlink" title="默认绑定"></a>默认绑定</h3><p>这是最常用的函数调用类型，独立函数调用。 这种情况this默认指向了全局对象</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br>foo(); <span class="hljs-comment">// 2</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="隐式绑定"><a href="#隐式绑定" class="headerlink" title="隐式绑定"></a>隐式绑定</h3><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-attr">foo</span>: foo<br>&#125;<br><br>obj.foo(); <span class="hljs-comment">// 2</span><br><br></code></pre></td></tr></table></figure>
+<p>这种方式加上了对于obj对象的引用，拥有了上下文，当函数引用有上下文对象时，隐式绑定规则会把函数调用中的this绑定到这个上细纹对象。</p>
+<p>对象属性的引用链只有上一层或者说最后一层在调用位置中起作用。举例来说：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">var</span> obj2 = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">42</span>,<br>  <span class="hljs-attr">foo</span>: foo<br>&#125;<br><br><span class="hljs-keyword">var</span> obj1 = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-attr">obj2</span>: obj2<br>&#125;<br><br><br>obj1.obj2.foo(); <span class="hljs-comment">// 42  最后一个obj2起作用</span><br><br><br></code></pre></td></tr></table></figure>
+
+<p>一个最常见的this对象绑定问题就是隐式绑定的函数会丢失绑定对象，也就是说它会应用默认绑定，从而吧this绑定到全局对象或着<code>undefined</code>这取决于是否是严格模式</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-attr">foo</span>: foo<br>&#125;<br><br><br><span class="hljs-keyword">var</span> bar = obj.foo;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-string">&quot;oops, global&quot;</span>;<br><br>bar(); <span class="hljs-comment">// oops, global</span><br></code></pre></td></tr></table></figure>
+<p>还有一种，参数传递也是一种隐式赋值，因此我们穿日函数时也会被隐式赋值</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">doFoo</span>(<span class="hljs-params">fn</span>) &#123;<br>  fn();<br>&#125;<br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-attr">foo</span>: foo<br>&#125;<br><br><br><span class="hljs-keyword">var</span> bar = obj.foo;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-string">&quot;oops, global&quot;</span>;<br><br>doFoo(obj.foo); <span class="hljs-comment">// oops, global</span><br><br></code></pre></td></tr></table></figure>
+<p>同理如果向setTimeout中传递函数对象，同样会丢失this。</p>
+<h3 id="显示绑定"><a href="#显示绑定" class="headerlink" title="显示绑定"></a>显示绑定</h3><p>显示绑定通常使用 <code>call</code>、<code>apply</code>、<code>bind</code>，这些方式来实现。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span><br>&#125;<br><br>foo.call(obj);<br><br></code></pre></td></tr></table></figure>
+<p>foo.call(…)， 我们可以调用foo时强制把它的this绑定到obj上。</p>
+<p>可惜的是显示绑定仍然无法解决我们之前提出的丢失绑定的问题。但是显示绑定的一个变种可以帮我们解决。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">a</span>);<br>&#125;<br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span><br>&#125;<br><br><span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  foo.<span class="hljs-title function_">call</span>(obj);<br>&#125;<br><br><span class="hljs-title function_">bar</span>(); <span class="hljs-comment">// 2</span><br><br><span class="hljs-built_in">setTimeout</span>(bar, <span class="hljs-number">100</span>); <span class="hljs-comment">// 2</span><br><br>bar.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">window</span>); <span class="hljs-comment">// 2</span><br><br></code></pre></td></tr></table></figure>
+
+<p>硬绑定的典型应用场景就是创建一个包裹函数，负责接收参数并返回值</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">something</span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a, something);<br>&#125;<br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span><br>&#125;<br><br><span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">return</span> foo.apply(obj, arguments);<br>&#125;<br><br><br><span class="hljs-keyword">var</span> b = bar(<span class="hljs-number">3</span>); <span class="hljs-comment">// 2, 3</span><br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(b);  <span class="hljs-comment">// 5</span><br><br></code></pre></td></tr></table></figure>
+
+<p>另一种使用方法是创建一个可以重复使用的辅助函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">something</span>) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-variable language_">this</span>.<span class="hljs-property">a</span>);<br>  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">a</span> + something;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">bind</span>(<span class="hljs-params">fn, obj</span>) &#123;<br>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    fn.<span class="hljs-title function_">apply</span>(obj, <span class="hljs-variable language_">arguments</span>);<br>  &#125;<br>&#125;<br><br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span><br>&#125;<br><br><span class="hljs-keyword">var</span> bar = <span class="hljs-title function_">bind</span>(foo, obj);<br><br><span class="hljs-keyword">var</span> b = <span class="hljs-title function_">bar</span>(<span class="hljs-number">3</span>); <span class="hljs-comment">// 2 3</span><br><br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(b); <span class="hljs-comment">// 5</span><br><br><br></code></pre></td></tr></table></figure>
+
+<p>由于硬绑定是一种非常常用的模式，所以ES5提供了内置的方法<code>Function.ptototype.bind</code>，它的用法如下</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params">something</span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>  <span class="hljs-keyword">return</span> this.a + something;<br>&#125;<br><br><br><span class="hljs-keyword">var</span> obj = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span><br>&#125;<br><br><span class="hljs-keyword">var</span> bar = foo.bind(obj);<br><br><span class="hljs-keyword">var</span> b = bar(<span class="hljs-number">3</span>); <span class="hljs-comment">// 2 3</span><br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(b); <span class="hljs-comment">// 5</span><br><br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="new绑定"><a href="#new绑定" class="headerlink" title="new绑定"></a>new绑定</h3><p>虽然JavaScript中也有new操作符，使用方法看起来跟那些面向类的语言意义，绝大多数开发者都认为JavaScript中的new的机制也跟那些语言一样，然而JavaScript中的new机制实际上跟面向类的语言完全不同。</p>
+<ul>
+<li>构造函数 首先JavaScript中的构造函数只是使用new操作符调用的函数，它们并不会属于某个类，也不会实例化一个类，实际上它们甚至不能说是一种特殊的函数类型，它们只是被new操作符调用的普通函数而已。 函数被使用new操作符调用成为构造函数调用，实际上不存在所谓的构造函数，只有对于函数的构造调用。</li>
+</ul>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  this.a = a;<br>&#125;<br><br><span class="hljs-keyword">var</span> bar = <span class="hljs-keyword">new</span> foo(<span class="hljs-number">2</span>);<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(bar.a); <span class="hljs-comment">// 2</span><br><br></code></pre></td></tr></table></figure>
+<p>我们创造了一个新的对象，并把它绑定到foo调用中的this上。</p>
+<h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>显示绑定比隐式绑定优先级要高， new绑定比隐式绑定优先级要高， 但是new绑定会得到一个新的对象。</p>
+<h2 id="判断this"><a href="#判断this" class="headerlink" title="判断this"></a>判断this</h2><ul>
+<li><p>函数是否在new中调用， 如果是的话this绑定的是新创建的对象。</p>
+</li>
+<li><p>函数是否通过<code>call</code>，<code>apply</code>,或者硬绑定调用，如果是的话this是指定的对象</p>
+</li>
+<li><p>函数是否在某个上下文对象中（隐式绑定）如果是的话，this绑定的是上下文对象。</p>
+</li>
+<li><p>如果都不是的话，使用默认绑定。如果在严格模式下绑定到undefined， 否则绑定到全局对象。</p>
+</li>
+</ul>
+<h2 id="被忽略的this"><a href="#被忽略的this" class="headerlink" title="被忽略的this"></a>被忽略的this</h2><p>如果你把null或undefined作为this绑定对象传入call，apply或者bind，这些值会在调用时被忽略，实际应用的是默认绑定规则</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br>foo.call(<span class="hljs-literal">null</span>); <span class="hljs-comment">// 2</span><br><br></code></pre></td></tr></table></figure>
+<p>使用null忽略this可能产生一些副作用，如果某个函数确实使用了this（比如第三方库的一个函数）， 那默认绑定规则会把this绑定到全局对象。这将导致不可预计的后果。<br>所以我们使用一个更安全的空对象<br>在JavaScript中创建一个空对象最简单的方法是Obejct.create(null), 它和{}很像，但是不会创建Object.ptototype，所以它比{}更空</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">option</span> + o<br>var ø = <span class="hljs-keyword">Object</span>.<span class="hljs-keyword">create</span>(<span class="hljs-keyword">null</span>);<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="间接引用"><a href="#间接引用" class="headerlink" title="间接引用"></a>间接引用</h2><p>还有一个需要注意的情况你可能创建一个函数的间接引用，调用这个函数会应用默认绑定规则</p>
+<p>间接引用最容易在赋值时发生</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">foo</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(this.a);<br>&#125;<br><br><span class="hljs-keyword">var</span> a = <span class="hljs-number">2</span>;<br><br><span class="hljs-keyword">var</span> o = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">3</span>,<br>  <span class="hljs-attr">foo</span>: foo<br>&#125;<br><br><span class="hljs-keyword">var</span> p = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">4</span><br>&#125;<br><br>o.foo(); <span class="hljs-comment">// 3</span><br><br>(p.foo = o.foo)(); <span class="hljs-comment">// 2</span><br><br><br></code></pre></td></tr></table></figure>
+<p>赋值表达式p.foo = o.foo的返回值是目标函数的引用，因此调用位置是foo() 而不是p.foo()或者o.foo();</p>
+<h2 id="this词法"><a href="#this词法" class="headerlink" title="this词法"></a>this词法</h2><p><code>self = this</code>和箭头函数看起来都可以取代bind但本质上想取代的是this机制。如果你经常编写this风格的代码，但是绝大部份都会是用self = this,或者箭头函数，那么你或许应该</p>
+<ul>
+<li>只使用此法作用域并且完全抛弃错误this风格代码;</li>
+<li>完全采用this风格，在必要时使用bind，避免使用self = this 和 箭头函数。</li>
+</ul>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h2><p>在对象中，属性名永远都是字符串。使用非String作为属性名它首先会被转成一个字符串。</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs abnf">var myObject <span class="hljs-operator">=</span> &#123;&#125;<span class="hljs-comment">;</span><br><br>myObject[true] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;foo&quot;</span><span class="hljs-comment">;</span><br>myObject[<span class="hljs-number">3</span>] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;bar&quot;</span><span class="hljs-comment">;</span><br>myObject[myObject] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;baz&quot;</span><span class="hljs-comment">;</span><br><br><br>myObject[<span class="hljs-string">&quot;true&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;foo&quot;</span><span class="hljs-comment">;</span><br>myObject[<span class="hljs-string">&quot;3&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;bar&quot;</span><span class="hljs-comment">;</span><br>myObject[<span class="hljs-string">&quot;[object OBject]&quot;</span>] <span class="hljs-operator">=</span> <span class="hljs-string">&quot;baz&quot;</span><span class="hljs-comment">;</span><br><br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="对象复制"><a href="#对象复制" class="headerlink" title="对象复制"></a>对象复制</h3><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haxe">浅复制<br><span class="hljs-keyword">var</span> <span class="hljs-keyword">new</span><span class="hljs-type">Obj</span> = Object.assign(&#123;&#125;, myObject);<br><br>深复制<br>对于JSON安全的对象来说有一种巧妙的复制方法<br><br><span class="hljs-keyword">var</span> <span class="hljs-keyword">new</span><span class="hljs-type">Obj</span> = JSON.parse(JSON.stringify(someObj));<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="属性描述符"><a href="#属性描述符" class="headerlink" title="属性描述符"></a>属性描述符</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">var</span> <span class="hljs-string">myObject</span> <span class="hljs-string">=</span> &#123;<br>  <span class="hljs-attr">a:</span> <span class="hljs-number">2</span><br>&#125;<br><br><span class="hljs-string">Object.getOwnPropertyDescriptor(myObject,</span> <span class="hljs-string">&quot;a&quot;</span><span class="hljs-string">);</span><br><br><span class="hljs-string">//</span> &#123;<span class="hljs-attr">value:</span> <span class="hljs-number">2</span>, <span class="hljs-attr">writable:</span> <span class="hljs-literal">true</span>, <span class="hljs-attr">enumerable:</span> <span class="hljs-literal">true</span>, <span class="hljs-attr">configurable:</span> <span class="hljs-literal">true</span>&#125;<br><br><span class="hljs-string">如果configurable:</span> <span class="hljs-literal">false</span><span class="hljs-string">,</span> <span class="hljs-string">则不可以再配置，也不可以被删除</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="对象常量"><a href="#对象常量" class="headerlink" title="对象常量"></a>对象常量</h3><p>结合writable: false 和configurable: false就可以创建一个真正的常量属性(不可以重新定义，修改，删除)</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-keyword">var</span> myObject = &#123;&#125;;<br><br>Object.<span class="hljs-title function_ invoke__">defineProterty</span>(myObject, <span class="hljs-string">&quot;FAVORITE_NUMBER&quot;</span>, &#123;<br>  <span class="hljs-attr">value</span>: <span class="hljs-number">42</span>,<br>  <span class="hljs-attr">writable</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">configurable</span>: <span class="hljs-literal">false</span> <br>&#125;);<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="禁止扩展"><a href="#禁止扩展" class="headerlink" title="禁止扩展"></a>禁止扩展</h3><p>如果你想禁止一个对象添加新属性并且保留已有属性，可以使用Object.preventExtensions(…)</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">var myObject = &#123;<br>  a: <span class="hljs-number">2</span><br>&#125;<br><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Object</span>.</span></span>prevent<span class="hljs-constructor">Extensions(<span class="hljs-params">myObject</span>)</span>;<br><br>myObject.b = <span class="hljs-number">3</span>;<br><br>myObject.b; <span class="hljs-comment">// undefined</span><br><br></code></pre></td></tr></table></figure>
+<p>在非严格模式下，创建属性b会静默失败，在严格模式下，将会抛出TyperError错误。</p>
+<h3 id="密封"><a href="#密封" class="headerlink" title="密封"></a>密封</h3><p>Object.seal(…)会创建一个”密封”对象，这个方法实际会在一个现有对象上调用Object.preventExtensions并把所有现有属性标记为configurable: false.<br>所有密封后不能添加新属性，也不能重新配置和删除任何现有属性(虽然可以修改属性的值)</p>
+<h3 id="冻结"><a href="#冻结" class="headerlink" title="冻结"></a>冻结</h3><p><code>Object.freeze(...)</code>，会创建一个冻结对象，这个方法是在现有对象调用了<code>Object.seal</code>并把所有数据访问属性标记为 writable: false, 这样就无法修改它们的值</p>
+<h3 id="Getter和Setter"><a href="#Getter和Setter" class="headerlink" title="Getter和Setter"></a>Getter和Setter</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> myObject = &#123;<br>  <span class="hljs-keyword">get</span> <span class="hljs-title function_">a</span>() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>;<br>  &#125;<br>&#125;<br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(myObject, <span class="hljs-string">&quot;b&quot;</span>, &#123;<br>  <span class="hljs-attr">get</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">a</span> * <span class="hljs-number">2</span>;<br>  &#125;,<br>  <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">true</span>  <br><br>&#125;);<br><br></code></pre></td></tr></table></figure>
+
+<p>通常get和set是成对出现的，只定义一个的话通常会产生意料之外的行为。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><br><span class="hljs-keyword">var</span> myObject = &#123;<br>  <span class="hljs-keyword">get</span> a() &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._a_;<br>  &#125;<br><br>  <span class="hljs-keyword">set</span> a(<span class="hljs-keyword">val</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._a_ = <span class="hljs-keyword">val</span> * <span class="hljs-number">2</span>;<br>  &#125;<br>&#125;<br><br><br>myObject.a = <span class="hljs-number">2</span>;<br><br>myObject.a; <span class="hljs-comment">// 4</span><br><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="存在性"><a href="#存在性" class="headerlink" title="存在性"></a>存在性</h3><p>前面说过 如果本身对象中有值为undefiend的属性obj.a, 去获取该值得到的结果跟去获取一个不存在的属性结果是一样的，比如obj.b， 那么如果判断一个属性在对象中是否存在呢</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk"><br>var myObject = &#123;<br>  a: <span class="hljs-number">2</span><br>&#125;<br><br>(a <span class="hljs-keyword">in</span> myObject); <span class="hljs-regexp">//</span> true<br>(b <span class="hljs-keyword">in</span> myObject); <span class="hljs-regexp">//</span> false<br><br>myObject.hasOwnProperty(<span class="hljs-string">&quot;a&quot;</span>); <span class="hljs-regexp">//</span> true<br>myObject.hasOwnProperty(<span class="hljs-string">&quot;b&quot;</span>); <span class="hljs-regexp">//</span> false<br><br><br></code></pre></td></tr></table></figure>
+
+<p>in操作符会检查属性是否存在对象及其[[prototype]]原型中，相比之下hasOwnProperty只会检查属性是否存在myObject对象中。</p>
+<p>要注意的是in操作符检查的是容器内是否有某个值，实际上检查的是某个属性名是否存在。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-number">4</span> <span class="hljs-keyword">in</span> [<span class="hljs-number">2</span>, <span class="hljs-number">4</span>, <span class="hljs-number">6</span>]; <span class="hljs-regexp">//</span> false<br>这个数组包含的属性名其实是<span class="hljs-number">0</span> ，<span class="hljs-number">1</span>，<span class="hljs-number">2</span><br><br></code></pre></td></tr></table></figure>
+
+<p>是否可通过for…in操作符来枚举可以通过定义属性是设定</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs awk">var myObject = &#123;&#125;;<br><br>Object.defineProperty(myObject, <span class="hljs-string">&quot;a&quot;</span>, &#123;<br>  enumerable: true, value: <span class="hljs-number">2</span>  <br>&#125;);<br><br>Object.defineProperty(myObject, <span class="hljs-string">&quot;b&quot;</span>, &#123;<br>  enumerable: false, value: <span class="hljs-number">3</span><br>&#125;);<br><br><br>myObject.b; <span class="hljs-regexp">//</span><span class="hljs-number">3</span><br>&#123;<span class="hljs-string">&quot;b&quot;</span> <span class="hljs-keyword">in</span> myObject&#125;; <span class="hljs-regexp">//</span>true<br>myObject.hasOwnProperty(<span class="hljs-string">&quot;b&quot;</span>); <span class="hljs-regexp">//</span>true<br><br><br><span class="hljs-keyword">for</span>(var k <span class="hljs-keyword">in</span> myObject) &#123;<br>  console.log(k, myObject[k]);<br>&#125;<br><br><span class="hljs-regexp">//</span> <span class="hljs-string">&quot;a&quot;</span> <span class="hljs-number">2</span><br><br>还可以通过另一种方式来区分属性是否可枚举<br><br>propertyIsEnumerable 会检查属性是否存在于对象中(而不是在原型链中)并且满足enumerable: true<br>Object.keys会返回一个数组，包含所有可枚举属性<br>Object.getOwnPropertyNames 返回一个数组包含所有属性无论是否可枚举<br><br>myObject.propertyIsEnumerable(<span class="hljs-string">&quot;a&quot;</span>); <span class="hljs-regexp">//</span> true<br><br>myObject.propertyIsEnumerable(<span class="hljs-string">&quot;b&quot;</span>); <span class="hljs-regexp">//</span> false<br><br>Object.keys(myObject); <span class="hljs-regexp">//</span> [<span class="hljs-string">&quot;a&quot;</span>]<br><br>Object.getOwnPropertyNames(myObject); <span class="hljs-regexp">//</span> [<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>]<br><br><br></code></pre></td></tr></table></figure>
+
+<p>Object.keys 和Object.getOwnPropertyNames 都不回查找原型链，只会查找对象直接包含的属性</p>
+<h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><p>我们通常会通过<code>for...in</code>来遍历一个对象，但是这样便利对象属性时的顺序是不确定的，在不同的JavaScript引擎中可能不一样，因此在不同的环境中需要保持一致性时，一定不要相信任何观察到顺序，它们是不可靠的<br>那么如何直接遍历值而不是数组下标呢</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br><span class="hljs-keyword">var</span> myArray = [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>];<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> v of myArray) &#123;<br>  <span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(v);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>因为数组有内置的@iterator, 因此for…of可以直接应用到数组上。</p>
+<p>我们可以使用内置的@@iterator来手动遍历数组， ES6中我们使用Symbol.iterator来获取对象的@@iterator内部属性</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs awk">var myArray = [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>];<br><br>var it = myArray[Symbol.iterator]();<br><br>it.<span class="hljs-keyword">next</span>();  <span class="hljs-regexp">//</span> &#123;value: <span class="hljs-number">1</span>, done: false&#125;<br><br>it.<span class="hljs-keyword">next</span>();  <span class="hljs-regexp">//</span> &#123;value: <span class="hljs-number">3</span>, done: false&#125;<br><br>it.<span class="hljs-keyword">next</span>();  <span class="hljs-regexp">//</span> &#123;value: <span class="hljs-number">5</span>, done: false&#125;<br><br>it.<span class="hljs-keyword">next</span>();  <span class="hljs-regexp">//</span> &#123;value: undefined, done: undefined&#125;<br><br></code></pre></td></tr></table></figure>
+<p>和数组不同普通的对象没有内置的@@iterator,所以无法自动完成for…of遍历，之所以这样做有许多非常复杂的原因， 简单来说，这样做是为了避免影响未来的对象类型.</p>
+<p>当然我们可以给任何想遍历的对象定义@@iterator</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">var</span> myObject = &#123;<br>  <span class="hljs-attr">a</span>: <span class="hljs-number">2</span>,<br>  <span class="hljs-attr">b</span>: <span class="hljs-number">3</span><br>&#125;;<br><br><span class="hljs-title class_">Object</span>.<span class="hljs-title function_">defineProperty</span>(myObject, <span class="hljs-title class_">Symbol</span>.<span class="hljs-property">iterator</span>, &#123;<br>  <span class="hljs-attr">enumerable</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">writable</span>: <span class="hljs-literal">false</span>,<br>  <span class="hljs-attr">configurable</span>: <span class="hljs-literal">true</span>,<br>  <span class="hljs-attr">value</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">var</span> o = <span class="hljs-variable language_">this</span>;<br>    <span class="hljs-keyword">var</span> idx = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">var</span> ks = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(o);<br><br>    <span class="hljs-keyword">return</span> &#123;<br>      <span class="hljs-attr">next</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> &#123;<br>          <span class="hljs-attr">value</span>: o[ks[idx++]];<br>          <span class="hljs-attr">done</span>: (idx &gt; ks.<span class="hljs-property">length</span>)<br>        &#125;<br>      &#125;<br>    &#125;<br>  &#125;  <br>&#125;);<br><br>这样手动遍历<br><br><span class="hljs-keyword">var</span> it = myObject[<span class="hljs-title class_">Symbol</span>.<span class="hljs-property">iterator</span>]();<br>it.<span class="hljs-title function_">next</span>(); <span class="hljs-comment">// &#123;value:2, done: false&#125;</span><br>it.<span class="hljs-title function_">next</span>(); <span class="hljs-comment">// &#123;value:3, done: false&#125;</span><br>it.<span class="hljs-title function_">next</span>(); <span class="hljs-comment">// &#123;value: undefined, done: true&#125;</span><br><br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> v <span class="hljs-keyword">of</span> myObject) &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(v);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="原型风格继承"><a href="#原型风格继承" class="headerlink" title="原型风格继承"></a>原型风格继承</h2><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><br><span class="hljs-keyword">function</span> <span class="hljs-constructor">Foo(<span class="hljs-params">name</span>)</span> &#123;<br>  this.name = name;<br>&#125;<br><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Foo</span>.</span></span>prototype.myName = <span class="hljs-keyword">function</span><span class="hljs-literal">()</span> &#123;<br>  return this.name;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-constructor">Bar(<span class="hljs-params">name</span>, <span class="hljs-params">label</span>)</span> &#123;<br>  <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Foo</span>.</span></span>call(this, name);<br><br>  this.label = label;<br>&#125;<br><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Bar</span>.</span></span>prototype = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Object</span>.</span></span>create(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Foo</span>.</span></span>prototype);<br><span class="hljs-comment">// 这里还可以用这种写法，ES6 的 Object.setPrototypeOf  下面的写法更好一点， 当时上面的写法更容易理解</span><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Object</span>.</span></span>set<span class="hljs-constructor">PrototypeOf(Bar.<span class="hljs-params">prototype</span>, Foo.<span class="hljs-params">prototype</span>)</span>;<br><br><br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Bar</span>.</span></span>prototype.myLabel = <span class="hljs-keyword">function</span><span class="hljs-literal">()</span> &#123;<br>  return this.label;<br>&#125;<br><br>var a = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Bar(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;obj a&quot;</span>)</span>;<br><br>a.my<span class="hljs-constructor">Name()</span>; <span class="hljs-comment">// &quot;a&quot;</span><br><br>a.my<span class="hljs-constructor">Label()</span>; <span class="hljs-comment">// &quot;obj a&quot;</span><br><br><br>该方法比较有用，<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Foo</span>.</span></span>prototype是否出现在a的<span class="hljs-literal">[[<span class="hljs-identifier">prototype</span>]</span>]链中<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Foo</span>.</span></span>prototype.is<span class="hljs-constructor">PrototypeOf(<span class="hljs-params">a</span>)</span>;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="委托"><a href="#委托" class="headerlink" title="委托"></a>委托</h2><p>基于委托实现与上面相同功能的代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-title class_">Foo</span> = &#123;<br>  <span class="hljs-attr">init</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">who</span>) &#123;<br>    <span class="hljs-variable language_">this</span>.<span class="hljs-property">me</span> = who;<br>  &#125;,<br>  <span class="hljs-attr">identify</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;I am &quot;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>;<br>  &#125;<br>&#125;<br><br><span class="hljs-title class_">Bar</span> = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-title class_">Foo</span>);<br><br><span class="hljs-title class_">Bar</span>.<span class="hljs-property">speak</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-title function_">alert</span>(<span class="hljs-string">&quot;Hello, &quot;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">identify</span>() + <span class="hljs-string">&quot; . &quot;</span>);<br>&#125;<br><br><br><span class="hljs-keyword">var</span> b1 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-title class_">Bar</span>);<br>b1.<span class="hljs-title function_">init</span>(<span class="hljs-string">&quot;b1&quot;</span>);<br><br><span class="hljs-keyword">var</span> b2 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(<span class="hljs-title class_">Bar</span>);<br>b2.<span class="hljs-title function_">init</span>(<span class="hljs-string">&quot;b2&quot;</span>);<br><br>b1.<span class="hljs-title function_">speak</span>();<br>b2.<span class="hljs-title function_">speak</span>();<br></code></pre></td></tr></table></figure>
+
+<p>通过比较发现， 对象关联风格的代码更加简洁，因为这种风格的代码只关注一件事， 对象之间的关联关系。</p>
+<h2 id="更简洁的设计"><a href="#更简洁的设计" class="headerlink" title="更简洁的设计"></a>更简洁的设计</h2><p>一个关于登陆验证器的设计</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><br>function Controller() &#123;<br>  <span class="hljs-keyword">this</span>.errors= [];<br>&#125;<br><br>Controller.prototype.showDialog = function(title, msg) &#123;<br>  <span class="hljs-comment">// 显示给用户的消息</span><br>&#125;<br><br>Controller.prototype.success = function(msg) &#123;<br>  <span class="hljs-keyword">this</span>.showDialog(<span class="hljs-string">&quot;success&quot;</span>, msg);<br>&#125;<br><br>Controller.prototype.failure = function(err) &#123;<br>  <span class="hljs-keyword">this</span>.errors.push(err);<br><br>  <span class="hljs-keyword">this</span>.showDialog(<span class="hljs-string">&quot;Error&quot;</span>, err);<br>&#125;<br><br><br>function LoginController() &#123;<br>  Controller.call(<span class="hljs-keyword">this</span>);<br>&#125;<br><br>LoginController.prototype = Object.create(Controller.prototype);<br><br>LoginController.prototype.getUser = function() &#123;<br>  <span class="hljs-keyword">return</span> document.getElementById(<span class="hljs-string">&quot;login_username&quot;</span>).value;<br>&#125;<br><br>LoginController.prototype.getPassword = function() &#123;<br>  <span class="hljs-keyword">return</span> document.getElementById(<span class="hljs-string">&quot;login_password&quot;</span>).value;<br>&#125;<br><br><br>LoginController.prototype.validateEntry = function(user, pw) &#123;<br>  user = user || <span class="hljs-keyword">this</span>.getUser();<br>  pw = pw || <span class="hljs-keyword">this</span>.getPassword();<br><br>  <span class="hljs-keyword">if</span>(!(user &amp;&amp; pw)) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.failure(<span class="hljs-string">&quot;Please enter a username &amp; password&quot;</span>);<br>  &#125;<br>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(pw.length &lt; <span class="hljs-number">5</span>) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.failure(<span class="hljs-string">&quot;Password must be 5+ character!&quot;</span>);<br>  &#125;<br><br>  <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br><br>LonginController.prototype.failure = function() &#123;<br>  Controller.prototype.failure.call(<span class="hljs-keyword">this</span>, <span class="hljs-string">&quot;Login invalid: &quot;</span> + err);<br>&#125;<br><br><br><br><br>function AuthController(login) &#123;<br>  Controller.call(<span class="hljs-keyword">this</span>);<br><br>  <span class="hljs-keyword">this</span>.login = login;<br>&#125;<br><br>AuthController.prototype = Object.create(Controller.prototype);<br><br>AuthController.prototype.server = function(url, <span class="hljs-keyword">data</span>) &#123;<br>  <span class="hljs-keyword">return</span> $.ajax(&#123;<br>    url: url,<br>    <span class="hljs-keyword">data</span>: <span class="hljs-keyword">data</span><br>  &#125;);<br>&#125;<br><br>AuthController.prototype.checkAuth = function() &#123;<br>  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>.login.getUser();<br>  <span class="hljs-keyword">var</span> pw = <span class="hljs-keyword">this</span>.login.getPassword();<br><br>  <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.login.validateEntry(user, pw)) &#123;<br>    <span class="hljs-keyword">this</span>.server(<span class="hljs-string">&quot;/check-auth&quot;</span>, &#123;<br>      user: user,<br>      pw: pw<br>    &#125;)<br>    .then(<span class="hljs-keyword">this</span>.success.bind(<span class="hljs-keyword">this</span>));<br>    .fail(<span class="hljs-keyword">this</span>.failure.bind(<span class="hljs-keyword">this</span>));<br>  &#125;<br>&#125;<br><br><br>AuthController.prototype.success = function() &#123;<br>  Controller.prototype.success.call(<span class="hljs-keyword">this</span>, <span class="hljs-string">&quot;Authenticated;&quot;</span>);<br>&#125;<br><br>AuthController.prototype.failure = function(err) &#123;<br>  Controller.prototype.failure.call(<span class="hljs-keyword">this</span>, <span class="hljs-string">&quot;Auth failed: &quot;</span> + err);<br>&#125;<br><br><br><span class="hljs-keyword">var</span> auth = new AuthController(new LoginController());<br><br>auth.checkAuth();<br><br></code></pre></td></tr></table></figure>
+<p>反类，我们可以使用对象关联风格的行为委托来实现更简单的设计</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><br><span class="hljs-keyword">var</span> LoginController = &#123;<br>  errors: [],<br>  getUser: function() &#123;<br>    <span class="hljs-keyword">return</span> document.getElementById(<span class="hljs-string">&quot;login_username&quot;</span>).value;<br>  &#125;,<br><br>  getPassword: function() &#123;<br>    <span class="hljs-keyword">return</span> document.getElementById(<span class="hljs-string">&quot;login_password&quot;</span>).value;<br>  &#125;,<br>  validateEntry: function(user, pw) &#123;<br>    user = user || <span class="hljs-keyword">this</span>.getUser();<br>    pw = pw || <span class="hljs-keyword">this</span>.getPassword();<br><br>    <span class="hljs-keyword">if</span>(!(user &amp;&amp; pw)) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.failure(<span class="hljs-string">&quot;Please enter a username &amp; password&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(pw.length &lt; <span class="hljs-number">5</span>) &#123;<br>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.failure(<span class="hljs-string">&quot;Password must be 5+ character!&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>  &#125;,<br>  showDialog: function() &#123;<br>    <span class="hljs-comment">// 给用户显示的消息</span><br>  &#125;,<br>  failure: function() &#123;<br>    <span class="hljs-keyword">this</span>.errors.push(err);<br>    <span class="hljs-keyword">this</span>.showDialog(<span class="hljs-string">&quot;Error&quot;</span>, <span class="hljs-string">&quot;Login invalid &quot;</span> + err);<br>  &#125;,<br>  success: function(msg) &#123;<br>    <span class="hljs-keyword">this</span>.showDialog(<span class="hljs-string">&quot;success&quot;</span>, msg);<br>  &#125;<br><br>&#125;<br><br><br><br><span class="hljs-keyword">var</span> AuthController = Object.create(LoginController);<br><br>AuthController.errors = [];<br><br>AuthController.checkAuth = function() &#123;<br>  <span class="hljs-keyword">var</span> user = <span class="hljs-keyword">this</span>.getUser();<br>  <span class="hljs-keyword">var</span> pw = <span class="hljs-keyword">this</span>.getPassword();<br><br>  <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.validateEntry(user, pw)) &#123;<br>    <span class="hljs-keyword">this</span>.server(<span class="hljs-string">&quot;/check-auth&quot;</span>, &#123;<br>      user: user,<br>      pw: pw  <br>    &#125;)<br>    .then(<span class="hljs-keyword">this</span>.accepted.bind(<span class="hljs-keyword">this</span>))<br>    .fail(<span class="hljs-keyword">this</span>.rejected.bind(<span class="hljs-keyword">this</span>));<br>  &#125;<br>&#125;<br><br>AuthController.server = function(url, <span class="hljs-keyword">data</span>) &#123;<br>  <span class="hljs-keyword">return</span> $.ajax(&#123;<br>    url: url,<br>    <span class="hljs-keyword">data</span>: <span class="hljs-keyword">data</span>  <br>  &#125;)<br>&#125;<br><br>AuthController.accepted = function() &#123;<br>  <span class="hljs-keyword">this</span>.showDialog(<span class="hljs-string">&quot;Success&quot;</span>, <span class="hljs-string">&quot;Authenticated!&quot;</span>);<br>&#125;<br><br>AuthController.rejected = function(err) &#123;<br>  <span class="hljs-keyword">this</span>.failure(<span class="hljs-string">&quot;Auth Failed: &quot;</span> + err);<br>&#125;<br><br><br>AuthController.checkAuth();<br></code></pre></td></tr></table></figure>
+<p>这种模式我们只需要两个实体LoginController 和 AuthController<br>总结： 我们用一种极其简单的设计实现了同样的功能， 这既是对象关联风格代码和行为委托设计模式的力量</p>
+<h2 id="反词法"><a href="#反词法" class="headerlink" title="反词法"></a>反词法</h2><p>ES6简洁与法有一个非常小但重要的缺点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">var</span> <span class="hljs-title class_">Foo</span> = &#123;<br>  <span class="hljs-title function_">bar</span>(<span class="hljs-params"></span>) &#123;<span class="hljs-comment">/**/</span>&#125;,<br>  <span class="hljs-attr">baz</span>: <span class="hljs-keyword">function</span> <span class="hljs-title function_">baz</span>(<span class="hljs-params"></span>) &#123;<span class="hljs-comment">/**/</span>&#125;  <br>&#125;<br><br>去掉语法糖<br><br><span class="hljs-keyword">var</span> <span class="hljs-title class_">Foo</span> = &#123;<br>  <span class="hljs-attr">bar</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<span class="hljs-comment">/**/</span>&#125;<br>  <span class="hljs-attr">baz</span>: <span class="hljs-keyword">function</span> <span class="hljs-title function_">baz</span>(<span class="hljs-params"></span>) &#123;<span class="hljs-comment">/**/</span>&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>由于函数对象本身没有标识符， 所以bar()的缩写形式实际上会变成一个匿名函数表达式并赋值给bar属性。相比之下 具名函数表达式会额外的给.baz属性附加一个词法名称标识符baz。</p>
+<p>匿名函数没有name标识符会导致</p>
+<ul>
+<li>调用栈更难追踪</li>
+<li>自我引用（递归， 事件绑定和解除绑定）更难</li>
+<li>代码稍微难理解</li>
+</ul>
+<p>这里只有第二个缺点无法避免，因此使用简洁语法一定要小心这一点。 如果你需要自我引用的话，那最好使用传统的具名函数表达式来定义对应的函数，不要使用简洁语法。</p>
+<blockquote>
+<p>再说一次，我们认为JavaScript种的对象关联比类风格代码更为简洁(而且功能相同)</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/18/2018-10-18-read-book-you-known-middle-one/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">你不知道的JavaScript中卷(一)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/28/2018-09-28-read-book-effective-nine/">
+                        <span class="hidden-mobile">Effective JavaScript (九)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

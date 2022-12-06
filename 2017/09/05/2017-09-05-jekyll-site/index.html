@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第一次搭建博客不知为何最近突然想写个博客网站了，以前的话都是在一些博客园，新浪微博啥的浪一波时间长了也不想写了就慢慢荒废了，之所以想自己搞个一方面是把一些技术点记录一下，同时对自己也是一个督促，再就是我有个写小说的梦想想搞个栏目写写随笔等杂七杂八的东东。经过一番努力该博客终于可以勉强拿出手了。在此要感谢两位大神:   黄玄 漠然   我的博客是基于黄玄的博客主题来更改的虽然遇到一些问题但是经过一番">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建jekyll 博客流程记录">
+<meta property="og:url" content="http://example.com/2017/09/05/2017-09-05-jekyll-site/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="第一次搭建博客不知为何最近突然想写个博客网站了，以前的话都是在一些博客园，新浪微博啥的浪一波时间长了也不想写了就慢慢荒废了，之所以想自己搞个一方面是把一些技术点记录一下，同时对自己也是一个督促，再就是我有个写小说的梦想想搞个栏目写写随笔等杂七杂八的东东。经过一番努力该博客终于可以勉强拿出手了。在此要感谢两位大神:   黄玄 漠然   我的博客是基于黄玄的博客主题来更改的虽然遇到一些问题但是经过一番">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-09-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:57:23.133Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="博客搭建">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>搭建jekyll 博客流程记录 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="如何搭建个人博客以及注意点">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-09-05 00:00" pubdate>
+        2017年9月5日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何搭建个人博客以及注意点</h1>
+            
+            <div class="markdown-body">
+              <h2 id="第一次搭建博客"><a href="#第一次搭建博客" class="headerlink" title="第一次搭建博客"></a>第一次搭建博客</h2><p>不知为何最近突然想写个博客网站了，以前的话都是在一些博客园，新浪微博啥的浪一波时间长了也不想写了就慢慢荒废了，之所以想自己搞个一方面是把一些技术点记录一下，同时对自己也是一个督促，再就是我有个写小说的梦想想搞个栏目写写随笔等杂七杂八的东东。经过一番努力该博客终于可以勉强拿出手了。在此要感谢两位大神:</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://huangxuan.me/">黄玄</a></li>
+<li><a target="_blank" rel="noopener" href="https://mritd.me/">漠然</a></li>
+</ul>
+</blockquote>
+<p>我的博客是基于黄玄的博客主题来更改的虽然遇到一些问题但是经过一番查找还是完美的解决了。<br>而漠然这位仁兄是我好兄弟对于我博客的搭建提供了各种技术支持和疑难解答对此再次表示感谢。</p>
+<h2 id="搭建博客的基本流程"><a href="#搭建博客的基本流程" class="headerlink" title="搭建博客的基本流程"></a>搭建博客的基本流程</h2><h3 id="安装Ruby-Rails"><a href="#安装Ruby-Rails" class="headerlink" title="安装Ruby, Rails"></a>安装Ruby, Rails</h3><p>建议在Linux的发行版本(Ubuntu,CentOs, Redhat, ArchLinux…) 或者 Mac Os X安装。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ruby-china/homeland/wiki/Mac-OS-X-%E4%B8%8A%E5%AE%89%E8%A3%85-Ruby">Mac OS X上安装ruby</a> 来安装</li>
+<li>如果需要不同版本的ruby可以<a target="_blank" rel="noopener" href="https://ruby-china.org/wiki/install_ruby_guide">安装 RVM</a>来进行ruby版本管理</li>
+</ul>
+<h3 id="安装jekyll"><a href="#安装jekyll" class="headerlink" title="安装jekyll"></a>安装jekyll</h3><p>该博客使用了 <a target="_blank" rel="noopener" href="https://jekyllrb.com/">Jekyll</a>, 当然好多同学可能会用 <a target="_blank" rel="noopener" href="https://hexo.io/themes/">Hexo</a> 这个就是萝卜青菜了。<br>如果你选择使用Jekyll请安装下面步骤安装生成:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><pre><code class="hljs shell">~ $ gem install jekyll bundler<br>~ $ jekyll new my-awesome-site<br>~ $ cd my-awesome-site<br>~/my-awesome-site $ bundle exec jekyll serve<br><span class="hljs-meta prompt_"># </span><span class="language-bash">=&gt; Now browse to http://localhost:4000</span><br><br></code></pre></td></tr></table></figure>
+<p>生产的项目结构类似</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs sqf">.<br>├── <span class="hljs-variable">_config</span>.yml    <span class="hljs-comment">//项目相关配置文件</span><br>├── <span class="hljs-variable">_data</span><br>|   └── <span class="hljs-built_in">members</span>.yml   <span class="hljs-comment">//一些需要的数据</span><br>├── <span class="hljs-variable">_drafts</span>           <span class="hljs-comment">//草稿</span><br>|   ├── begin-<span class="hljs-keyword">with</span>-the-crazy-ideas.md<br>|   └── on-simplicity-<span class="hljs-built_in">in</span>-technology.md<br>├── <span class="hljs-variable">_includes</span>         <span class="hljs-comment">//公共的部分</span><br>|   ├── footer.html<br>|   └── header.html<br>├── <span class="hljs-variable">_layouts</span>           <span class="hljs-comment">//布局文件</span><br>|   ├── <span class="hljs-keyword">default</span>.html<br>|   └── post.html<br>├── <span class="hljs-variable">_posts</span>             <span class="hljs-comment">//发布的文章</span><br>|   ├── <span class="hljs-number">2007</span>-<span class="hljs-number">10</span>-<span class="hljs-number">29</span>-why-every-programmer-should-play-nethack.md<br>|   └── <span class="hljs-number">2009</span>-<span class="hljs-number">04</span>-<span class="hljs-number">26</span>-barcamp-boston-<span class="hljs-number">4</span>-roundup.md<br>├── <span class="hljs-variable">_sass</span>              <span class="hljs-comment">//sass文件路径编译后生产css</span><br>|   ├── <span class="hljs-variable">_base</span>.scss<br>|   └── <span class="hljs-variable">_layout</span>.scss<br>├── <span class="hljs-variable">_site</span>              <span class="hljs-comment">//所有文件编译生产静态文件都存放到这里</span><br>├── .jekyll-metadata<br>└── index.html <span class="hljs-meta"># can also be an <span class="hljs-string">&#x27;index.md&#x27;</span> with valid YAML Frontmatter</span><br></code></pre></td></tr></table></figure>
+<p>具体还有其他目录请参考<a target="_blank" rel="noopener" href="https://jekyllrb.com/docs/structure/">jekyll目录结构</a></p>
+<h3 id="安装主题"><a href="#安装主题" class="headerlink" title="安装主题"></a>安装主题</h3><p>到这里你应该可以访问一个页面了,但是离我们心中的博客相差甚远。我们需要给项目增加一个 <a target="_blank" rel="noopener" href="http://jekyllthemes.org/">Jekyll 主题</a> ,当然如果在套用别人主题的时候有问题可以看一下<br><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/4224b8ea0ec0">Liquid语法</a>,和markdown语法,因为我在套用黄玄的博客时就遇到了语法问题,可能是ruby版本更新导致。这些语法问题都可以在文档中找到答案,所以还是要仔细读文档</p>
+<p>到此博客已经能够访问并且有了主题,如果添加新的文章只需要按照固定格式套用即可。</p>
+<p>参考文章</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://crispgm.com/page/48-tips-for-jekyll-you-should-know.html">48 个你需要知道的 Jekyll 使用技巧
+</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.zhanxin.info/journal/">掌心</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.ixxoo.me/">likebeta’s Blog
+</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.csdn.net/maoxunxing/article/details/40479753">jekyll翻译文章</a></li>
+<li><a target="_blank" rel="noopener" href="http://ibloodline.com/articles/2014/12/15/jekyll-syntax.html">jekyll语法简单笔记</a></li>
+<li><a target="_blank" rel="noopener" href="http://alfred-sun.github.io/blog/2014/12/05/github-pages/">GitHub Pages 静态博客 - 个人建站实录
+</a></li>
+<li><a target="_blank" rel="noopener" href="http://harttle.com/2013/10/18/github-homepage-tutorial.html">部署自己的博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://mritd.me/2017/02/25/jekyll-blog-+-travis-ci-auto-deploy/">杨缘的博客参考</a></li>
+<li><a target="_blank" rel="noopener" href="http://yerl.cn/blog/use-jekyll-build-your-blog">poison</a></li>
+<li><a target="_blank" rel="noopener" href="http://jekyllcn.com/docs/plugins/">jekyll官网中文</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.thomaszhao.cn/2015/01/08/how-do-i-build-this-jekyll-blog/">适合程序员的Blog – 基于github pages + jekyll + markdown打造自己的blog</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.w3cboy.com/post/2016/03/travisci-hexo-deploy/">使用travis-ci自动部署hexo博客</a></li>
+<li><a target="_blank" rel="noopener" href="http://t.hengwei.me/post/%E4%B8%BAjekyll%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E7%9B%AE%E5%BD%95%E4%B8%8Escrollspy%E6%95%88%E6%9E%9C.html">为Jekyll博客添加目录与ScrollSpy效果</a></li>
+</ul>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/">技术文章</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建</a>
+                    
+                      <a class="hover-with-bg" href="/tags/JavaScript/">JavaScript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/09/05/2017-09-27-blog-static-nginx/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用travis-ci集成项目,自动部署博客站点</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="保持一致的约定将undefined当作没有值undefined很特殊，每当JavaScritp无法提供具体的值时，就产生undefined。为赋值的初始值即为undefiend 12345678910111213141516171819202122var x;x &#x2F;&#x2F; undefined;var obj &#x3D; &amp;#123;&amp;#125;;obj.x; &#x2F;&#x2F;undefinedfunction f() &amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective JavaScript (九)">
+<meta property="og:url" content="http://example.com/2018/09/28/2018-09-28-read-book-effective-nine/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="保持一致的约定将undefined当作没有值undefined很特殊，每当JavaScritp无法提供具体的值时，就产生undefined。为赋值的初始值即为undefiend 12345678910111213141516171819202122var x;x &#x2F;&#x2F; undefined;var obj &#x3D; &amp;#123;&amp;#125;;obj.x; &#x2F;&#x2F;undefinedfunction f() &amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:59:29.701Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="读书总结">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Effective JavaScript (九) - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="库和API设计">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-28 00:00" pubdate>
+        2018年9月28日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.7k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      48 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">库和API设计</h1>
+            
+            <div class="markdown-body">
+              <h2 id="保持一致的约定"><a href="#保持一致的约定" class="headerlink" title="保持一致的约定"></a>保持一致的约定</h2><h2 id="将undefined当作没有值"><a href="#将undefined当作没有值" class="headerlink" title="将undefined当作没有值"></a>将undefined当作没有值</h2><p>undefined很特殊，每当JavaScritp无法提供具体的值时，就产生undefined。为赋值的初始值即为undefiend</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">var</span> x;<br>x <span class="hljs-comment">// undefined;</span><br><br><span class="hljs-keyword">var</span> obj = &#123;&#125;;<br>obj.x; <span class="hljs-comment">//undefined</span><br><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-keyword">return</span> ;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">g</span><span class="hljs-params">()</span> &#123;&#125;<br><br><br>f();  <span class="hljs-comment">//undefined</span><br>f();  <span class="hljs-comment">//undefined</span><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">f</span><span class="hljs-params">(x)</span> &#123;<br>	<span class="hljs-keyword">return</span> x;<br>&#125;<br>f(); <span class="hljs-comment">// undefined</span><br><br></code></pre></td></tr></table></figure>
+
+<p>例如一个Web服务器可以接受一个可选的主机名称</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">var s1 = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Server(80, <span class="hljs-string">&quot;example.com&quot;</span>)</span>;<br><br>var s2 = <span class="hljs-keyword">new</span> <span class="hljs-constructor">Server(80)</span>; <span class="hljs-comment">//defaults to &quot;localhost&quot;</span><br><br>我们可以通过判断arguments.length来实现Server构造函数<br><br><span class="hljs-keyword">function</span> <span class="hljs-constructor">Server(<span class="hljs-params">port</span>, <span class="hljs-params">hostname</span>)</span> &#123;<br>	<span class="hljs-keyword">if</span>(arguments.length &lt; <span class="hljs-number">2</span>) &#123;<br>		hostname = <span class="hljs-string">&quot;localhost&quot;</span>;<br>	&#125;<br><br>	hostname = <span class="hljs-constructor">String(<span class="hljs-params">hostname</span>)</span>;<br>&#125;<br><br>这种情况如果第二个值是undefined的话可能会使用undefined，这并不是我们想要的所以我们最好判断undefined<br><br><span class="hljs-keyword">function</span> <span class="hljs-constructor">Server(<span class="hljs-params">port</span>, <span class="hljs-params">hostname</span>)</span> &#123;<br>	<span class="hljs-keyword">if</span>(hostname<span class="hljs-operator"> === </span>undefined) &#123;<br>		hostname = <span class="hljs-string">&quot;localhost&quot;</span>;<br>	&#125;<br><br>	host = <span class="hljs-constructor">String(<span class="hljs-params">hostname</span>)</span>;<br>&#125;<br><br><br>另一种合理的方式是测试hostname是否为真<br><br><span class="hljs-keyword">function</span> <span class="hljs-constructor">Server(<span class="hljs-params">port</span>, <span class="hljs-params">hostname</span>)</span> &#123;<br>	hostname = <span class="hljs-constructor">String(<span class="hljs-params">hostname</span> <span class="hljs-operator">||</span> <span class="hljs-string">&quot;localhost&quot;</span>)</span>;<br>	<span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>但是最后一种的真值检测并不总是安全的，如果一个函数允许接受0(或NaN，虽然不常见)为可接受的参数,则不应该使用真值测试</p>
+<p>比如</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><br><br><span class="hljs-function">function <span class="hljs-title">Element</span><span class="hljs-params">(width, height)</span> </span>&#123;<br>	<span class="hljs-keyword">this</span>.width = width || <span class="hljs-number">320</span>;<br>	<span class="hljs-keyword">this</span>.height = height || <span class="hljs-number">240</span>;<br>	<span class="hljs-comment">// ...</span><br>&#125;<br>var c1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Element</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>); <br>c1.width; <span class="hljs-comment">// 320</span><br>c1.height; <span class="hljs-comment">// 240</span><br><br><br>这种情况我们需要更详细的测试来测试<span class="hljs-function">undefined</span><br><span class="hljs-function">function <span class="hljs-title">Element</span><span class="hljs-params">(width, height)</span> </span>&#123;<br>	<span class="hljs-keyword">this</span>.width = width === undefined ? <span class="hljs-number">320</span> : width;<br>	<span class="hljs-keyword">this</span>.height = height === undefined ? <span class="hljs-number">240</span> : height;<br><br>	<span class="hljs-comment">// ...</span><br>&#125;<br><br>var c1 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Element</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>c1.width; <span class="hljs-comment">// 0</span><br>c1.height; <span class="hljs-comment">// 0</span><br><br>var c2 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Element</span>();<br>c2.width; <span class="hljs-comment">// 320</span><br>c2.height; <span class="hljs-comment">// 240</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="接受关键字参数的选项对象"><a href="#接受关键字参数的选项对象" class="headerlink" title="接受关键字参数的选项对象"></a>接受关键字参数的选项对象</h2><p>保持参数顺序的一致约定对于帮助程序员记住每个参数在函数调用中的意义是很重要的，参数较少时它是适用的。但是参数过多后根本不可扩展</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-keyword">var</span> alert = <span class="hljs-keyword">new</span> <span class="hljs-type">Alert</span>(<span class="hljs-number">100</span>, <span class="hljs-number">75</span>, <span class="hljs-number">300</span>, <span class="hljs-number">200</span>,<br>		<span class="hljs-string">&quot;Error&quot;</span>, message,<br>		<span class="hljs-string">&quot;blue&quot;</span>, <span class="hljs-string">&quot;white&quot;</span>, <span class="hljs-string">&quot;black&quot;</span>,<br>		<span class="hljs-string">&quot;error&quot;</span>, <span class="hljs-literal">true</span><br>	);<br><br></code></pre></td></tr></table></figure>
+<p>一个函数起初很简单，但是过一段时间，随着库功能的扩展，该函数的签名便会获得越来越多的参数。</p>
+<p>幸运的是，JavaScrtip提供了一个简单、轻量的惯用法： 选项对象(options object).</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">var</span> <span class="hljs-string">alert</span> <span class="hljs-string">=</span> <span class="hljs-string">new</span> <span class="hljs-string">Alert(&#123;</span><br>	<span class="hljs-attr">x:</span> <span class="hljs-number">100</span><span class="hljs-string">,</span> <span class="hljs-attr">y:</span> <span class="hljs-number">75</span><span class="hljs-string">,</span><br>	<span class="hljs-attr">width:</span> <span class="hljs-number">300</span><span class="hljs-string">,</span> <span class="hljs-attr">height:</span> <span class="hljs-number">200</span><span class="hljs-string">,</span><br>	<span class="hljs-attr">title:</span> <span class="hljs-string">&quot;Error&quot;</span><span class="hljs-string">,</span> <span class="hljs-attr">message:</span> <span class="hljs-string">message,</span><br>	<span class="hljs-attr">titleColor:</span> <span class="hljs-string">&quot;blue&quot;</span><span class="hljs-string">,</span> <span class="hljs-attr">bgColor:</span> <span class="hljs-string">&quot;white&quot;</span><span class="hljs-string">,</span> <span class="hljs-attr">textColor:</span> <span class="hljs-string">&quot;black&quot;</span><span class="hljs-string">,</span><br>	<span class="hljs-attr">icon:</span> <span class="hljs-string">&quot;error&quot;</span><span class="hljs-string">,</span> <span class="hljs-attr">modal:</span> <span class="hljs-literal">true</span>	<br><span class="hljs-string">&#125;);</span><br><br></code></pre></td></tr></table></figure>
+<p>这个虽然烦琐，但明显更易于阅读，每个参数都是自我描述(self-documenting)的。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function">function <span class="hljs-title">Alert</span><span class="hljs-params">(parent, message, opts)</span> </span>&#123;<br>	opts = opts || &#123;&#125;;<br><br>	<span class="hljs-keyword">this</span>.width = opts.width === undefined ? <span class="hljs-number">320</span> : opts.width;<br>	<span class="hljs-keyword">this</span>.height = opts.width === undefined ? <span class="hljs-number">240</span> : opts.height;<br>	<span class="hljs-keyword">this</span>.title = otps.title || <span class="hljs-string">&quot;Alert&quot;</span>;<br><br>&#125;<br><br>基于 extend 的另一种实现<br><br><span class="hljs-function">function <span class="hljs-title">extend</span><span class="hljs-params">(target, source)</span> </span>&#123;<br>	<span class="hljs-keyword">if</span>(source) &#123;<br>		<span class="hljs-keyword">for</span>(var key in source) &#123;<br>			var val = source[key];<br><br>			<span class="hljs-keyword">if</span>(typeof val !== <span class="hljs-string">&quot;undefined&quot;</span>) &#123;<br>				target[key] = val;<br>			&#125;<br>		&#125;<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> target;<br>&#125;<br><br><br><br><span class="hljs-function">function <span class="hljs-title">Alert</span><span class="hljs-params">(parent, message, opts)</span> </span>&#123;<br>	opts = <span class="hljs-built_in">extend</span>(&#123;<br>		width: <span class="hljs-number">320</span>,<br>		height: <span class="hljs-number">240</span><br>	&#125;);<br><br>	opts = <span class="hljs-built_in">extend</span>(&#123;<br>		title: <span class="hljs-string">&quot;Alert&quot;</span>	<br>	&#125;, opts);<br><br>	<span class="hljs-keyword">this</span>.width = opts.width;<br>	<span class="hljs-keyword">this</span>.height = opts.height;<br>	<span class="hljs-keyword">this</span>.title = opts.title;<br><br>&#125;<br><br><br>进一步简化<br><br><br><span class="hljs-function">function <span class="hljs-title">Alert</span><span class="hljs-params">(parent, message, opts)</span> </span>&#123;<br>	opts = <span class="hljs-built_in">extend</span>(&#123;<br>		width: <span class="hljs-number">320</span>,<br>		height: <span class="hljs-number">240</span><br>	&#125;);<br><br>	opts = <span class="hljs-built_in">extend</span>(&#123;<br>		title: <span class="hljs-string">&quot;Alert&quot;</span>	<br>	&#125;, opts);<br><br>	<span class="hljs-built_in">extend</span>(<span class="hljs-keyword">this</span>, opts);<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="区分数组对象和类数组对象"><a href="#区分数组对象和类数组对象" class="headerlink" title="区分数组对象和类数组对象"></a>区分数组对象和类数组对象</h2><p>使用instanceof的不完美选择</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-title class_">StringSet</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">add</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> x === <span class="hljs-string">&#x27;String&#x27;</span>) &#123;<br>		<span class="hljs-comment">// xxx</span><br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(x <span class="hljs-keyword">instanceof</span> <span class="hljs-title class_">Array</span>) &#123; <span class="hljs-comment">//有局限性</span><br>		<span class="hljs-comment">// xxx</span><br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-comment">// xxx</span><br>	&#125;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>instanceof 操作符测试一个对象是否继承自Array.prototype。 在一些允许多个全局对象的环境中可能会有标准的Array构造函数和原型对象的多份副本。在浏览器中有这种情况，每个frame会有标准库的一份单独副本，当跨frame通信时，一个frame中的数组不会继承自另一个frame的Array.prototype.出于这个原因，ES5中引入了<code>Array.isArray</code>函数， 其用于测试一个值是否是数组，而不管原型继承。ESMAScript标准中， 该函数测试对象内部[[Class]]属性值是否是Array。它比<code>instanceof</code>更加可靠。<br>所以有这个更健壮的实现。</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-type">StringSet</span>.proto<span class="hljs-keyword">type</span>.add = function(x) &#123;<br>	if(typeof x  === &#x27;<span class="hljs-type">String</span>&#x27;) &#123;<br><br>	&#125; else if(<span class="hljs-type">Array</span>.isArray(x)) &#123;<br><br>	&#125; else &#123;<br><br>	&#125;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+<p>对于不支持ES5的环境中我们可以自己实现一个测试方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> toString = <span class="hljs-title class_">Object</span>.<span class="hljs-property"><span class="hljs-keyword">prototype</span></span>.<span class="hljs-property">toString</span>;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">isArray</span>(<span class="hljs-params">x</span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-title function_">toString</span>(x) === <span class="hljs-string">&#x27;[object Array]&#x27;</span>;<br>&#125;<br><br><br><span class="hljs-comment">// 转为真实数组</span><br>你不能传入<span class="hljs-variable language_">arguments</span>对象并期待它被视为数组，<br>最好还是自己转化一下<br>[].<span class="hljs-property">slice</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">arguments</span>);<br><br><br><br></code></pre></td></tr></table></figure>
+
+<p><code>Object.prototype.toString</code>函数使用对象内部<code>[[Class]]</code>属性创建结果字符串，所以比<code>instance of</code>操作符更可靠。</p>
+<h2 id="避免过度的强制转换"><a href="#避免过度的强制转换" class="headerlink" title="避免过度的强制转换"></a>避免过度的强制转换</h2><p>我们创建一个BitVector的构造函数guard, 这里有一个思路可以用来做检测用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">function</span> <span class="hljs-title function_">BitVector</span>(<span class="hljs-params">x</span>) &#123;<br>	<span class="hljs-comment">// 链式调用</span><br>	uint32.<span class="hljs-title function_">or</span>(arrayLike).<span class="hljs-title function_">guard</span>(x);<br>&#125;<br><br><br><span class="hljs-keyword">var</span> guard = &#123;<br>	<span class="hljs-attr">guard</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>		<span class="hljs-keyword">if</span>(!<span class="hljs-variable language_">this</span>.<span class="hljs-title function_">test</span>(x)) &#123;<br>			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TypeError</span>(<span class="hljs-string">&quot;expected &quot;</span> + <span class="hljs-variable language_">this</span>);<br>		&#125;<br>	&#125;<br>&#125;<br><br><span class="hljs-keyword">var</span> uint32 = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(guard);<br><br>uint32.<span class="hljs-property">toString</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;uint32&quot;</span>;<br>&#125;<br><br><br><span class="hljs-keyword">var</span> arrayLike = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(guard);<br><br>arrayLike.<span class="hljs-property">test</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> x === <span class="hljs-string">&quot;object&quot;</span> &amp;&amp; x &amp;&amp; uint32.<span class="hljs-title function_">test</span>(x.<span class="hljs-property">length</span>);<br>&#125;<br><br>arrayLike.<span class="hljs-property">toString</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;array-like object&quot;</span>;<br>&#125;<br><br><br>guard.<span class="hljs-property">or</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">other</span>) &#123;<br>	<span class="hljs-keyword">var</span> result = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">create</span>(guard);<br><br>	<span class="hljs-keyword">var</span> self = <span class="hljs-variable language_">this</span>;<br>	result.<span class="hljs-property">test</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>		<span class="hljs-keyword">return</span> self.<span class="hljs-title function_">test</span>(x) || other.<span class="hljs-title function_">test</span>(x);<br>	&#125;;<br><br>	<span class="hljs-keyword">var</span> description = <span class="hljs-variable language_">this</span> + <span class="hljs-string">&quot; or &quot;</span> + other;<br><br>	result.<span class="hljs-property">toString</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">return</span> description;<br>	&#125;;<br><br>	<span class="hljs-keyword">return</span> result;<br><br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="支持方法链"><a href="#支持方法链" class="headerlink" title="支持方法链"></a>支持方法链</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">escapeBasicHTML</span>(<span class="hljs-params">str</span>) &#123;<br>	<span class="hljs-keyword">return</span> str.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&amp;/g</span>, <span class="hljs-string">&quot;&amp;amp;&quot;</span>)<br>			  .<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&lt;/g</span>, <span class="hljs-string">&quot;&amp;lt;&quot;</span>)<br>			  .<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&gt;/g</span>, <span class="hljs-string">&quot;&amp;gt;&quot;</span>)<br>			  .<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&quot;/g</span>, <span class="hljs-string">&quot;&amp;quot;&quot;</span>)<br>			  .<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&#x27;/g</span>, <span class="hljs-string">&quot;&amp;apos;&quot;</span>);<br>&#125;<br><br>这种比下面的方法更加简洁<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">escapeBasicHTML</span>(<span class="hljs-params">str</span>) &#123;<br>	<span class="hljs-keyword">var</span> str2 = str.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&amp;/g</span>, <span class="hljs-string">&quot;&amp;amp;&quot;</span>);<br>	<span class="hljs-keyword">var</span> str3 = str2.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&lt;/g</span>, <span class="hljs-string">&quot;&amp;lt;&quot;</span>);<br>	<span class="hljs-keyword">var</span> str4 = str3.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&gt;/g</span>, <span class="hljs-string">&quot;&amp;gt;&quot;</span>);<br>	<span class="hljs-keyword">var</span> str5 = str4.<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&quot;/g</span>, <span class="hljs-string">&quot;&amp;quot;&quot;</span>);<br>	<span class="hljs-keyword">var</span> str6 = str5..<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/&#x27;/g</span>, <span class="hljs-string">&quot;&amp;apos;&quot;</span>);<br><br>	<span class="hljs-keyword">return</span> str6;<br>&#125;<br><br><br><span class="hljs-keyword">var</span> users = records.<span class="hljs-built_in">map</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">record</span>) &#123;<br>		<span class="hljs-keyword">return</span> record.username;<br>	&#125;)<br>	.<span class="hljs-built_in">filter</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">username</span>) &#123;<br>		<span class="hljs-keyword">return</span> !!username;<br>	&#125;)<br>	.<span class="hljs-built_in">map</span>(<span class="hljs-keyword">function</span>(<span class="hljs-params">username</span>) &#123;<br>		<span class="hljs-keyword">return</span> username.toLowerCase();<br>	&#125;);<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用方法链来连接无状态的操作</li>
+<li>通过无状态的方法中返回新对象来支持方法链</li>
+<li>通过在有状态的方法中返回this来支持方法链</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/08/2018-10-08-read-book-you-known-up-one/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">你不知道的JavaScript上卷</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/28/2018-09-28-read-book-effective-ten/">
+                        <span class="hidden-mobile">Effective JavaScript (十)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

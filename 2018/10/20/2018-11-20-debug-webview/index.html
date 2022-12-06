@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="场景我们通常会有这样的开发场景， 开发了一些前端页面，可能在手机浏览器打开，也可能在客户端的webview打开，对应不同的场景我们可能需要不通的手段来进行调试。对于简单的页面我们一般可以通过chrome的开发工具来调试或者通过safari来直接对手机打开的页面直接进行调试。 但是对于复杂webview我们可能需要一些特殊手段来进行debug. 在本文将总结一部分调试技巧    方法分类 难度 调试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓和IOS前端页面调试">
+<meta property="og:url" content="http://example.com/2018/10/20/2018-11-20-debug-webview/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="场景我们通常会有这样的开发场景， 开发了一些前端页面，可能在手机浏览器打开，也可能在客户端的webview打开，对应不同的场景我们可能需要不通的手段来进行调试。对于简单的页面我们一般可以通过chrome的开发工具来调试或者通过safari来直接对手机打开的页面直接进行调试。 但是对于复杂webview我们可能需要一些特殊手段来进行debug. 在本文将总结一部分调试技巧    方法分类 难度 调试">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/debug-webview/Safari%E8%AE%BE%E7%BD%AE.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/debug-webview/iPhone%E8%AE%BE%E7%BD%AE.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/debug-webview/%E5%BC%80%E5%90%AF%E8%B0%83%E8%AF%95.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/debug-webview/weinre.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/debug-webview/Charles_Rewrite.jpg">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/debug-webview/Charles_Rewrite_Rule.jpg">
+<meta property="article:published_time" content="2018-10-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:59:29.712Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="调试">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.darknights.cn/assets/images/in-post/debug-webview/Safari%E8%AE%BE%E7%BD%AE.png">
+  
+  
+  <title>安卓和IOS前端页面调试 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="调试客户端的webview">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-10-20 00:00" pubdate>
+        2018年10月20日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.3k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">调试客户端的webview</h1>
+            
+            <div class="markdown-body">
+              <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>我们通常会有这样的开发场景， 开发了一些前端页面，可能在手机浏览器打开，也可能在客户端的webview打开，对应不同的场景我们可能需要不通的手段来进行调试。<br>对于简单的页面我们一般可以通过chrome的开发工具来调试或者通过safari来直接对手机打开的页面直接进行调试。 但是对于复杂webview我们可能需要一些特殊手段来进行debug.</p>
+<p>在本文将总结一部分调试技巧</p>
+<table>
+<thead>
+<tr>
+<th>方法分类</th>
+<th align="right">难度</th>
+<th align="center">调试目标</th>
+<th align="center">调试效果</th>
+<th align="center">优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Chrome自带模拟器</td>
+<td align="right">简单</td>
+<td align="center">所有</td>
+<td align="center">模拟效果，基本能调试 UI 及标准 JS 所有问题</td>
+<td align="center">极高</td>
+</tr>
+<tr>
+<td>chrome://inspect</td>
+<td align="right">简单</td>
+<td align="center">安卓的自带浏览器+webview</td>
+<td align="center">真机调试效果显著</td>
+<td align="center">高</td>
+</tr>
+<tr>
+<td>spy-debugger</td>
+<td align="right">一般</td>
+<td align="center">所有页面不管是否是webview</td>
+<td align="center">效果可以</td>
+<td align="center">高</td>
+</tr>
+<tr>
+<td>safari开发模式</td>
+<td align="right">简单</td>
+<td align="center">手机safari的所有页面</td>
+<td align="center">真机调试效果显著</td>
+<td align="center">高</td>
+</tr>
+<tr>
+<td>xcode的iPhone模拟器</td>
+<td align="right">较难</td>
+<td align="center">webview和手机浏览器</td>
+<td align="center">调试效果显著</td>
+<td align="center">中等</td>
+</tr>
+<tr>
+<td>weinre</td>
+<td align="right">一般</td>
+<td align="center">所有页面不管是否是webview</td>
+<td align="center">需要注入代码效果一般</td>
+<td align="center">低</td>
+</tr>
+<tr>
+<td>微信开发者工具</td>
+<td align="right">一般</td>
+<td align="center">模拟手机</td>
+<td align="center"></td>
+<td align="center">低</td>
+</tr>
+<tr>
+<td>TBS Studio</td>
+<td align="right">一般</td>
+<td align="center">模拟手机</td>
+<td align="center"></td>
+<td align="center">未测试</td>
+</tr>
+<tr>
+<td>Browsersync</td>
+<td align="right">一般</td>
+<td align="center">模拟手机</td>
+<td align="center"></td>
+<td align="center">未测试</td>
+</tr>
+</tbody></table>
+<h2 id="抓包"><a href="#抓包" class="headerlink" title="抓包"></a>抓包</h2><p>对于抓包有很多工具比如 mac上面有 charles，wireShark， windows上面有fiddler 等等。<br>我常用的一个抓包工具叫 <a target="_blank" rel="noopener" href="https://mitmproxy.org/">mitmproxy</a>, 在github已经一万多star了，使用起来比较简单。 一条命令 <code>mitmproxy -p 4000 --set console_mouse=false</code>, 启动后 手机手动代理到 ip+端口就可以开始抓包了，对于https可能需要<a target="_blank" rel="noopener" href="http://mitm.it/">安装证书</a>.至于安装过程就不重复了，官网已有<a target="_blank" rel="noopener" href="https://docs.mitmproxy.org/stable/">教程</a>。</p>
+<p>charles抓包请查看<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/fdd7c681929c">这篇教程</a></p>
+<h2 id="安卓的webview页面"><a href="#安卓的webview页面" class="headerlink" title="安卓的webview页面"></a>安卓的webview页面</h2><p>现在的安卓应用内的页面进行调试是真的方便。</p>
+<ul>
+<li>首先打开手机的usb调试，连接到电脑。</li>
+<li>第二在chrome输入 <code>chrome://inspect/#devices</code> （开发环境安卓桌面版Chrome32+ 并且 Android 系统高于 4.4）</li>
+<li>第三 选择app中的页面进行调试即可</li>
+</ul>
+<h2 id="safari调试iPhone页面"><a href="#safari调试iPhone页面" class="headerlink" title="safari调试iPhone页面"></a>safari调试iPhone页面</h2><p>这种方式适合手机上面的浏览器页面<br>需要几步配置</p>
+<ul>
+<li><p>首先打开电脑的safari<br><img src="https://cdn.darknights.cn/assets/images/in-post/debug-webview/Safari%E8%AE%BE%E7%BD%AE.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>然后打开iPhone进行设置<br><img src="https://cdn.darknights.cn/assets/images/in-post/debug-webview/iPhone%E8%AE%BE%E7%BD%AE.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+<li><p>最后通过电脑的safari打开进行调试<br><img src="https://cdn.darknights.cn/assets/images/in-post/debug-webview/%E5%BC%80%E5%90%AF%E8%B0%83%E8%AF%95.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+<h2 id="调试iPhone的webview"><a href="#调试iPhone的webview" class="headerlink" title="调试iPhone的webview"></a>调试iPhone的webview</h2><p>iPhone的webview可行的方法就是下载xcode，然后跟客户端开发借来一个xxx.app然后用模拟器打开，这样调试页面的时候可以调试各种情况下的页面，包括safari和应用内的页面。<br>这是目前唯一靠谱的调试方案。 还有一些 <a target="_blank" rel="noopener" href="https://github.com/google/ios-webkit-debug-proxy">ios-webkit-debug-proxy</a> 和 <a target="_blank" rel="noopener" href="https://github.com/RemoteDebug/remotedebug-ios-webkit-adapter">remotedebug-ios-webkit-adapter</a> 类似方案， 这些方案只能够调试手机的safari 对于app中的webview就无能为力了，而且经过本人实践效果并不理想，如果只是为了调试safari那还不如直接usb连接方便快捷，而且安装过程会有很多坑，因此不推荐使用。</p>
+<p>简化方案</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>打开首页<br>xcrun simctl openurl booted taobao:<span class="hljs-regexp">//</span>h5.m.taobao.com<span class="hljs-regexp">/guang/i</span>ndex.html<br><span class="hljs-regexp">//</span> 打开模拟器<br>open -a <span class="hljs-string">&quot;Simulator.app&quot;</span> --args -CurrentDeviceUDID <span class="hljs-string">&quot;FCE2CFE8-64C3-4DBE-906B-B9BF4180DE49&quot;</span><br><br></code></pre></td></tr></table></figure>
+<p>前提是安装了xcode， 本地需要一个sdk与测试网站进行交互方便获取app和执行本地shell命令<br>根据<a target="_blank" rel="noopener" href="http://taobaofed.org/blog/2015/11/13/web-debug-in-ios/">此文章</a>, 后期开发一个测试环境用的本地调试网站。</p>
+<p><a target="_blank" rel="noopener" href="http://taobaofed.org/blog/2015/11/13/web-debug-in-ios/">http://taobaofed.org/blog/2015/11/13/web-debug-in-ios/</a></p>
+<h2 id="weinre"><a href="#weinre" class="headerlink" title="weinre"></a>weinre</h2><p>Weinre 是一款较老的远程调试工具，功能与 Chrome DevTools 相似，需要在页面中插入一段 JS 脚本来实时调试页面 DOM 结构、样式、JS 等，另外它使用的是代理的方式，所以兼容性很好，无论是新老设备系统通吃，但对于样式调试不友善，缺少断点调试及 Profiles 等常用功能。</p>
+<ul>
+<li><p>安装 Weinre</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$ sudo npm -g <span class="hljs-keyword">install</span> weinre<br></code></pre></td></tr></table></figure></li>
+<li><p>启动Weinre监听服务</p>
+<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">$ weinre</span> <span class="hljs-literal">--</span><span class="hljs-comment">boundHost 10</span><span class="hljs-string">.</span><span class="hljs-comment">10</span><span class="hljs-string">.</span><span class="hljs-comment">2</span><span class="hljs-string">.</span><span class="hljs-comment">144</span> <span class="hljs-literal">--</span><span class="hljs-comment">httpPort 8090</span> <br></code></pre></td></tr></table></figure></li>
+<li><p>使用chrome访问<br><a target="_blank" rel="noopener" href="http://10.10.2.144:8090/">http://10.10.2.144:8090</a>, 然后将一段 JS 脚本 <script src="http://10.10.2.144:8090/target/target-script-min.js#anonymous"></script> 插入到需要调试的页面中，插入代码后手机访问调试页面。<br><img src="https://cdn.darknights.cn/assets/images/in-post/debug-webview/weinre.png" srcset="/img/loading.gif" lazyload></p>
+</li>
+</ul>
+<p>到这里还不算完，因为手动插入js不够优雅，所以这里采用js脚本注入<br>Tools –&gt; Rewrite 选中Enable Rewrite<br>这里我们需要使用到的是 Body，它的作用是对请求或响应内容进行匹配替换，按照下图的配置，通过将匹配到的响应内容 </body> 标签替换成需要插入到页面中的 JS 脚本，从而实现动态插入。<br><img src="https://cdn.darknights.cn/assets/images/in-post/debug-webview/Charles_Rewrite.jpg" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.darknights.cn/assets/images/in-post/debug-webview/Charles_Rewrite_Rule.jpg" srcset="/img/loading.gif" lazyload></p>
+<h2 id="spy-debugger"><a href="#spy-debugger" class="headerlink" title="spy-debugger"></a>spy-debugger</h2><p><a target="_blank" rel="noopener" href="https://github.com/wuchangming/spy-debugger">spy-debugger</a>跟微信开发这工具都在weinre的基础上简化了给页面添加js的步骤，它还对HTTPS的支持</p>
+<p>安装spy-debugger<br>spy-debugger内部集成了<a target="_blank" rel="noopener" href="http://people.apache.org/~pmuellr/weinre/docs/latest/Home.html">weinre</a>、<a target="_blank" rel="noopener" href="https://github.com/wuchangming/node-mitmproxy">node-mitmproxy</a>、<a target="_blank" rel="noopener" href="https://github.com/alibaba/anyproxy">AnyProxy</a></p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">$  sudo <span class="hljs-built_in">npm</span> install spy-<span class="hljs-keyword">debugger</span> -g<br></code></pre></td></tr></table></figure>
+<p>安装https证书包括手机和PC。<br>执行启动特别酸爽</p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript">$ spy-<span class="hljs-keyword">debugger</span> -p <span class="hljs-number">8888</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="TBS-Studio"><a href="#TBS-Studio" class="headerlink" title="TBS Studio"></a>TBS Studio</h2><p><a target="_blank" rel="noopener" href="https://x5.tencent.com/guide/debug.html">TBS Studio</a></p>
+<h2 id="微信-WebView-调试"><a href="#微信-WebView-调试" class="headerlink" title="微信 WebView 调试"></a>微信 WebView 调试</h2><p><a target="_blank" rel="noopener" href="https://x5.tencent.com/tbs/guide/debug/season1.html">https://x5.tencent.com/tbs/guide/debug/season1.html</a></p>
+<h2 id="browserSync"><a href="#browserSync" class="headerlink" title="browserSync"></a>browserSync</h2><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://75team.com/post/webview-debug.html">前端 WebView 指南之调试篇</a></li>
+<li><a target="_blank" rel="noopener" href="http://elevenbeans.github.io/2017/06/06/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/">移动端浏览器调试方法汇总</a></li>
+<li><a target="_blank" rel="noopener" href="https://aotu.io/notes/2017/02/24/Mobile-debug/index.html">移动端真机调试指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/riskers/blog/issues/11">打造最舒适的webview调试环境</a></li>
+<li><a target="_blank" rel="noopener" href="http://yujiangshui.com/multidevice-frontend-debug/">移动端前端开发调试</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%B0%83%E8%AF%95/">调试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%B0%83%E8%AF%95/">调试</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/10/21/2018-11-21-scaffold-front-www/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">搭建门户网站技术选型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/10/18/2018-10-18-read-book-you-known-middle-one/">
+                        <span class="hidden-mobile">你不知道的JavaScript中卷(一)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

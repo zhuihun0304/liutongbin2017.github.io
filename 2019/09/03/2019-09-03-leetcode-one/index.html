@@ -1,0 +1,575 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="本文将LeetCode刷过的题目进行简单的总结和记录，便于自己进行复习，同时将看到的解题思路进行汇总让其他的小伙伴能够理解。 1.两数之和两数之和：给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那 两个 整数，并返回它们的数组下标。你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。你可以按任意顺序返回答案。 1234567891">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode刷题总结(简单版一)">
+<meta property="og:url" content="http://example.com/2019/09/03/2019-09-03-leetcode-one/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="本文将LeetCode刷过的题目进行简单的总结和记录，便于自己进行复习，同时将看到的解题思路进行汇总让其他的小伙伴能够理解。 1.两数之和两数之和：给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那 两个 整数，并返回它们的数组下标。你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。你可以按任意顺序返回答案。 1234567891">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/leetcode/237_example.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/leetcode/tree.jpeg">
+<meta property="article:published_time" content="2019-09-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-01-22T06:32:45.498Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="LeetCode">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.darknights.cn/assets/images/in-post/leetcode/237_example.png">
+  
+  
+  <title>LeetCode刷题总结(简单版一) - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="对LeetCode刷过的题目进行整理总结，方便后期查阅复习。">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-09-03 00:00" pubdate>
+        2019年9月3日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      12k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      101 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">对LeetCode刷过的题目进行整理总结，方便后期查阅复习。</h1>
+            
+            <div class="markdown-body">
+              <p>本文将LeetCode刷过的题目进行简单的总结和记录，便于自己进行复习，同时将看到的解题思路进行汇总让其他的小伙伴能够理解。</p>
+<h3 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1.两数之和"></a>1.两数之和</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/two-sum/">两数之和</a>：<br>给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那 两个 整数，并返回它们的数组下标。<br>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。<br>你可以按任意顺序返回答案。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><pre><code class="hljs inform7">示例1:<br>输入：nums = <span class="hljs-comment">[2,7,11,15]</span>, target = 9<br>输出：<span class="hljs-comment">[0,1]</span><br>解释：因为 nums<span class="hljs-comment">[0]</span> + nums<span class="hljs-comment">[1]</span> == 9 ，返回 <span class="hljs-comment">[0, 1]</span> 。<br><br>示例2:<br>输入：nums = <span class="hljs-comment">[3,2,4]</span>, target = 6<br>输出：<span class="hljs-comment">[1,2]</span><br><br>示例3:<br>输入：nums = <span class="hljs-comment">[3,3]</span>, target = 6<br>输出：<span class="hljs-comment">[0,1]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="答案一："><a href="#答案一：" class="headerlink" title="答案一："></a>答案一：</h4><p>我的方法:for循环获取减法并且判断数组是否存在</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[]</span>&#125; <span class="hljs-variable">nums</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number</span>&#125; <span class="hljs-variable">target</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number[]</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> twoSum = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums, target</span>) &#123;<br>    <span class="hljs-keyword">let</span> arrayIndex = []<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>;i&lt;= nums.<span class="hljs-property">length</span>;i++) &#123;<br>        <span class="hljs-keyword">let</span> newData = target -  nums[i];<br>        <span class="hljs-keyword">if</span>(nums.<span class="hljs-title function_">indexOf</span>(target -  nums[i]) &gt; -<span class="hljs-number">1</span> &amp;&amp; nums.<span class="hljs-title function_">lastIndexOf</span>(newData) !== i) &#123;<br>            <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(nums.<span class="hljs-title function_">lastIndexOf</span>(newData))<br>            arrayIndex = [i,nums.<span class="hljs-title function_">lastIndexOf</span>(newData)]<br>            <span class="hljs-keyword">return</span> arrayIndex<br>        &#125;<br>    &#125;<br>    <br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-整数反转"><a href="#2-整数反转" class="headerlink" title="2.整数反转"></a>2.整数反转</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/reverse-integer/">整数反转</a>：<br>给你一个 32 位的有符号整数 x ，返回 x 中每位上的数字反转后的结果。<br>如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs llvm">示例<span class="hljs-number">1</span>:<br>输入：<span class="hljs-keyword">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">123</span><br>输出：<span class="hljs-number">321</span><br><br>示例<span class="hljs-number">2</span>:<br>输入：<span class="hljs-keyword">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">-123</span><br>输出：<span class="hljs-number">-321</span><br><br>示例<span class="hljs-number">3</span>:<br>输入：<span class="hljs-keyword">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">120</span><br>输出：<span class="hljs-number">21</span><br><br>示例<span class="hljs-number">4</span>:<br>输入：<span class="hljs-keyword">x</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span><br>输出：<span class="hljs-number">0</span><br><br></code></pre></td></tr></table></figure>
+<h4 id="答案一"><a href="#答案一" class="headerlink" title="答案一"></a>答案一</h4><p>我的方法：转换成字符串然后声生成数组，reverse，然后正则去掉’,’；比较繁琐与麻烦<br>Math.pow():用来写次方的方法 2的31次方===Math.pow(2,31)</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @param &#123;number&#125; x</span><br><span class="hljs-comment"> * @return &#123;number&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> <span class="hljs-built_in">reverse</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">x</span>) &#123;<br>    let newX;<br>    let flag = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">Number</span>(x) &gt;= <span class="hljs-number">0</span>) &#123;<br>        newX = x.toString().<span class="hljs-built_in">split</span>(<span class="hljs-string">&quot;&quot;</span>).<span class="hljs-built_in">reverse</span>();<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        flag = <span class="hljs-number">-1</span><br>        newX = Math.<span class="hljs-built_in">abs</span>(x).toString().<span class="hljs-built_in">split</span>(<span class="hljs-string">&quot;&quot;</span>).<span class="hljs-built_in">reverse</span>()  <br>    &#125;<br>    let newNumber = <span class="hljs-built_in">Number</span>(newX.toString().<span class="hljs-built_in">replace</span>(<span class="hljs-regexp">/,/g</span>,<span class="hljs-string">&#x27;&#x27;</span>));<br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">Number</span>(Math.<span class="hljs-built_in">pow</span>(<span class="hljs-number">-2</span>,<span class="hljs-number">31</span>)) &lt;= newNumber &amp;&amp;  newNumber &lt;=<span class="hljs-built_in">Number</span>(Math.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>,<span class="hljs-number">31</span>))) &#123;<br>        <span class="hljs-keyword">return</span> flag*newNumber<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span><br>    &#125;<br>    <br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="答案二"><a href="#答案二" class="headerlink" title="答案二"></a>答案二</h3><p>这个答案相当简洁，运用了Math的用法，以及字符串简单转换</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs vim">Math.<span class="hljs-keyword">sign</span>():获取传入的值判断是正负，正值是<span class="hljs-number">1</span>，负值是-<span class="hljs-number">1</span>；<br>Math.<span class="hljs-built_in">abs</span>():将数字取绝对值<br>var <span class="hljs-built_in">reverse</span> = <span class="hljs-keyword">function</span>(<span class="hljs-keyword">x</span>) &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">sign</span> = Math.<span class="hljs-keyword">sign</span>(<span class="hljs-keyword">x</span>)<br>    <span class="hljs-keyword">let</span> <span class="hljs-keyword">res</span> = (Math.<span class="hljs-built_in">abs</span>(<span class="hljs-keyword">x</span>) + <span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-keyword">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-built_in">reverse</span>().<span class="hljs-keyword">join</span>(<span class="hljs-string">&#x27;&#x27;</span>) * <span class="hljs-keyword">sign</span><br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">res</span> &gt; Math.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, <span class="hljs-number">31</span>) - <span class="hljs-number">1</span> || <span class="hljs-keyword">res</span> &lt; Math.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, <span class="hljs-number">31</span>) * -<span class="hljs-number">1</span>) <span class="hljs-keyword">res</span> = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">res</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-删除链表中的节点"><a href="#3-删除链表中的节点" class="headerlink" title="3.删除链表中的节点"></a>3.删除链表中的节点</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/delete-node-in-a-linked-list/">删除链表中的节点</a>:<br>请编写一个函数，使其可以删除某个链表中给定的（非末尾）节点，你将只被给定要求被删除的节点。<br>现有一个链表 – head = [4,5,1,9]，它可以表示为:<br><img src="https://cdn.darknights.cn/assets/images/in-post/leetcode/237_example.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">示例<span class="hljs-number">1</span><br>输入: head = [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">9</span>], <span class="hljs-keyword">node</span> <span class="hljs-title">= 5</span><br>输出: [<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">9</span>]<br>解释: 给定你链表中值为 <span class="hljs-number">5</span> 的第二个节点，那么在调用了你的函数之后，该链表应变为 <span class="hljs-number">4</span> -&gt; <span class="hljs-number">1</span> -&gt; <span class="hljs-number">9</span>.<br><br>示例<span class="hljs-number">2</span><br>输入: head = [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">1</span>,<span class="hljs-number">9</span>], <span class="hljs-keyword">node</span> <span class="hljs-title">= 1</span><br>输出: [<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">9</span>]<br>解释: 给定你链表中值为 <span class="hljs-number">1</span> 的第三个节点，那么在调用了你的函数之后，该链表应变为 <span class="hljs-number">4</span> -&gt; <span class="hljs-number">5</span> -&gt; <span class="hljs-number">9</span>.<br><br></code></pre></td></tr></table></figure>
+<p>说明:</p>
+<ul>
+<li>链表至少包含两个节点。</li>
+<li>链表中所有节点的值都是唯一的。</li>
+<li>给定的节点为非末尾节点并且一定是链表中的一个有效节点。</li>
+<li>不要从你的函数中返回任何结果。</li>
+</ul>
+<h4 id="答案一-1"><a href="#答案一-1" class="headerlink" title="答案一"></a>答案一</h4><p>分析：说实话这道题目对于前端的同学来说其实很难理解。但是对于后台同学这个就太简单了，首先要理解<a target="_blank" rel="noopener" href="https://blog.csdn.net/jianyuerensheng/article/details/51200274">单向链表的概念</a>。对于本题只需要将删除后的节点指向新节点</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteNode</span><span class="hljs-params">(ListNode node)</span> &#123;<br>    node.val = node.next.val;<br>    node.next = node.next.next;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="答案二-1"><a href="#答案二-1" class="headerlink" title="答案二"></a>答案二</h4><p>对于使用javascript的版本需要首先定义一个单向链表</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs xquery">/**<br> * Definition <span class="hljs-keyword">for</span> singly-linked list.<br> * <span class="hljs-keyword">function</span> ListNode(val) &#123;<br> *     this.val = val;<br> *     this.<span class="hljs-keyword">next</span> = null;<br> * &#125;<br> */<br>/**<br> * @param &#123;ListNode&#125; <span class="hljs-type">node</span><br> * @<span class="hljs-keyword">return</span> &#123;void&#125; Do<span class="hljs-built_in"> not</span> <span class="hljs-keyword">return</span> anything, <span class="hljs-keyword">modify</span> <span class="hljs-type">node</span> in-place instead.<br> */<br>var deleteNode = <span class="hljs-keyword">function</span>(<span class="hljs-type">node</span>) &#123;<br>  <span class="hljs-type">node</span>.val = <span class="hljs-type">node</span>.<span class="hljs-keyword">next</span>.val;<br>  <span class="hljs-type">node</span>.<span class="hljs-keyword">next</span> = <span class="hljs-type">node</span>.<span class="hljs-keyword">next</span>.<span class="hljs-keyword">next</span>;<br>&#125;;<br><br>var deleteNode = <span class="hljs-keyword">function</span>(<span class="hljs-type">node</span>) &#123;<br>  <span class="hljs-type">node</span> = Object.assign(<span class="hljs-type">node</span>, <span class="hljs-type">node</span>.<span class="hljs-keyword">next</span>)<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="4-查找重复的电子邮箱"><a href="#4-查找重复的电子邮箱" class="headerlink" title="4.查找重复的电子邮箱"></a>4.查找重复的电子邮箱</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/duplicate-emails/">查找重复的电子邮箱</a>: 编写一个 SQL 查询，查找 <code>Person</code> 表中所有重复的电子邮箱。</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-section">示例：</span><br><span class="hljs-section">+----+---------+</span><br><span class="hljs-section">| Id | Email   |</span><br><span class="hljs-section">+----+---------+</span><br>| 1  | a@b.com |<br>| 2  | c@d.com |<br><span class="hljs-section">| 3  | a@b.com |</span><br><span class="hljs-section">+----+---------+</span><br><br><span class="hljs-section">返回结果：</span><br><span class="hljs-section">+---------+</span><br><span class="hljs-section">| Email   |</span><br><span class="hljs-section">+---------+</span><br><span class="hljs-section">| a@b.com |</span><br><span class="hljs-section">+---------+</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="答案一-2"><a href="#答案一-2" class="headerlink" title="答案一"></a>答案一</h4><figure class="highlight n1ql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs n1ql"><span class="hljs-keyword">select</span> Email<br><span class="hljs-keyword">from</span> Person<br><span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> Email<br><span class="hljs-keyword">having</span> <span class="hljs-built_in">count</span>(Email) &gt; <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="答案二-2"><a href="#答案二-2" class="headerlink" title="答案二"></a>答案二</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">select</span> Email <span class="hljs-keyword">from</span><br>(<br>    <span class="hljs-keyword">select</span> Email, <span class="hljs-keyword">count</span>(Email) <span class="hljs-keyword">as</span> num<br>    <span class="hljs-keyword">from</span> Person<br>    <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> Email<br>) <span class="hljs-keyword">as</span> statistic<br><span class="hljs-keyword">where</span> num &gt; <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-大的国家"><a href="#5-大的国家" class="headerlink" title="5.大的国家"></a>5.大的国家</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/big-countries/">大的国家</a>:这里有张 World 表</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs gherkin">+-----------------+------------+------------+--------------+---------------+<br>|<span class="hljs-string"> name            </span>|<span class="hljs-string"> continent  </span>|<span class="hljs-string"> area       </span>|<span class="hljs-string"> population   </span>|<span class="hljs-string"> gdp           </span>|<br>+-----------------+------------+------------+--------------+---------------+<br>|<span class="hljs-string"> Afghanistan     </span>|<span class="hljs-string"> Asia       </span>|<span class="hljs-string"> 652230     </span>|<span class="hljs-string"> 25500100     </span>|<span class="hljs-string"> 20343000      </span>|<br>|<span class="hljs-string"> Albania         </span>|<span class="hljs-string"> Europe     </span>|<span class="hljs-string"> 28748      </span>|<span class="hljs-string"> 2831741      </span>|<span class="hljs-string"> 12960000      </span>|<br>|<span class="hljs-string"> Algeria         </span>|<span class="hljs-string"> Africa     </span>|<span class="hljs-string"> 2381741    </span>|<span class="hljs-string"> 37100000     </span>|<span class="hljs-string"> 188681000     </span>|<br>|<span class="hljs-string"> Andorra         </span>|<span class="hljs-string"> Europe     </span>|<span class="hljs-string"> 468        </span>|<span class="hljs-string"> 78115        </span>|<span class="hljs-string"> 3712000       </span>|<br>|<span class="hljs-string"> Angola          </span>|<span class="hljs-string"> Africa     </span>|<span class="hljs-string"> 1246700    </span>|<span class="hljs-string"> 20609294     </span>|<span class="hljs-string"> 100990000     </span>|<br>+-----------------+------------+------------+--------------+---------------+<br></code></pre></td></tr></table></figure>
+<p>如果一个国家的面积超过300万平方公里，或者人口超过2500万，那么这个国家就是大国家。</p>
+<p>编写一个SQL查询，输出表中所有大国家的名称、人口和面积。</p>
+<p>例如，根据上表，我们应该输出:</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-code">+--------------+</span>-------------<span class="hljs-code">+--------------+</span><br><span class="hljs-section">| name         | population  | area         |</span><br><span class="hljs-section">+--------------+-------------+--------------+</span><br>| Afghanistan  | 25500100    | 652230       |<br><span class="hljs-section">| Algeria      | 37100000    | 2381741      |</span><br><span class="hljs-section">+--------------+-------------+--------------+</span><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="答案一-3"><a href="#答案一-3" class="headerlink" title="答案一"></a>答案一</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs mysql">SELECT name, population, area <br>FROM world <br>WHERE area &gt; 3000000<br>UNION<br>SELECT name, population, area <br>FROM world <br>WHERE population &gt; 25000000<br><br><br>SELECT name, population, area <br>FROM world <br>WHERE area &gt; 3000000 OR population &gt; 25000000<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-二叉搜索树的范围和"><a href="#6-二叉搜索树的范围和" class="headerlink" title="6.二叉搜索树的范围和"></a>6.二叉搜索树的范围和</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/range-sum-of-bst/">二叉搜索树的范围和</a>: 给定二叉搜索树的根结点 root，返回 L 和 R（含）之间的所有结点的值的和。<br>二叉搜索树保证具有唯一的值。</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs nix">示例<span class="hljs-number">1</span>:<br>输入：<span class="hljs-attr">root</span> = [<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">15</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>,<span class="hljs-literal">null</span>,<span class="hljs-number">18</span>], <span class="hljs-attr">L</span> = <span class="hljs-number">7</span>, <span class="hljs-attr">R</span> = <span class="hljs-number">15</span><br>输出：<span class="hljs-number">32</span><br><br>示例<span class="hljs-number">2</span>:<br>输入：<span class="hljs-attr">root</span> = [<span class="hljs-number">10</span>,<span class="hljs-number">5</span>,<span class="hljs-number">15</span>,<span class="hljs-number">3</span>,<span class="hljs-number">7</span>,<span class="hljs-number">13</span>,<span class="hljs-number">18</span>,<span class="hljs-number">1</span>,<span class="hljs-literal">null</span>,<span class="hljs-number">6</span>], <span class="hljs-attr">L</span> = <span class="hljs-number">6</span>, <span class="hljs-attr">R</span> = <span class="hljs-number">10</span><br>输出：<span class="hljs-number">23</span><br></code></pre></td></tr></table></figure>
+<p>提示</p>
+<ul>
+<li>树中的结点数量最多为 10000 个。</li>
+<li>最终的答案保证小于 2^31。</li>
+</ul>
+<h4 id="答案一-4"><a href="#答案一-4" class="headerlink" title="答案一"></a>答案一</h4><p><code>Java官方解法</code><br>要理解这道题首先要知道一个概念<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BA%8C%E5%85%83%E6%90%9C%E5%B0%8B%E6%A8%B9">二叉查找树</a>, 也称为二叉搜索树、有序二叉树、排序二叉树，指一棵空树或具有以下性质的二叉树：</p>
+<ul>
+<li>若任意节点的左子树不空，则左子树上所有节点的值均小于它的根节点的值；</li>
+<li>若任意节点的右子树不空，则右子树上所有节点的值均大于它的根节点的值；</li>
+<li>任意节点的左、右子树也分别为二叉查找树；</li>
+<li>没有键值相等的节点。</li>
+</ul>
+<p>深度优先搜索我们对树进行深度优先搜索，对于当前节点 node，如果 node.val 小于等于 L，那么只需要继续搜索它的右子树；如果 node.val 大于等于 R，那么只需要继续搜索它的左子树；如果 node.val 在区间 (L, R) 中，则需要搜索它的所有子树。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//深度优先搜索</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-type">int</span> ans;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">rangeSumBST</span><span class="hljs-params">(TreeNode root, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R)</span> &#123;<br>        ans = <span class="hljs-number">0</span>;<br>        dfs(root, L, R);<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">dfs</span><span class="hljs-params">(TreeNode node, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R)</span> &#123;<br>        <span class="hljs-keyword">if</span> (node != <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">if</span> (L &lt;= node.val &amp;&amp; node.val &lt;= R)<br>                ans += node.val;<br>            <span class="hljs-keyword">if</span> (L &lt; node.val)<br>                dfs(node.left, L, R);<br>            <span class="hljs-keyword">if</span> (node.val &lt; R)<br>                dfs(node.right, L, R);<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//迭代实现深度优先搜索</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">rangeSumBST</span><span class="hljs-params">(TreeNode root, <span class="hljs-type">int</span> L, <span class="hljs-type">int</span> R)</span> &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">ans</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        Stack&lt;TreeNode&gt; stack = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Stack</span>();<br>        stack.push(root);<br>        <span class="hljs-keyword">while</span>(!stack.isEmpty()) &#123;<br>            <span class="hljs-type">TreeNode</span> <span class="hljs-variable">node</span> <span class="hljs-operator">=</span> stack.pop();<br>            <span class="hljs-keyword">if</span>(node != <span class="hljs-literal">null</span>) &#123;<br>                <span class="hljs-keyword">if</span>(L &lt;= node.val &amp;&amp; node.val &lt;= R)<br>                    ans += node.val;<br><br>                <span class="hljs-keyword">if</span>(L &lt; node.val)<br>                    stack.push(node.left);<br>                <br>                <span class="hljs-keyword">if</span>(node.val &lt; R)<br>                    stack.push(node.right);<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="答案二-3"><a href="#答案二-3" class="headerlink" title="答案二"></a>答案二</h4><p><code>JavaScript</code>画图解题<br><img src="https://cdn.darknights.cn/assets/images/in-post/leetcode/tree.jpeg" srcset="/img/loading.gif" lazyload><br>假设L= 7，R=15 </p>
+<ul>
+<li>如果node.val &gt;= 7 &amp;&amp; node.val &lt;= 15 则直接求和</li>
+<li>如果node.val &gt; 7,则node.right的值都大于7，右侧没有搜索必要，去查找left的值</li>
+<li>如果node.val &lt; 15,则node.left的值都小于15，左侧没有搜索必要，去查找right的值</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for a binary tree node.</span><br><span class="hljs-comment"> * function TreeNode(val) &#123;</span><br><span class="hljs-comment"> *     this.val = val;</span><br><span class="hljs-comment"> *     this.left = this.right = null;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">TreeNode</span>&#125; <span class="hljs-variable">root</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number</span>&#125; <span class="hljs-variable">L</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number</span>&#125; <span class="hljs-variable">R</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> rangeSumBST = <span class="hljs-keyword">function</span>(<span class="hljs-params">root, L, R</span>) &#123;<br>    <span class="hljs-keyword">var</span> sum = <span class="hljs-number">0</span>;<br>        <br>    <span class="hljs-keyword">const</span> <span class="hljs-title function_">dealBinTree</span> = node =&gt; &#123;<br>        <span class="hljs-keyword">if</span>(node !== <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">if</span>(L &lt; node.<span class="hljs-property">val</span>) &#123;<br>                    <span class="hljs-title function_">dealBinTree</span>(node.<span class="hljs-property">left</span>);<br>            &#125;<br>            <span class="hljs-keyword">if</span>(node.<span class="hljs-property">val</span> &gt;= L &amp;&amp; node.<span class="hljs-property">val</span> &lt;= R) &#123;<br>                sum += node.<span class="hljs-property">val</span>;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(R &gt; node.<span class="hljs-property">val</span>) &#123;<br>                    <span class="hljs-title function_">dealBinTree</span>(node.<span class="hljs-property">right</span>);<br>            &#125;<br>            <br>        &#125;<br>    <br>    &#125;<br>    <br>    <span class="hljs-title function_">dealBinTree</span>(root);<br>    <br>    <span class="hljs-keyword">return</span> sum;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-转换成小写字母"><a href="#7-转换成小写字母" class="headerlink" title="7.转换成小写字母"></a>7.转换成小写字母</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/to-lower-case/">转换成小写字母</a>:实现函数 ToLowerCase()，该函数接收一个字符串参数 str，并将该字符串中的大写字母转换成小写字母，之后返回新的字符串。</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs 1c">示例 <span class="hljs-number">1</span>：<br><br>输入: <span class="hljs-string">&quot;Hello&quot;</span><br>输出: <span class="hljs-string">&quot;hello&quot;</span><br>示例 <span class="hljs-number">2</span>：<br><br>输入: <span class="hljs-string">&quot;here&quot;</span><br>输出: <span class="hljs-string">&quot;here&quot;</span><br>示例 <span class="hljs-number">3</span>：<br><br>输入: <span class="hljs-string">&quot;LOVELY&quot;</span><br>输出: <span class="hljs-string">&quot;lovely&quot;</span><br><br></code></pre></td></tr></table></figure>
+<h4 id="答案一-5"><a href="#答案一-5" class="headerlink" title="答案一"></a>答案一</h4><p>分析通过字符串的 <code>charCodeAt</code>和<code>String.fromCharCode</code>这两个方法来得到答案</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs wren"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;string&#125; str</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;string&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> <span class="hljs-variable">toLowerCase</span> <span class="hljs-operator">=</span> <span class="hljs-title function_">function</span>(<span class="hljs-params">str</span>) &#123;<br>    <span class="hljs-keyword">var</span> <span class="hljs-variable">s</span> <span class="hljs-operator">=</span> &#x27;&#x27;;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>, <span class="hljs-variable">len</span> <span class="hljs-operator">=</span> <span class="hljs-variable">str</span>.<span class="hljs-property">length</span>; <span class="hljs-variable">i</span> <span class="hljs-operator">&lt;</span> <span class="hljs-variable">len</span>; <span class="hljs-variable">i</span><span class="hljs-operator">+</span><span class="hljs-operator">+</span>) &#123;<br>        <span class="hljs-keyword">var</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-variable">str</span>.<span class="hljs-property">charCodeAt</span>(<span class="hljs-variable">i</span>);<br>        <span class="hljs-keyword">if</span>(<span class="hljs-variable">c</span> <span class="hljs-operator">&gt;=</span> <span class="hljs-number">65</span> <span class="hljs-operator">&amp;&amp;</span> <span class="hljs-variable">c</span> <span class="hljs-operator">&lt;=</span> <span class="hljs-number">90</span>) &#123;<br>           <span class="hljs-variable">s</span> <span class="hljs-operator">+</span><span class="hljs-operator">=</span> <span class="hljs-title class_">String</span>.<span class="hljs-property">fromCharCode</span>(<span class="hljs-variable">c</span><span class="hljs-operator">+</span><span class="hljs-number">32</span>); <br>        &#125;  <span class="hljs-keyword">else</span> &#123;<br>           <span class="hljs-variable">s</span> <span class="hljs-operator">+</span><span class="hljs-operator">=</span> <span class="hljs-variable">str</span>.<span class="hljs-property">charAt</span>(<span class="hljs-variable">i</span>);    <br>        &#125;<br>        <br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable">s</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="8-唯一摩尔斯密码词"><a href="#8-唯一摩尔斯密码词" class="headerlink" title="8.唯一摩尔斯密码词"></a>8.唯一摩尔斯密码词</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/unique-morse-code-words/">唯一摩尔斯密码词</a><br>国际摩尔斯密码定义一种标准编码方式，将每个字母对应于一个由一系列点和短线组成的字符串， 比如: “a” 对应 “.-“, “b” 对应 “-…”, “c” 对应 “-.-.”, 等等。<br>为了方便，所有26个英文字母对应摩尔斯密码表如下：</p>
+<p>[“.-“,”-…”,”-.-.”,”-..”,”.”,”..-.”,”–.”,”….”,”..”,”.—“,”-.-“,”.-..”,”–”,”-.”,”—“,”.–.”,”–.-“,”.-.”,”…”,”-“,”..-“,”…-“,”.–”,”-..-“,”-.–”,”–..”]</p>
+<p>给定一个单词列表，每个单词可以写成每个字母对应摩尔斯密码的组合。例如，”cab” 可以写成 “-.-..–…”，(即 “-.-.” + “-…” + “.-“字符串的结合)。我们将这样一个连接过程称作单词翻译。</p>
+<p>返回我们可以获得所有词不同单词翻译的数量。</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs clean">例如:<br>输入: words = [<span class="hljs-string">&quot;gin&quot;</span>, <span class="hljs-string">&quot;zen&quot;</span>, <span class="hljs-string">&quot;gig&quot;</span>, <span class="hljs-string">&quot;msg&quot;</span>]<br>输出: <span class="hljs-number">2</span><br>解释: <br>各单词翻译如下:<br><span class="hljs-string">&quot;gin&quot;</span> -&gt; <span class="hljs-string">&quot;--...-.&quot;</span><br><span class="hljs-string">&quot;zen&quot;</span> -&gt; <span class="hljs-string">&quot;--...-.&quot;</span><br><span class="hljs-string">&quot;gig&quot;</span> -&gt; <span class="hljs-string">&quot;--...--.&quot;</span><br><span class="hljs-string">&quot;msg&quot;</span> -&gt; <span class="hljs-string">&quot;--...--.&quot;</span><br><br>共有 <span class="hljs-number">2</span> 种不同翻译, <span class="hljs-string">&quot;--...-.&quot;</span> 和 <span class="hljs-string">&quot;--...--.&quot;</span>.<br></code></pre></td></tr></table></figure>
+
+<p>注意:</p>
+<ul>
+<li>单词列表words 的长度不会超过 100。</li>
+<li>每个单词 words[i]的长度范围为 [1, 12]。</li>
+<li>每个单词 words[i]只包含小写字母。</li>
+</ul>
+<h4 id="答案一-6"><a href="#答案一-6" class="headerlink" title="答案一"></a>答案一</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">string[]</span>&#125; <span class="hljs-variable">words</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> uniqueMorseRepresentations = <span class="hljs-keyword">function</span>(<span class="hljs-params">words</span>) &#123;<br>    <span class="hljs-keyword">var</span> map = [<span class="hljs-string">&quot;.-&quot;</span>,<span class="hljs-string">&quot;-...&quot;</span>,<span class="hljs-string">&quot;-.-.&quot;</span>,<span class="hljs-string">&quot;-..&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;..-.&quot;</span>,<span class="hljs-string">&quot;--.&quot;</span>,<span class="hljs-string">&quot;....&quot;</span>,<span class="hljs-string">&quot;..&quot;</span>,<span class="hljs-string">&quot;.---&quot;</span>,<span class="hljs-string">&quot;-.-&quot;</span>,<span class="hljs-string">&quot;.-..&quot;</span>,<span class="hljs-string">&quot;--&quot;</span>,<span class="hljs-string">&quot;-.&quot;</span>,<span class="hljs-string">&quot;---&quot;</span>,<span class="hljs-string">&quot;.--.&quot;</span>,<span class="hljs-string">&quot;--.-&quot;</span>,<span class="hljs-string">&quot;.-.&quot;</span>,<span class="hljs-string">&quot;...&quot;</span>,<span class="hljs-string">&quot;-&quot;</span>,<span class="hljs-string">&quot;..-&quot;</span>,<span class="hljs-string">&quot;...-&quot;</span>,<span class="hljs-string">&quot;.--&quot;</span>,<span class="hljs-string">&quot;-..-&quot;</span>,<span class="hljs-string">&quot;-.--&quot;</span>,<span class="hljs-string">&quot;--..&quot;</span>];<br>    <br>    <span class="hljs-keyword">var</span> obj = &#123;&#125;;<br><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, len = words.<span class="hljs-property">length</span>; i &lt; len; i++) &#123;<br>        <br>        <span class="hljs-keyword">let</span> m = <span class="hljs-string">&#x27;&#x27;</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> j = <span class="hljs-number">0</span>, jen = words[i].<span class="hljs-property">length</span>; j &lt; jen; j++) &#123;<br>             m += map[words[i].<span class="hljs-title function_">charCodeAt</span>(j) - <span class="hljs-number">97</span>];<br>        &#125;<br>        <br>        <span class="hljs-keyword">if</span>(obj.<span class="hljs-title function_">hasOwnProperty</span>(m)) &#123;<br>            obj[m] = obj[m] + <span class="hljs-number">1</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            obj[m] = <span class="hljs-number">1</span>;<br>        &#125;<br>        <br>    &#125;<br>    <br><br>    <span class="hljs-keyword">return</span> <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">keys</span>(obj).<span class="hljs-property">length</span>;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h4 id="答案二-4"><a href="#答案二-4" class="headerlink" title="答案二"></a>答案二</h4><p><code>Java</code>利用Set自动去重</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">uniqueMorseRepresentations</span><span class="hljs-params">(String[] words)</span> &#123;<br>        String[] s=&#123;<span class="hljs-string">&quot;.-&quot;</span>,<span class="hljs-string">&quot;-...&quot;</span>,<span class="hljs-string">&quot;-.-.&quot;</span>,<span class="hljs-string">&quot;-..&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;..-.&quot;</span>,<span class="hljs-string">&quot;--.&quot;</span>,<span class="hljs-string">&quot;....&quot;</span>,<span class="hljs-string">&quot;..&quot;</span>,<span class="hljs-string">&quot;.---&quot;</span>,<span class="hljs-string">&quot;-.-&quot;</span>,<span class="hljs-string">&quot;.-..&quot;</span>,<span class="hljs-string">&quot;--&quot;</span>,<span class="hljs-string">&quot;-.&quot;</span>,<span class="hljs-string">&quot;---&quot;</span>,<span class="hljs-string">&quot;.--.&quot;</span>,<span class="hljs-string">&quot;--.-&quot;</span>,<span class="hljs-string">&quot;.-.&quot;</span>,<span class="hljs-string">&quot;...&quot;</span>,<span class="hljs-string">&quot;-&quot;</span>,<span class="hljs-string">&quot;..-&quot;</span>,<span class="hljs-string">&quot;...-&quot;</span>,<span class="hljs-string">&quot;.--&quot;</span>,<span class="hljs-string">&quot;-..-&quot;</span>,<span class="hljs-string">&quot;-.--&quot;</span>,<span class="hljs-string">&quot;--..&quot;</span>&#125;;<br><br>        Set&lt;String&gt; set = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br>        <span class="hljs-type">int</span> index;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; words.length; i++) &#123;<br>            <span class="hljs-type">String</span> <span class="hljs-variable">temp</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&quot;</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; j &lt; words[i].length(); j++) &#123;<br>                index = (<span class="hljs-type">int</span>)words[i].charAt(j) - <span class="hljs-number">65</span> - <span class="hljs-number">32</span>;<br>                temp = temp.concat(s[index]);<br>            &#125;<br>            set.add(temp);<br>        &#125;<br>        <span class="hljs-keyword">return</span> set.size();<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="9-合并二叉树"><a href="#9-合并二叉树" class="headerlink" title="9.合并二叉树"></a>9.合并二叉树</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/merge-two-binary-trees/">合并二叉树</a>:给定两个二叉树，想象当你将它们中的一个覆盖到另一个上时，两个二叉树的一些节点便会重叠。<br>你需要将他们合并为一个新的二叉树。合并的规则是如果两个节点重叠，那么将他们的值相加作为节点合并后的新值，否则不为 NULL 的节点将直接作为新二叉树的节点。</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs tap">示例 1:<br><br>输入: <br>	Tree<span class="hljs-number"> 1 </span>                    Tree<span class="hljs-number"> 2 </span>                 <br>         <span class="hljs-number"> 1 </span>                       <span class="hljs-number"> 2 </span>                            <br>         / \                       / \                            <br>       <span class="hljs-number"> 3 </span> <span class="hljs-number"> 2 </span>                   <span class="hljs-number"> 1 </span> <span class="hljs-number"> 3 </span>                       <br>       /                           \   \                      <br>     <span class="hljs-number"> 5 </span>                           <span class="hljs-number"> 4 </span> <span class="hljs-number"> 7 </span>                 <br>输出: <br>合并后的树:<br>	     3<br>	    / \<br>	  <span class="hljs-number"> 4 </span>  5<br>	  / \   \ <br>	<span class="hljs-number"> 5 </span> <span class="hljs-number"> 4 </span>  7<br>注意: 合并必须从两个树的根节点开始。<br></code></pre></td></tr></table></figure>
+<h4 id="答案一-7"><a href="#答案一-7" class="headerlink" title="答案一"></a>答案一</h4><p><code>Java</code>解法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">public</span> TreeNode <span class="hljs-title function_">meregeTrees</span><span class="hljs-params">(TreeNode t1, TreeNode t2)</span> &#123;<br>        <span class="hljs-keyword">if</span>(t1 == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> t2;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(t2 == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> t1;<br>        &#125;<br><br>        <span class="hljs-type">TreeNode</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">TreeNode</span>(t1.val + t2.val);<br>        result.left = mergeTrees(t1.left, t2.left);<br>        result.right = mergeTrees(t1.right, t2.right);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="答案二-5"><a href="#答案二-5" class="headerlink" title="答案二"></a>答案二</h4><p><code>JavaScript</code>解法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * Definition for a binary tree node.</span><br><span class="hljs-comment"> * function TreeNode(val) &#123;</span><br><span class="hljs-comment"> *     this.val = val;</span><br><span class="hljs-comment"> *     this.left = this.right = null;</span><br><span class="hljs-comment"> * &#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">TreeNode</span>&#125; <span class="hljs-variable">t1</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">TreeNode</span>&#125; <span class="hljs-variable">t2</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">TreeNode</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> mergeTrees = <span class="hljs-keyword">function</span>(<span class="hljs-params">t1, t2</span>) &#123;<br>    <span class="hljs-keyword">if</span>(t1 === <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> t2;<br>    &#125;<br>    <span class="hljs-keyword">if</span>(t2 === <span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> t1;<br>    &#125;<br>    <br>    t1.<span class="hljs-property">val</span> = t1.<span class="hljs-property">val</span> + t2.<span class="hljs-property">val</span>;<br>    t1.<span class="hljs-property">left</span> = <span class="hljs-title function_">mergeTrees</span>(t1.<span class="hljs-property">left</span>, t2.<span class="hljs-property">left</span>);<br>    t1.<span class="hljs-property">right</span> = <span class="hljs-title function_">mergeTrees</span>(t1.<span class="hljs-property">right</span>, t2.<span class="hljs-property">right</span>);<br>    <br>    <span class="hljs-keyword">return</span> t1;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="10-翻转图像"><a href="#10-翻转图像" class="headerlink" title="10.翻转图像"></a>10.翻转图像</h3><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/flipping-an-image/">翻转图像</a>给定一个二进制矩阵 A，我们想先水平翻转图像，然后反转图像并返回结果。<br>水平翻转图片就是将图片的每一行都进行翻转，即逆序。例如，水平翻转 [1, 1, 0] 的结果是 [0, 1, 1]。<br>反转图片的意思是图片中的 0 全部被 1 替换， 1 全部被 0 替换。例如，反转 [0, 1, 1] 的结果是 [1, 0, 0]。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs lua">示例 <span class="hljs-number">1</span>:<br><br>输入: <span class="hljs-string">[[1,1,0],[1,0,1],[0,0,0]]</span><br>输出: <span class="hljs-string">[[1,0,0],[0,1,0],[1,1,1]]</span><br>解释: 首先翻转每一行: <span class="hljs-string">[[0,1,1],[1,0,1],[0,0,0]]</span>；<br>     然后反转图片: <span class="hljs-string">[[1,0,0],[0,1,0],[1,1,1]]</span><br>示例 <span class="hljs-number">2</span>:<br><br>输入: <span class="hljs-string">[[1,1,0,0],[1,0,0,1],[0,1,1,1],[1,0,1,0]]</span><br>输出: <span class="hljs-string">[[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]</span><br>解释: 首先翻转每一行: <span class="hljs-string">[[0,0,1,1],[1,0,0,1],[1,1,1,0],[0,1,0,1]]</span>；<br>     然后反转图片: <span class="hljs-string">[[1,1,0,0],[0,1,1,0],[0,0,0,1],[1,0,1,0]]</span><br>说明:<br><br><span class="hljs-number">1</span> &lt;= A.length = A[<span class="hljs-number">0</span>].length &lt;= <span class="hljs-number">20</span><br><span class="hljs-number">0</span> &lt;= A[i][j] &lt;= <span class="hljs-number">1</span><br><br></code></pre></td></tr></table></figure>
+<h4 id="答案一-8"><a href="#答案一-8" class="headerlink" title="答案一"></a>答案一</h4><p>分析：最简单的方法就是按部就班来实现，先进行水平再进行图片反转。<br>对于1和0的翻转有两种方式</p>
+<ul>
+<li>1 - 当前值 得到的是1和0的翻转</li>
+<li>1 ^ 当前值 得到的也是0和1的反转。这个符号是异或，相同为0，相异为1</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[][]</span>&#125; <span class="hljs-variable">A</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number[][]</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> flipAndInvertImage = <span class="hljs-keyword">function</span>(<span class="hljs-params">A</span>) &#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>, len = A.<span class="hljs-property">length</span>; i &lt; len; i++) &#123;<br>        <span class="hljs-keyword">let</span> re = A[i].<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;&#x27;</span>);<br>        <span class="hljs-keyword">let</span> im = <span class="hljs-string">&#x27;&#x27;</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> j = <span class="hljs-number">0</span>; j &lt; re.<span class="hljs-property">length</span>; j++) &#123;<br>               im += <span class="hljs-title class_">Number</span>(re[j]) === <span class="hljs-number">0</span> ? <span class="hljs-string">&#x27;1&#x27;</span> : <span class="hljs-string">&#x27;0&#x27;</span>;<br>        &#125;<br>        A[i] = im.<span class="hljs-title function_">split</span>(<span class="hljs-string">&#x27;&#x27;</span>).<span class="hljs-title function_">reverse</span>();<br>        <br>    &#125;<br>    <span class="hljs-keyword">return</span> A;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="答案二-6"><a href="#答案二-6" class="headerlink" title="答案二"></a>答案二</h4><p>数组api一行解法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[][]</span>&#125; <span class="hljs-variable">A</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number[][]</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> flipAndInvertImage = <span class="hljs-keyword">function</span>(<span class="hljs-params">A</span>) &#123;<br>    <span class="hljs-keyword">return</span> A.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">val</span> =&gt;</span> val.<span class="hljs-title function_">reverse</span>().<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> (<span class="hljs-number">1</span> - v)))<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+<h4 id="答案三"><a href="#答案三" class="headerlink" title="答案三"></a>答案三</h4><p>双向指针</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[][]</span>&#125; <span class="hljs-variable">A</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number[][]</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> flipAndInvertImage = <span class="hljs-keyword">function</span>(<span class="hljs-params">A</span>) &#123;<br>    <span class="hljs-keyword">let</span> <span class="hljs-title class_">Alen</span> = A.<span class="hljs-property">length</span>;<br>    <span class="hljs-keyword">let</span> len = A[<span class="hljs-number">0</span>].<span class="hljs-property">length</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-title class_">Alen</span>; i++) &#123;<br>        <span class="hljs-keyword">let</span> left = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">let</span> right = len - <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(left &lt;= right) &#123;<br>            <span class="hljs-keyword">let</span> temp = A[i][left];<br>            A[i][left] = A[i][right] ^ <span class="hljs-number">1</span>;<br>            A[i][right] = temp ^ <span class="hljs-number">1</span>;<br>            <br>            left++;<br>            right--;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> A;<br>&#125;;<br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/LeetCode/">LeetCode</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/LeetCode/">LeetCode</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/09/04/2019-09-04-leetcode-two/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LeetCode刷题总结(简单版二)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/10/21/2018-11-21-scaffold-front-www/">
+                        <span class="hidden-mobile">搭建门户网站技术选型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

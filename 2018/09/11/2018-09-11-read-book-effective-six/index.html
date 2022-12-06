@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="函数调用理解函数调用， 方法调用，构造函数调用之间的不同。 12345678910111213141516171819202122232425262728293031323334最简单的函数调用function hello(username) &amp;#123;	return &quot;hello, &quot; + username;&amp;#125;hello(&quot;Keyser soze&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective JavaScript (六)">
+<meta property="og:url" content="http://example.com/2018/09/11/2018-09-11-read-book-effective-six/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="函数调用理解函数调用， 方法调用，构造函数调用之间的不同。 12345678910111213141516171819202122232425262728293031323334最简单的函数调用function hello(username) &amp;#123;	return &quot;hello, &quot; + username;&amp;#125;hello(&quot;Keyser soze&amp;quo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:59:29.744Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="读书总结">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Effective JavaScript (六) - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="使用函数">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-11 00:00" pubdate>
+        2018年9月11日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.2k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      52 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用函数</h1>
+            
+            <div class="markdown-body">
+              <h2 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h2><p>理解函数调用， 方法调用，构造函数调用之间的不同。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><pre><code class="hljs javascript"><br>最简单的函数调用<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">hello</span>(<span class="hljs-params">username</span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello, &quot;</span> + username;<br>&#125;<br><br><span class="hljs-title function_">hello</span>(<span class="hljs-string">&quot;Keyser soze&quot;</span>);<br><br>方法调用<br><span class="hljs-keyword">var</span> obj = &#123;<br>	<span class="hljs-attr">hello</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello, &quot;</span> + <span class="hljs-variable language_">this</span>.<span class="hljs-property">username</span>;<br>	&#125;,<br>	<span class="hljs-attr">username</span>: <span class="hljs-string">&quot;Hans, Gruber&quot;</span>;<br>&#125;<br><br>obj.<span class="hljs-title function_">hello</span>(); <span class="hljs-comment">// hello, Hans, Gruber</span><br><br><br><span class="hljs-comment">// 在函数调用过程中由调用表达式自身来确定this变量的绑定。 </span><br>  <br>构造函数调用<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">User</span>(<span class="hljs-params">name, pass</span>) &#123;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;<br>	<span class="hljs-variable language_">this</span>.<span class="hljs-property">pass</span> = pass;<br>&#125;  <br><br><span class="hljs-keyword">var</span> u = <span class="hljs-keyword">new</span> <span class="hljs-title class_">User</span>(<span class="hljs-string">&quot;sketcon&quot;</span>, <span class="hljs-string">&quot;123456&quot;</span>);<br><br>与函数调用和方法调用不同的是，构造函数调用将一个全新的对象作为<span class="hljs-variable language_">this</span>变量的值，并隐式的返回这个对象作为调用结果。<br>构造函数的主要职责是初始化这个新对象。<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="熟练掌握高阶函数"><a href="#熟练掌握高阶函数" class="headerlink" title="熟练掌握高阶函数"></a>熟练掌握高阶函数</h2><p>高阶函数无非就是将函数作为参数或返回值的函数。将函数作为参数通常称为回调函数。</p>
+<h2 id="使用call方法自定义接收者来调用方法"><a href="#使用call方法自定义接收者来调用方法" class="headerlink" title="使用call方法自定义接收者来调用方法"></a>使用call方法自定义接收者来调用方法</h2><p>通常情况下，函数或方法的接接收者（即绑定到特殊关键字this的值）是由调用者的语法决定的。但是有时我需要自定义一个接收者，幸运的是函数有一个内置的方法call来自定义接收者。可以通过函数对象的call方法来调用自身。</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs scss">f<span class="hljs-selector-class">.call</span>(obj, arg1, arg2, arg3);<br><br><span class="hljs-built_in">f</span>(arg1, arg2, arg3);<br></code></pre></td></tr></table></figure>
+<p>不同的是第一个参数提供了一个显示的接收者对象。</p>
+<h2 id="使用apply方法通过不同数量的参数调用函数"><a href="#使用apply方法通过不同数量的参数调用函数" class="headerlink" title="使用apply方法通过不同数量的参数调用函数"></a>使用apply方法通过不同数量的参数调用函数</h2><p>这里理解有误区，接受一个数组的参数，但是方法调用时将参数依次传入方法</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs gcode">average 函数是一个称为可变参数或可变元的函数（函数的元市值其期望的参数个数）<br><br>average<span class="hljs-comment">(1, 2, 3)</span>;<br><br>average<span class="hljs-comment">(1)</span>;<br><br>average<span class="hljs-comment">(1, 2, 3, 7, 9)</span>;<br><br>可变参数的版本更加简洁，优雅。<br><br><br>averageOfArray<span class="hljs-comment">([1, 2, 3])</span>;<br><br>averageOfArray<span class="hljs-comment">([1])</span>;<br><br>averageOfArray<span class="hljs-comment">([1, 2, 3, 7, 9])</span>;<br><br><br><span class="hljs-comment">// 本来average 只接受可变参数，假设我有这样一个数字数组， average函数中没有this引用，所以简单的传null就可以。</span><br>var scores = getAllScores<span class="hljs-comment">()</span>;<br>average.apply<span class="hljs-comment">(null, scores)</span>  <br>传入一个数组，调用时这样 average<span class="hljs-comment">(scores[0], scores[1], scores[2])</span><br><br><br><br><br><br>使用apply方法指定一个可计算的参数数组来调用可变参数的函数。<br>使用apply方法的第一个参数给可变参数的方法提供一个接收者。<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用arguments创建可变参数的函数"><a href="#使用arguments创建可变参数的函数" class="headerlink" title="使用arguments创建可变参数的函数"></a>使用arguments创建可变参数的函数</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade">参数可变函数的实现<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">average</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, <span class="hljs-built_in">sum</span> = <span class="hljs-number">0</span>, n = argumants.<span class="hljs-built_in">length</span>; i &lt; n; i++) &#123;<br>		<span class="hljs-built_in">sum</span> += arguments[i];<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span> / n;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>可变参数的函数提供了灵活的接口，不同的调用者可以使用不同数量的参数来调用它们，但是它们自身也失去了一点便利。如果使用者要使用数组的参数则只能使用 apply。<br>apply方法会降低可读性而且经常导致性能损失</p>
+<p>好的经验是</p>
+<blockquote>
+<p>如果提供了一个便利的可变参数的函数，最好也提供一个需要显示指定数组的固定元数的版本。这样可以编写一个轻量级的封装，并委托固定元数的版本来实现可变参数的函数</p>
+</blockquote>
+<p>比较拗口，代码比较直观如下：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br>固定元数的版本实现 用来作为数组参数的调用<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">averageOfArray</span>(<span class="hljs-params">a</span>) &#123;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, <span class="hljs-built_in">sum</span> = <span class="hljs-number">0</span>, n = a.<span class="hljs-built_in">length</span>; i &lt; n; i++) &#123;<br>		<span class="hljs-built_in">sum</span> += a[i];<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">sum</span> / n;<br>&#125;<br><br>averageOfArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);<br><br><br>参数可变函数的实现可以通过调用 固定元数版本来实现<br><span class="hljs-keyword">function</span> <span class="hljs-title function_">average</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-comment">// averageOfArray本来就支持数组 所以无论average传入数组还是啥</span><br>	<span class="hljs-keyword">return</span> averageOfArray(arguments);<br>&#125;<br><br><br><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="永远不要修改arguments对象"><a href="#永远不要修改arguments对象" class="headerlink" title="永远不要修改arguments对象"></a>永远不要修改arguments对象</h2><p>不要修改arguments对象，并且将arguments对象复制到一个真正的数组中再进行调整。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> obj = &#123;<br>	<span class="hljs-attr">add</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">x, y</span>) &#123; <span class="hljs-keyword">return</span> x + y; &#125;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">callMethod</span>(<span class="hljs-params">obj, method</span>) &#123;<br>	<span class="hljs-keyword">var</span> shift = [].<span class="hljs-property">shift</span>;<br>	shift.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">arguments</span>);<br>	shift.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">arguments</span>);<br><br>	<span class="hljs-keyword">return</span> obj[method].<span class="hljs-title function_">apply</span>(obj, <span class="hljs-variable language_">arguments</span>);<br>&#125;<br><br><span class="hljs-title function_">callMethod</span>(obj, <span class="hljs-string">&quot;add&quot;</span>, <span class="hljs-number">17</span>, <span class="hljs-number">25</span>);  <span class="hljs-comment">// cannot read property &quot;apply&quot; of undefined   17[25]</span><br><br>这里的<span class="hljs-variable language_">arguments</span> 对象并不是函数参数的副本，所有命名参数都是<span class="hljs-variable language_">arguments</span>对象中对应索引的别名。<br><br></code></pre></td></tr></table></figure>
+<p>永远不要修改arguments对象是更为安全的，通过一开始复制参数中的元素到一个真正的数组的方式，很容易避免修改arguments对象。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">var args = [].<span class="hljs-keyword">slice</span>.<span class="hljs-keyword">call</span>(argumants);<br><br><span class="hljs-keyword">slice</span>会复制整个数组，其结果是一个真正的标准<span class="hljs-keyword">Array</span>类型实例。<br><br><span class="hljs-keyword">function</span> callMethod(obj, <span class="hljs-keyword">method</span>) &#123;<br>	var args = [].<span class="hljs-keyword">slice</span>.<span class="hljs-keyword">call</span>(arguments, <span class="hljs-number">2</span>);<br>	<span class="hljs-keyword">return</span> obj[<span class="hljs-keyword">method</span>].apply(obj, args);<br>&#125;<br><br>callMethod(obj, &quot;add&quot;, <span class="hljs-number">17</span>, <span class="hljs-number">25</span>);<br></code></pre></td></tr></table></figure>
+
+<h2 id="使用变量保存arguments的引用"><a href="#使用变量保存arguments的引用" class="headerlink" title="使用变量保存arguments的引用"></a>使用变量保存arguments的引用</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 实现一个迭代器</span><br><br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">values</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = <span class="hljs-variable language_">arguments</span>.<span class="hljs-property">length</span>;<br>	<span class="hljs-keyword">return</span> &#123;<br>		<span class="hljs-attr">hasNext</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>			<span class="hljs-keyword">return</span> i &lt; n;<br>		&#125;,<br>		<span class="hljs-attr">next</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>			<span class="hljs-keyword">if</span>(i &gt;= n) &#123;<br>				<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&quot;end of iteration&quot;</span>);<br>			&#125;<br>			<span class="hljs-keyword">return</span> <span class="hljs-variable language_">arguments</span>[i++]; <span class="hljs-comment">// wrong arguments;</span><br>		&#125;<br>	&#125;<br>&#125;<br><br><span class="hljs-keyword">var</span> it = <span class="hljs-title function_">values</span>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">78</span>);<br><br>it.<span class="hljs-title function_">next</span>(); <span class="hljs-comment">//undefined</span><br><br>it.<span class="hljs-title function_">next</span>(); <span class="hljs-comment">//undefined</span><br><br>it.<span class="hljs-title function_">next</span>(); <span class="hljs-comment">//undefined</span><br><br>每次调用next的时候，next方法内部会存在一个<span class="hljs-variable language_">arguments</span>这里可能我们关心的只是values的<span class="hljs-variable language_">arguments</span>, 所以正确的方法是将values的<span class="hljs-variable language_">arguments</span>保存下来<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">values</span>(<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, n = <span class="hljs-variable language_">arguments</span>.<span class="hljs-property">length</span>, arg = <span class="hljs-variable language_">arguments</span>;<br>	<span class="hljs-keyword">return</span> &#123;<br>		<span class="hljs-attr">hasNext</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>			<span class="hljs-keyword">return</span> i &lt; n;<br>		&#125;,<br>		<span class="hljs-attr">next</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>			<span class="hljs-keyword">if</span>(i &gt;= n) &#123;<br>				<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Error</span>(<span class="hljs-string">&quot;end of iteration&quot;</span>);<br>			&#125;<br>			<span class="hljs-keyword">return</span> arg[i++];<br>		&#125;<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="使用bind方法提取具有确定接收者的方法"><a href="#使用bind方法提取具有确定接收者的方法" class="headerlink" title="使用bind方法提取具有确定接收者的方法"></a>使用bind方法提取具有确定接收者的方法</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> <span class="hljs-built_in">buffer</span> = &#123;<br>	<span class="hljs-attr">entries</span>: [],<br>	<span class="hljs-attr">add</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">s</span>) &#123;<br>		this.entries.<span class="hljs-built_in">push</span>(s);<br>	&#125;,<br>	<span class="hljs-attr">concat</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>		<span class="hljs-keyword">return</span> this.entries.join(<span class="hljs-string">&quot;&quot;</span>);<br>	&#125;<br>&#125;<br><br><span class="hljs-keyword">var</span> source = [<span class="hljs-string">&quot;867&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;5309&quot;</span>];<br><br>source.forEach(<span class="hljs-built_in">buffer</span>.add);  <span class="hljs-comment">// error: entries is undefined</span><br><br><br></code></pre></td></tr></table></figure>
+<p>buffer.add 方法的接收者并不是buffer对象，函数的接收者取决于它是如何被调用，<br>不过我们并没有调用它，而是把它传给了forEach方法<br>而我们并不知道forEach在哪里调用了它，事实上forEach方法的实现使用全局对象作为默认的接收者。由于全局对象没有entries属性所以这段代码抛出了一个错误。<br>幸运的是forEach允许调用者提供一个可选的参数作为回调函数的接收者，所以我们可以很轻松的修复该例子。</p>
+<p>方法一</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> source = [<span class="hljs-string">&quot;867&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;5309&quot;</span>];<br><br>source.forEach(<span class="hljs-built_in">buffer</span>.add, <span class="hljs-built_in">buffer</span>); <br><br><br></code></pre></td></tr></table></figure>
+
+
+<p>并非所有的高阶函数都会为使用者提供其毁掉函数的接收者。如果forEach不接受额外的接收者参数怎么办</p>
+<p>方法二</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">source.<span class="hljs-keyword">forEach</span>(<span class="hljs-keyword">function</span>(s) &#123;<br>	buffer.<span class="hljs-keyword">add</span>(s);<br>&#125;);<br><br>bujjer.<span class="hljs-keyword">join</span>();<br><br></code></pre></td></tr></table></figure>
+
+<p>创建一个函数用来实现绑定其接收者到一个指定的对象是非常常见的，因此ES5标准库直接支持这种模式，函数对象的bind方法需要一个接收者对象，并产生一个以该接收者对象的方法调用的方式调用原来的函数的封装函数。</p>
+<p>方法三</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> source = [<span class="hljs-string">&quot;867&quot;</span>, <span class="hljs-string">&quot;-&quot;</span>, <span class="hljs-string">&quot;5309&quot;</span>];<br><br>source.forEach(<span class="hljs-built_in">buffer</span>.add.bind(<span class="hljs-built_in">buffer</span>)); <br><br><br><span class="hljs-built_in">buffer</span>.add.bind(<span class="hljs-built_in">buffer</span>) 创建了一个新函数而不是修改了bufffer.add函数 该函数将接收者绑定到了<span class="hljs-built_in">buffer</span>对象，而原有函数的接收者保持不变<br><br><span class="hljs-built_in">buffer</span>.add === <span class="hljs-built_in">buffer</span>.add.bind(<span class="hljs-built_in">buffer</span>);  <span class="hljs-comment">// false;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="使用bind实现函数柯里化"><a href="#使用bind实现函数柯里化" class="headerlink" title="使用bind实现函数柯里化"></a>使用bind实现函数柯里化</h2><p>函数对象的bind方法除了具有降方法绑定到接收者的用途外，它还有更多功能。</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">function</span> simpleURL(protocol, <span class="hljs-keyword">domain</span>, <span class="hljs-type">path</span>) &#123;<br>	<span class="hljs-keyword">return</span> protocol + &quot;://&quot; + <span class="hljs-keyword">domain</span> + &quot;/&quot; + <span class="hljs-type">path</span>;<br>&#125;<br><br>var urls = paths.map(<span class="hljs-keyword">function</span>(<span class="hljs-type">path</span>) &#123;<br>	<span class="hljs-keyword">return</span> simpleURL(&quot;http&quot;, siteDomain, <span class="hljs-type">path</span>);<br>&#125;);<br><br><br></code></pre></td></tr></table></figure>
+<p>传给simpleURL的前两个参数是固定的， 只有第三个参数在变化，我们可以通过调用simpleURL函数的bind方法来自动构造该匿名函数</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> urls = path.<span class="hljs-built_in">map</span>(simpleURL.bind(<span class="hljs-literal">null</span>, <span class="hljs-string">&quot;http&quot;</span>, siteDomain));<br></code></pre></td></tr></table></figure>
+<p>对simpleURL.bind的调用产生了一个委托到simpleURL的新函数，bind的第一个参数提供了接收者的值， 由于simpleURL.bind不需要引用this，所以可以使用任何值。使用null和undefined是习惯用法。 simpleURL.bind的其余参数和提供给你新函数的所有参数共同组成了传递给simpleURL的参数。</p>
+<blockquote>
+<p>将函数与其参数的一个子集绑定的技术称为函数柯里化。</p>
+</blockquote>
+<h2 id="不要信赖函数对象的toString方法"><a href="#不要信赖函数对象的toString方法" class="headerlink" title="不要信赖函数对象的toString方法"></a>不要信赖函数对象的toString方法</h2><p>JavaScript有一个非凡的特性， 即将其源代码重现为字符串的能力</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs wren">(<span class="hljs-title function_">function</span>(<span class="hljs-params">x</span>) &#123; <br>	<span class="hljs-keyword">return</span> <span class="hljs-variable">x</span> <span class="hljs-operator">+</span> <span class="hljs-number">1</span> <br>&#125;).<span class="hljs-property">toString</span>();<br><br><span class="hljs-comment">// &quot;function (x) &#123;\n return x + 1; \n&#125;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>ECMAScript标准对于函数对象的toString方法的返回结果并没有任何要求。这意味着不同的JavaScript引擎将产生不同的结果，甚至产生的字符串跟函数并不相关。</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs delphi">(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(x)</span> <span class="hljs-comment">&#123; </span></span><br><span class="hljs-comment"><span class="hljs-function">	return x + 1 </span></span><br><span class="hljs-comment"><span class="hljs-function">&#125;</span>).<span class="hljs-title">bind</span><span class="hljs-params">(16)</span>.<span class="hljs-title">toString</span><span class="hljs-params">()</span>;</span><br><br><span class="hljs-comment">// &quot;function (x) &#123;\n [native code] \n&#125;&quot;</span><br></code></pre></td></tr></table></figure>
+<p>由于bind函数通常是由其他语言实现的通常c++，宿主提供一个编译后的函数，在此环境下通常没有源代码可展示。</p>
+<p>还有一点就是 toString方法生成的源代码并不展示闭包中保存的和内部变量引用相关的值</p>
+<figure class="highlight wren"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs wren">(<span class="hljs-title function_">function</span>(<span class="hljs-params">x</span>) &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-title function_">function</span>(<span class="hljs-params">y</span>) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-variable">x</span> <span class="hljs-operator">+</span> <span class="hljs-variable">y</span>;<br>	&#125;	<br>&#125;)(<span class="hljs-number">42</span>).<span class="hljs-property">toString</span>();<br><br><span class="hljs-comment">// &quot;function(y) &#123;\n return x + y; \n &#125;&quot;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>总而言之，应该避免使用函数对象的toString方法</p>
+</blockquote>
+<h2 id="避免使用非标准的栈检查属性"><a href="#避免使用非标准的栈检查属性" class="headerlink" title="避免使用非标准的栈检查属性"></a>避免使用非标准的栈检查属性</h2><ul>
+<li>arguments.callee 指向使用该arguments对象被调用的函数</li>
+<li>arguments.caller 指向调用该arugments对象的函数（该arguments对象调用函数的函数）</li>
+</ul>
+<p>出于安全考虑大多环境移除了arguments.caller,因此它是不可靠的</p>
+<p>许多JavaScript环境提供了一个相似的函数对象属性—非标准但是普遍适用的caller属性。 它指向函数最近的调用者</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">revealCaller</span>() &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-type">revealCaller.caller</span>;<br>&#125;<br><br><span class="hljs-keyword">function</span> <span class="hljs-title">start</span>() &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-type">revealCaller()</span>;<br>&#125;<br><br>start() === start;  // <span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>ES5的严格模式禁止使用arguments.caller 和arguments.callee ，因为它们不具备良好的可移植性， 非标准的函数对象caller属性应该避免使用，因为在包含全部栈信息方面，它是不可靠的。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/11/2018-09-11-read-book-effective-five/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Effective JavaScript (五)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/06/27/2018-06-27-read-book-effective-four/">
+                        <span class="hidden-mobile">Effective JavaScript (四)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

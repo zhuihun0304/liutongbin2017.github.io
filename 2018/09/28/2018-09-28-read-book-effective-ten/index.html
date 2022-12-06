@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="并发JavaScript被设计成一种嵌入式的脚本语言。它不是以单独的应用程序运行，而是作为大型应用程序环境下的脚本运行。典型的例子当然是Web浏览器。JavaScript中编写响应多个并发事件的程序的方法非常人性化，而且强大，因为它使用了一个简单的执行模型(有时称为事件队列和事件循环并发)和被称为异步的API.奇怪的是，到目前为止，ECMAScript标准从来没有关于并发的说明。我们讨论的都是“约">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective JavaScript (十)">
+<meta property="og:url" content="http://example.com/2018/09/28/2018-09-28-read-book-effective-ten/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="并发JavaScript被设计成一种嵌入式的脚本语言。它不是以单独的应用程序运行，而是作为大型应用程序环境下的脚本运行。典型的例子当然是Web浏览器。JavaScript中编写响应多个并发事件的程序的方法非常人性化，而且强大，因为它使用了一个简单的执行模型(有时称为事件队列和事件循环并发)和被称为异步的API.奇怪的是，到目前为止，ECMAScript标准从来没有关于并发的说明。我们讨论的都是“约">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:59:29.753Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="读书总结">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Effective JavaScript (十) - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="并发">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-28 00:00" pubdate>
+        2018年9月28日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      82 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">并发</h1>
+            
+            <div class="markdown-body">
+              <h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><p>JavaScript被设计成一种嵌入式的脚本语言。它不是以单独的应用程序运行，而是作为大型应用程序环境下的脚本运行。典型的例子当然是Web浏览器。<br>JavaScript中编写响应多个并发事件的程序的方法非常人性化，而且强大，因为它使用了一个简单的执行模型(有时称为事件队列和事件循环并发)和被称为异步的API.<br>奇怪的是，到目前为止，ECMAScript标准从来没有关于并发的说明。我们讨论的都是“约定成俗”的JavaScript特性，并不是官方标准。然而，绝大多数JavaScript的环境都使用相同的并发策略，未来标准的版本很有可能会基于广泛实现的执行模型来标准化。不管标准如何定义，使用事件和异步API是JavaScript编程的基础部分。</p>
+<h2 id="不要阻塞I-O事件队列"><a href="#不要阻塞I-O事件队列" class="headerlink" title="不要阻塞I/O事件队列"></a>不要阻塞I/O事件队列</h2><p>JavaScript程序是建立在事件之上的。输入可能来自各种各样的外部源，用户的交互操作，输入的网络数据或定时警报，我们通常会写这样的代码来等待某个特定的输入</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> <span class="hljs-built_in">text</span> = downloadSync(<span class="hljs-string">&quot;http://example.com/file.txt&quot;</span>);<br><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">text</span>);<br></code></pre></td></tr></table></figure>
+<p>这样的函数通常被称为同步函数或阻塞函数， 程序会停止工作，等待它的输入。这个例子是等的网络下载文件的结果。</p>
+<p>在JavaScript中，大多数的I/O操作都提供了异步的或非阻塞的API, 程序提供一个回调函数，一旦输入完成就可以被系统调用， 而不是将程序阻塞在等待结果的线程上。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs arcade">dowanloadAsync(<span class="hljs-string">&quot;http://example.com/file.txt&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">text</span>);<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>JavaScript并发的一个重要规则是绝不要在应用程序事件队列中使用阻塞I/O的API。对于Web应用程序的交互性，同步的I/O会导致灾难性的结果，在操作完成之前一直会阻塞用户于页面的交互。</p>
+<p>Web平台提供了Workder的API，使得产生大量的并行计算称为可能。不同于传统的线程执行Workders在一个完全隔离的状态下进行，没有获取全局作用域或应用程序主线程Web页面内容的能力。因此它不回妨碍主事件队列中运行的代码的执行。在一个Worker中使用XMLHttpRequest同步的变种很少出问题。下载操作的确会阻塞Worker继续运行，但这并不会组织要么的渲染或事件队列中的事件响应。</p>
+<h2 id="在异步序列中使用嵌套或命名的回调函数"><a href="#在异步序列中使用嵌套或命名的回调函数" class="headerlink" title="在异步序列中使用嵌套或命名的回调函数"></a>在异步序列中使用嵌套或命名的回调函数</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs arcade">db.lookupAsync(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">url</span>) &#123;<br>	<span class="hljs-comment">//	</span><br>&#125;);<br><br>downloadAsync(url, <span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;contents of &quot;</span> + url + <span class="hljs-string">&quot; : &quot;</span> + <span class="hljs-built_in">text</span>);<br>&#125;);<br><br></code></pre></td></tr></table></figure>
+<p>两个异步函数第二个的url读取不到，我们可以使用嵌套</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs arcade">db.lookupAsync(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">url</span>) &#123;<br>	downloadAsync(url, <span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) &#123;<br>		<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;contents of &quot;</span> + url + <span class="hljs-string">&quot; : &quot;</span> + <span class="hljs-built_in">text</span>);<br>	&#125;);<br>&#125;);<br><br><br></code></pre></td></tr></table></figure>
+
+<p>但是回调函数越来越多会变得很笨拙。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.lookup<span class="hljs-constructor">Async(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">url</span>)</span> &#123;<br>	download<span class="hljs-constructor">Async(<span class="hljs-params">url</span>, <span class="hljs-params">function</span>(<span class="hljs-params">text</span>)</span> &#123;<br>		download<span class="hljs-constructor">Async(<span class="hljs-string">&quot;a.txt&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">a</span>)</span> &#123;<br>			download<span class="hljs-constructor">Async(<span class="hljs-string">&quot;b.txt&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">b</span>)</span> &#123;<br>				<span class="hljs-comment">// ...</span><br>			&#125;)	<br>		&#125;)<br>	&#125;);<br>&#125;);<br><br><br></code></pre></td></tr></table></figure>
+
+<p>减少嵌套的方法之一就是将嵌套的回调函数作为命名的函数。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.lookup<span class="hljs-constructor">Async(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-params">downloadURL</span>)</span>;<br><br><br><span class="hljs-comment">// 仍然有嵌套</span><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">URL(<span class="hljs-params">url</span>)</span> &#123;<br>	download<span class="hljs-constructor">Async(<span class="hljs-params">url</span>, <span class="hljs-params">function</span>(<span class="hljs-params">text</span>)</span> &#123;<br>		show<span class="hljs-constructor">Contents(<span class="hljs-params">url</span>, <span class="hljs-params">text</span>)</span>;<br>	&#125;);<br>&#125;<br><br><span class="hljs-keyword">function</span> show<span class="hljs-constructor">Contents(<span class="hljs-params">url</span>, <span class="hljs-params">text</span>)</span> &#123;<br>	console.log(<span class="hljs-string">&quot;contents of &quot;</span> + url + <span class="hljs-string">&quot; : &quot;</span> + text);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>上面的例子中仍然有嵌套，我们可以使用bind方法消除最深层的嵌套回调函数。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.lookup<span class="hljs-constructor">Async(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-params">downloadURL</span>)</span>;<br><br><br><span class="hljs-comment">// 仍然有嵌套</span><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">URL(<span class="hljs-params">url</span>)</span> &#123;<br>	download<span class="hljs-constructor">Async(<span class="hljs-params">url</span>, <span class="hljs-params">showContents</span>.<span class="hljs-params">bind</span>(<span class="hljs-params">null</span>, <span class="hljs-params">url</span>)</span>);<br>&#125;<br><br><span class="hljs-keyword">function</span> show<span class="hljs-constructor">Contents(<span class="hljs-params">url</span>, <span class="hljs-params">text</span>)</span> &#123;<br>	console.log(<span class="hljs-string">&quot;contents of &quot;</span> + url + <span class="hljs-string">&quot; : &quot;</span> + text);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>但是如果层级过多仍然会有问题， 比如</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">db.lookup<span class="hljs-constructor">Async(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-params">downloadURL</span>)</span>;<br><br><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">URL(<span class="hljs-params">url</span>)</span> &#123;<br>	download<span class="hljs-constructor">Async(<span class="hljs-params">url</span>, <span class="hljs-params">downloadABC</span>.<span class="hljs-params">bind</span>(<span class="hljs-params">null</span>, <span class="hljs-params">url</span>)</span>);<br>&#125;<br><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">ABC(<span class="hljs-params">url</span>, <span class="hljs-params">file</span>)</span> &#123;<br>	downloas<span class="hljs-constructor">Async(<span class="hljs-string">&quot;a.txt&quot;</span>, <span class="hljs-params">downloadFileBC</span>.<span class="hljs-params">bind</span>(<span class="hljs-params">null</span>, <span class="hljs-params">url</span>, <span class="hljs-params">file</span>)</span>)<br>&#125;<br><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">BC(<span class="hljs-params">url</span>, <span class="hljs-params">file</span>, <span class="hljs-params">a</span>)</span> &#123;<br>	downloas<span class="hljs-constructor">Async(<span class="hljs-string">&quot;b.txt&quot;</span>, <span class="hljs-params">downloadFileFinish</span>.<span class="hljs-params">bind</span>(<span class="hljs-params">null</span>, <span class="hljs-params">url</span>, <span class="hljs-params">file</span>, <span class="hljs-params">a</span>)</span>)<br>&#125;<br><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">FileFinish(<span class="hljs-params">url</span>, <span class="hljs-params">file</span>, <span class="hljs-params">a</span>, <span class="hljs-params">b</span>)</span> &#123;<br>	<span class="hljs-comment">// ...</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>比如尴尬的函数命名，和参数传递。最好的方式还是将两种方式结合。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><br>db.lookup<span class="hljs-constructor">Async(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">url</span>)</span> &#123;<br>	download<span class="hljs-constructor">URLAndFiles(<span class="hljs-params">url</span>)</span>;<br>&#125;);<br><br><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">URLAndFiles(<span class="hljs-params">url</span>)</span> &#123;<br>	download<span class="hljs-constructor">Async(<span class="hljs-params">url</span>, <span class="hljs-params">downloadFiles</span>.<span class="hljs-params">bind</span>(<span class="hljs-params">null</span>, <span class="hljs-params">url</span>)</span>);<br>&#125;<br><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">Files(<span class="hljs-params">url</span>, <span class="hljs-params">file</span>)</span> &#123;<br>	download<span class="hljs-constructor">Async(<span class="hljs-string">&quot;a.txt&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">a</span>)</span> &#123;<br>		download<span class="hljs-constructor">Async(<span class="hljs-string">&quot;b.txt&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">b</span>)</span> &#123;<br>			<span class="hljs-comment">// ...</span><br>		&#125;)	<br>	&#125;)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>更好的方法是抽象出一个可以下载多个文件的方法</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">downloadFiles</span>(<span class="hljs-params">url, file</span>) &#123;<br>	downloadAllAsync([<span class="hljs-string">&quot;a.txt&quot;</span>, <span class="hljs-string">&quot;b.txt&quot;</span>, <span class="hljs-string">&quot;c.txt&quot;</span>], <span class="hljs-keyword">function</span>(<span class="hljs-params">all</span>) &#123;<br>		<span class="hljs-keyword">var</span> a = <span class="hljs-built_in">all</span>[<span class="hljs-number">0</span>], b = <span class="hljs-built_in">all</span>[<span class="hljs-number">1</span>], c = <span class="hljs-built_in">all</span>[<span class="hljs-number">2</span>];<br>	&#125;)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="当心丢弃错误"><a href="#当心丢弃错误" class="headerlink" title="当心丢弃错误"></a>当心丢弃错误</h2><p>同步代码我们可以通过<code>try...catch</code>来捕获所有错误，比如</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs scss">try &#123;<br>	<span class="hljs-built_in">f</span>();<br>	<span class="hljs-built_in">g</span>();<br>	<span class="hljs-built_in">h</span>();<br>&#125; <span class="hljs-built_in">catch</span>(e) &#123;<br>	<span class="hljs-comment">// handle any error that occured</span><br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+<p>但是异步代码根本不可能抛出异常， 通常异步API会有一个额外的回调函数来处理网络错误。</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br>downloadAsync(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) &#123;<br>		<br>&#125;, <span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Error &quot;</span> + err)	;<br>&#125;);<br><br>多个回调时可以提取公共部分<br><br><span class="hljs-keyword">function</span> <span class="hljs-title function_">onErr</span>(<span class="hljs-params">err</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Error &quot;</span> + err)	;<br>&#125;<br><br>downloadAsync(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">text</span>) &#123;<br>		<br>&#125;, onErr);<br><br></code></pre></td></tr></table></figure>
+
+<p>Node.js 异步处理API的错误处理，我们通过if判断来控制每个回调函数</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> on<span class="hljs-constructor">Err(<span class="hljs-params">err</span>)</span> &#123;<br>	console.log(<span class="hljs-string">&quot;Error &quot;</span> + err)	;<br>&#125;<br><br>download<span class="hljs-constructor">Async(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">error</span>, <span class="hljs-params">text</span>)</span> &#123;<br>	<span class="hljs-keyword">if</span>(error) &#123;<br>		on<span class="hljs-constructor">Error(<span class="hljs-params">error</span>)</span>;<br>		return <span class="hljs-literal">false</span>;<br>	&#125;<br><br>	<span class="hljs-comment">//success</span><br>&#125;);<br><br><br>更简洁写法<br><br>download<span class="hljs-constructor">Async(<span class="hljs-string">&quot;url&quot;</span>, <span class="hljs-params">function</span>(<span class="hljs-params">error</span>, <span class="hljs-params">text</span>)</span> &#123;<br>	<span class="hljs-keyword">if</span>(error) return on<span class="hljs-constructor">Error(<span class="hljs-params">error</span>)</span>;<br><br>	<span class="hljs-comment">//success</span><br>&#125;);<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="对异步循环使用递归"><a href="#对异步循环使用递归" class="headerlink" title="对异步循环使用递归"></a>对异步循环使用递归</h2><p>如果一个函数接受一个URL的数组并尝试下载买每个文件，如果API是同步的很容易实现</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> download<span class="hljs-constructor">OneSync(<span class="hljs-params">urls</span>)</span> &#123;<br>	<span class="hljs-keyword">for</span>(var i = <span class="hljs-number">0</span>, n = urls.length; i &lt; n; i++) &#123;<br>		<span class="hljs-keyword">try</span> &#123;<br>			return download<span class="hljs-constructor">Sync(<span class="hljs-params">urls</span>[<span class="hljs-params">i</span>])</span>;<br>		&#125; catch(e) &#123;<br><br>		&#125;<br>	&#125;<br><br>	throw <span class="hljs-keyword">new</span> <span class="hljs-constructor">Error(<span class="hljs-string">&quot;all downloads failed&quot;</span>)</span>;<br>&#125;<br>如果调用downloadAsync的话会所有文件一起下载没有顺序，所以我们需要这样做在每个回调结束调用自身<br><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">OneAsync(<span class="hljs-params">urls</span>, <span class="hljs-params">onsuccess</span>, <span class="hljs-params">onfailur</span>)</span> &#123;<br>	var n = urls.length;<br><br>	<span class="hljs-keyword">function</span> <span class="hljs-keyword">try</span><span class="hljs-constructor">NextURL(<span class="hljs-params">i</span>)</span> &#123;<br>		<span class="hljs-keyword">if</span>(i &gt;= n) &#123;<br>			onfailur(<span class="hljs-string">&quot;all downloads failed&quot;</span>);<br>			return;<br>		&#125;<br><br>		download<span class="hljs-constructor">Async(<span class="hljs-params">urls</span>[<span class="hljs-params">i</span>], <span class="hljs-params">onsuccess</span>, <span class="hljs-params">function</span>()</span> &#123;<br>			<span class="hljs-keyword">try</span><span class="hljs-constructor">NextURL(<span class="hljs-params">i</span> + 1)</span>;<br>		&#125;)<br>	&#125;<br><br>	<span class="hljs-keyword">try</span><span class="hljs-constructor">NextURL(0)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>局部函数tryNextURL是一个递归函数。它的实现调用了自身。 目前典型的JavaScript环境中一个递归函数调用自身多次会导致失败。<br>因为当一个程序执行有太多的函数调用，它会耗尽栈空间，最终抛出异常。这种情况被称为栈溢出。</p>
+<p>该例子调用100000次会产生一个运行时错误。</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ada"><br><span class="hljs-keyword">function</span> <span class="hljs-title">countdown</span>(n) &#123;<br>	if(n === 0) &#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-type">&quot;done&quot;</span>;<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		<span class="hljs-keyword">return</span> countdown(n -<span class="hljs-number">1</span>);<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>异步操作不需要等待递归回调返回后才返回，调用栈不回有十万个函数在等待。每次有进有出只调用一个。</p>
+<ul>
+<li>循环不能是异步的</li>
+<li>使用递归函数在事件循环的单独轮次中执行迭代</li>
+<li>在事件循环的单独轮次中执行递归，并不会导致栈溢出</li>
+</ul>
+<h2 id="不要在计算时阻塞事件队列"><a href="#不要在计算时阻塞事件队列" class="headerlink" title="不要在计算时阻塞事件队列"></a>不要在计算时阻塞事件队列</h2><p>如果你的程序需要执行代价高昂的计算你该怎么办，最简单的方法就是使用想Web客户端平台的Worker API这样的并发机制。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><br><span class="hljs-keyword">var</span> ai = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Worker</span>(<span class="hljs-string">&#x27;ai.js&#x27;</span>);<br><br><span class="hljs-keyword">var</span> userMove = <span class="hljs-comment">/* *** */</span>;<br><br>ai.<span class="hljs-title function_">postMessage</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(&#123;<br>	<span class="hljs-attr">userMOve</span>: userMove<br>&#125;));<br><br><br>ai.<span class="hljs-property">onmessage</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params">event</span>) &#123;<br>	<span class="hljs-title function_">executeMove</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">parse</span>(event.<span class="hljs-property">data</span>).<span class="hljs-property">computerMove</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这样会产生一个新的线程独立的事件队列的并发执行线程。该worker是一个完全隔离的状态–没有任何应用程序对象的直接访问。但是，应用程序于worker之间可以功过发送形式为字符串的message来交互。</p>
+<ul>
+<li>避免在主事件队列中执行代价高昂的计算</li>
+<li>在支持Worker API的平台，该API可以用来在一个独立的事件队列中运行长计算程序。</li>
+<li>在Worker API不可用活代价高昂的环境中，考虑将计算程序分解到事件循环的多个轮次中</li>
+</ul>
+<h2 id="使用计数器来执行并行操作"><a href="#使用计数器来执行并行操作" class="headerlink" title="使用计数器来执行并行操作"></a>使用计数器来执行并行操作</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">function</span> <span class="hljs-title function_">downloadAllAsync</span>(<span class="hljs-params">urls, onsuccess, onerror</span>) &#123;<br><br>	<span class="hljs-keyword">var</span> result = [], <span class="hljs-built_in">length</span> = urls.<span class="hljs-built_in">length</span>;<br><br>	<span class="hljs-keyword">if</span>(<span class="hljs-built_in">length</span> === <span class="hljs-number">0</span>) &#123;<br>		setTimeout(onsuccess.bind(<span class="hljs-literal">null</span>, result), <span class="hljs-number">0</span>);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br>	urls.forEach(<span class="hljs-keyword">function</span>(<span class="hljs-params">url</span>) &#123;<br>		downloadAsync(url, <span class="hljs-keyword">function</span>(<span class="hljs-params">rext</span>) &#123;<br>			<span class="hljs-keyword">if</span>(result) &#123;<br>				result.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">text</span>);<br>				<span class="hljs-keyword">if</span>(result.<span class="hljs-built_in">length</span> === urls.<span class="hljs-built_in">length</span>) &#123;<br>					onsuccess(result);<br>				&#125;<br>			&#125;<br>		&#125;, <span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) &#123;<br>			<span class="hljs-keyword">if</span>(result) &#123;<br>				result = <span class="hljs-literal">null</span>;<br>				onerror(error);<br>			&#125;<br>		&#125;);<br>	&#125;)<br>&#125;<br><br>这段代码有个错误<br><br><span class="hljs-keyword">var</span> filenames = [<br>	<span class="hljs-string">&quot;huge.txt&quot;</span>,<br>	<span class="hljs-string">&quot;tiny.txt&quot;</span>,<br>	<span class="hljs-string">&quot;medium.txt&quot;</span>,<br>];<br><br>downloadAllAsync(filenames, <span class="hljs-keyword">function</span>(<span class="hljs-params">files</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Huge file: &quot;</span> + files[<span class="hljs-number">0</span>].<span class="hljs-built_in">length</span>); <span class="hljs-comment">// tiny</span><br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Tiny file: &quot;</span> + files[<span class="hljs-number">0</span>].<span class="hljs-built_in">length</span>); <span class="hljs-comment">// medium</span><br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Medium file: &quot;</span> + files[<span class="hljs-number">0</span>].<span class="hljs-built_in">length</span>); <span class="hljs-comment">// huge</span><br>&#125;, <span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;Error : &quot;</span> + error);<br>&#125;);<br><br><br></code></pre></td></tr></table></figure>
+<p>这里下载文件的顺序并不可控，因为文件是并行下载的。 调用者无法找出那个结果对应哪个文件， 上面的例子假设结果合输入有相同的顺序其实是错误的</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">function</span> download<span class="hljs-constructor">AllAsync(<span class="hljs-params">urls</span>, <span class="hljs-params">onsuccess</span>, <span class="hljs-params">onerror</span>)</span> &#123;<br><br>	var result = <span class="hljs-literal">[]</span>, length = urls.length;<br><br>	<span class="hljs-keyword">if</span>(length<span class="hljs-operator"> === </span><span class="hljs-number">0</span>) &#123;<br>		set<span class="hljs-constructor">Timeout(<span class="hljs-params">onsuccess</span>.<span class="hljs-params">bind</span>(<span class="hljs-params">null</span>, <span class="hljs-params">result</span>)</span>, <span class="hljs-number">0</span>);<br>		return;<br>	&#125;<br><br>	urls.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each(<span class="hljs-params">function</span>(<span class="hljs-params">url</span>, <span class="hljs-params">i</span>)</span> &#123;<br>		download<span class="hljs-constructor">Async(<span class="hljs-params">url</span>, <span class="hljs-params">function</span>(<span class="hljs-params">text</span>)</span> &#123;<br>			<span class="hljs-keyword">if</span>(result) &#123;<br>				<br>				result<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = text;<br>				<span class="hljs-keyword">if</span>(result.length<span class="hljs-operator"> === </span>urls.length) &#123;<br>					onsuccess(result);<br>				&#125;<br>			&#125;<br>		&#125;, <span class="hljs-keyword">function</span>(error) &#123;<br>			<span class="hljs-keyword">if</span>(result) &#123;<br>				result = null;<br>				onerror(error);<br>			&#125;<br>		&#125;);<br>	&#125;)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+<p>这个版本也有问题如果先下载完成的是第三个文件则 result[2] = text; 那么result的长度也是3， 则直接在if条件中返回，用户的success回调函数将被过早调用，其参数为一个不完整的结果数组。</p>
+<p>所以正确的方式应该是这样</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><br><span class="hljs-keyword">function</span> download<span class="hljs-constructor">AllAsync(<span class="hljs-params">urls</span>, <span class="hljs-params">onsuccess</span>, <span class="hljs-params">onerror</span>)</span> &#123;<br><br>	var result = <span class="hljs-literal">[]</span>, pending = urls.length;<br><br>	<span class="hljs-keyword">if</span>(pending<span class="hljs-operator"> === </span><span class="hljs-number">0</span>) &#123;<br>		set<span class="hljs-constructor">Timeout(<span class="hljs-params">onsuccess</span>.<span class="hljs-params">bind</span>(<span class="hljs-params">null</span>, <span class="hljs-params">result</span>)</span>, <span class="hljs-number">0</span>);<br>		return;<br>	&#125;<br><br>	urls.<span class="hljs-keyword">for</span><span class="hljs-constructor">Each(<span class="hljs-params">function</span>(<span class="hljs-params">url</span>, <span class="hljs-params">i</span>)</span> &#123;<br>		download<span class="hljs-constructor">Async(<span class="hljs-params">url</span>, <span class="hljs-params">function</span>(<span class="hljs-params">text</span>)</span> &#123;<br>			<span class="hljs-keyword">if</span>(result) &#123;<br>			<br>				result<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = text;<br>				pending--;<br>				<span class="hljs-keyword">if</span>(pending<span class="hljs-operator"> === </span><span class="hljs-number">0</span>) &#123;<br>					onsuccess(result);<br>				&#125;<br>			&#125;<br>		&#125;, <span class="hljs-keyword">function</span>(error) &#123;<br>			<span class="hljs-keyword">if</span>(result) &#123;<br>				result = null;<br>				onerror(error);<br>			&#125;<br>		&#125;);<br>	&#125;)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="绝不要同步的调用异步的回调函数"><a href="#绝不要同步的调用异步的回调函数" class="headerlink" title="绝不要同步的调用异步的回调函数"></a>绝不要同步的调用异步的回调函数</h2><p>加入下载文件的例子有一个缓存</p>
+<figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs qml"><span class="hljs-keyword">var</span> cache = <span class="hljs-keyword">new</span> Dict();<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">downloadCachingAsync</span>(<span class="hljs-params">url, onsuccess, onerrur</span>) </span>&#123;<br>	<span class="hljs-keyword">if</span>(cache.has(<span class="hljs-built_in">url</span>)) &#123;<br>		onsuccess(cache.get(<span class="hljs-built_in">url</span>));  <span class="hljs-comment">// 同步调用</span><br>	&#125;<br><br>	<span class="hljs-keyword">return</span> downloadAsync(<span class="hljs-built_in">url</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">file</span>) </span>&#123;<br>		cache.set(<span class="hljs-built_in">url</span>, file);<br>		onsuccess(file);<br>	&#125;, onerror);<br>&#125;<br><br>通常情况如果可以回立即提供数据，但这改变了用户预期<br><br>downloadAsync(<span class="hljs-string">&quot;file.txt&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">file</span>) </span>&#123;<br>	<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;finished&quot;</span>);<br>&#125;);<br><br><span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;starting&quot;</span>);<br><br>这里按照我们预想 可能先返回 <span class="hljs-string">&quot;starting&quot;</span> 然后 <span class="hljs-string">&quot;finished&quot;</span>, 但是由于同步调用了函数，<br>这里如果文件有缓存的话 先返回了<span class="hljs-string">&quot;finished&quot;</span> 然后才是 <span class="hljs-string">&quot;starting&quot;</span>; 这与我们的预想不符。<br>所以我们应该这样来使用<br><br><span class="hljs-keyword">if</span>(cache.has(<span class="hljs-built_in">url</span>)) &#123;<br>	<span class="hljs-keyword">var</span> cached = cache.get(<span class="hljs-built_in">url</span>);<br>	setTimeout(onsuccess.bind(<span class="hljs-literal">null</span>, cached), <span class="hljs-number">0</span>);<br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="使用promise模式清洁异步逻辑"><a href="#使用promise模式清洁异步逻辑" class="headerlink" title="使用promise模式清洁异步逻辑"></a>使用promise模式清洁异步逻辑</h2><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><br>downloadAsync(<span class="hljs-string">&quot;file.txt&quot;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">file</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;file : &quot;</span> + file);<br>&#125;);<br><br><br>相比之下，基于promise的API不接受回调函数作为参数<br><br><span class="hljs-keyword">var</span> p = downloadP(<span class="hljs-string">&quot;file.txt&quot;</span>);<br><br>p.then(<span class="hljs-keyword">function</span>(<span class="hljs-params">file</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;file: &quot;</span> + file);<br>&#125;);<br><br>promise的返回值是一个新的promise<br><br><span class="hljs-keyword">var</span> fileP = downloadP(<span class="hljs-string">&quot;file.txt&quot;</span>);<br><br><span class="hljs-keyword">var</span> lengthP = fileP.then(<span class="hljs-keyword">function</span>(<span class="hljs-params">file</span>) &#123;<br>	<span class="hljs-keyword">return</span> file.<span class="hljs-built_in">length</span>;<br>&#125;);<br><br>lengthP.then(<span class="hljs-keyword">function</span>(<span class="hljs-params">length</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;length: &quot;</span> + <span class="hljs-built_in">length</span>);<br>&#125;);<br><br><br></code></pre></td></tr></table></figure>
+
+<p>promise通常提供给一个叫做when的工具函数，或者join</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-keyword">var</span> filesP = join(downloadP(<span class="hljs-string">&quot;file1.txt&quot;</span>),<br>				downloadP(<span class="hljs-string">&quot;file2.txt&quot;</span>),<br>				downloadP(<span class="hljs-string">&quot;file3.txt&quot;</span>));<br><br>filesP.then(<span class="hljs-keyword">function</span>(<span class="hljs-params">files</span>) &#123;<br>	<span class="hljs-comment">// files[0]</span><br>&#125;);<br><br><br><span class="hljs-keyword">var</span> fileP1 = downloadP(<span class="hljs-string">&quot;file1.txt&quot;</span>);<br><span class="hljs-keyword">var</span> fileP2 = downloadP(<span class="hljs-string">&quot;file2.txt&quot;</span>);<br><span class="hljs-keyword">var</span> fileP3 = downloadP(<span class="hljs-string">&quot;file3.txt&quot;</span>);<br><br><span class="hljs-built_in">when</span>([fileP1, fileP2, fileP3], <span class="hljs-keyword">function</span>(<span class="hljs-params">files</span>) &#123;<br>	<span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-string">&quot;file1: &quot;</span> + files[<span class="hljs-number">0</span>]);<br><br>&#125;)<br><br></code></pre></td></tr></table></figure>
+<p>使用select或choose工具函数可以使几个promise彼此竞争。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">var filesP = select(download<span class="hljs-constructor">P(<span class="hljs-string">&quot;file1.txt&quot;</span>)</span>,<br>				download<span class="hljs-constructor">P(<span class="hljs-string">&quot;file2.txt&quot;</span>)</span>,<br>				download<span class="hljs-constructor">P(<span class="hljs-string">&quot;file3.txt&quot;</span>)</span>);<br><br>filesP.<span class="hljs-keyword">then</span>(<span class="hljs-keyword">function</span>(file) &#123;<br>	<span class="hljs-comment">//file</span><br>	<span class="hljs-comment">// 返回值最先完成下载的文件的promise</span><br>&#125;);<br><br></code></pre></td></tr></table></figure>
+
+<p>select函数的另一个用途是提供超时来终止长时间的操作</p>
+<figure class="highlight sas"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sas">var fileP = <span class="hljs-keyword">select</span>(downloadP(<span class="hljs-string">&quot;file.txt&quot;</span>), timeoutErrorP(2000));<br><br>filep.the<span class="hljs-meta">n</span>(functio<span class="hljs-meta">n</span>(<span class="hljs-keyword">file</span>) &#123;<br>	console.<span class="hljs-meta">log</span>(<span class="hljs-string">&quot;file: &quot;</span> + <span class="hljs-keyword">file</span>);<br>&#125;, functio<span class="hljs-meta">n</span>(<span class="hljs-keyword">error</span>) &#123;<br>	console.<span class="hljs-meta">log</span>(<span class="hljs-string">&quot;I/O error or timeout: &quot;</span> + <span class="hljs-keyword">error</span>);<br>&#125;)<br><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AF%BB%E4%B9%A6%E6%80%BB%E7%BB%93/">读书总结</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2018/09/28/2018-09-28-read-book-effective-nine/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Effective JavaScript (九)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/25/2018-09-25-read-book-effective-eight/">
+                        <span class="hidden-mobile">Effective JavaScript (八)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

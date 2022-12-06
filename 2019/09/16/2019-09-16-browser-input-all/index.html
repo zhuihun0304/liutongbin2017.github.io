@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="不久前看了一篇文章在浏览器输入 URL 回车之后发生了什么, 感觉讲的实在很好所以在此我也想总结一下,当自己被问到这个问题的时候会如何回答呢? 在浏览器输入 URL 回车之后发生了什么？大致流程如下  1.URL解析 2.DNS查询； 3.建立TCP连接； 4.发送HTTP请求； 5.服务器处理请求； 6.返回响应结果； 7.关闭TCP连接； 8.浏览器解析HTML； 9.浏览器布局渲染；  当我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在浏览器输入 URL 回车之后发生了什么">
+<meta property="og:url" content="http://example.com/2019/09/16/2019-09-16-browser-input-all/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="不久前看了一篇文章在浏览器输入 URL 回车之后发生了什么, 感觉讲的实在很好所以在此我也想总结一下,当自己被问到这个问题的时候会如何回答呢? 在浏览器输入 URL 回车之后发生了什么？大致流程如下  1.URL解析 2.DNS查询； 3.建立TCP连接； 4.发送HTTP请求； 5.服务器处理请求； 6.返回响应结果； 7.关闭TCP连接； 8.浏览器解析HTML； 9.浏览器布局渲染；  当我">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/browser-input/search.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/browser-input/tcp.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/browser-input/core.png">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/browser-input/process.png">
+<meta property="article:published_time" content="2019-09-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:57:23.112Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="基础">
+<meta property="article:tag" content="HSTS">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.darknights.cn/assets/images/in-post/browser-input/search.png">
+  
+  
+  <title>在浏览器输入 URL 回车之后发生了什么 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="在浏览器输入 URL 回车之后的一系列流程解析">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-09-16 00:00" pubdate>
+        2019年9月16日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">在浏览器输入 URL 回车之后的一系列流程解析</h1>
+            
+            <div class="markdown-body">
+              <p>不久前看了一篇文章<a target="_blank" rel="noopener" href="https://4ark.me/post/b6c7c0a2.html">在浏览器输入 URL 回车之后发生了什么</a>, 感觉讲的实在很好所以在此我也想总结一下,当自己被问到这个问题的时候会如何回答呢?</p>
+<p>在浏览器输入 URL 回车之后发生了什么？<br>大致流程如下</p>
+<ul>
+<li>1.URL解析</li>
+<li>2.DNS查询；</li>
+<li>3.建立TCP连接；</li>
+<li>4.发送HTTP请求；</li>
+<li>5.服务器处理请求；</li>
+<li>6.返回响应结果；</li>
+<li>7.关闭TCP连接；</li>
+<li>8.浏览器解析HTML；</li>
+<li>9.浏览器布局渲染；</li>
+</ul>
+<p>当我们在浏览器输入网址回车后,一切从这里开始</p>
+<h3 id="URL解析"><a href="#URL解析" class="headerlink" title="URL解析"></a>URL解析</h3><blockquote>
+<p><code>HSTS(HTTP Strict Transport Security), 强制客户端使用 HTTPS 访问页面</code>,<a target="_blank" rel="noopener" href="https://www.barretlee.com/blog/2015/10/22/hsts-intro/">你不知道的HSTS</a></p>
+</blockquote>
+<p>首先判断你输入的是一个合法的URL还是一个带搜索的关键词</p>
+<ul>
+<li>如果输入的是内容则将输入内容自动编码。</li>
+<li>输入的是网址向服务器请求我们想要的页面内容则开始进行DNS域名查询</li>
+</ul>
+<p>浏览器需要首先确认的是域名所对应的服务器在哪里,将域名解析成对应的服务器IP地址这项工作,是由DNS服务器来完成的.<br>客户端收到你输入的域名地址后,</p>
+<ul>
+<li>1.首先会从浏览器缓存中查找是否有对应域名</li>
+<li>2.操作系统缓存</li>
+<li>3.路由器DNS缓存</li>
+<li>4.查找本地的hosts文件</li>
+<li>5.ISP的DNS服务器</li>
+<li>6.根域名服务器 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%A0%B9%E7%B6%B2%E5%9F%9F%E5%90%8D%E7%A8%B1%E4%BC%BA%E6%9C%8D%E5%99%A8">维基百科</a></li>
+</ul>
+<blockquote>
+<p><code>ISP</code>是<code>Internet Service Provider(因特网服务提供商)</code>的简称,ISP有专门的DNS服务器应对DNS查询请求.每一个ISP（网络服务提供商），或一个大学，甚至是一个大学里的系都会有一个自己的本地域名服务器，他会在url第一次访问时缓存该域名的指向。下次再访问时，他会从缓存里把这个url曾经指向的IP调出来。</p>
+</blockquote>
+<blockquote>
+<p>ISP的DNS服务器还找不到的话，它就会向根服务器发出请求，进行递归查询（DNS服务器先问根域名服务器.com域名服务器的IP地址，然后再问.com域名服务器，依次类推）。</p>
+</blockquote>
+<h4 id="根域名服务器查询"><a href="#根域名服务器查询" class="headerlink" title="根域名服务器查询"></a>根域名服务器查询</h4><p>在前面所有步骤没有缓存的情况下，本地 DNS 服务器会将请求转发到互联网上的根域，下面这个图很好的诠释了整个流程：<br><img src="https://cdn.darknights.cn/assets/images/in-post/browser-input/search.png" srcset="/img/loading.gif" lazyload></p>
+<p>需要注意的点</p>
+<ul>
+<li>递归方式：一路查下去中间不返回，得到最终结果才返回信息（浏览器到本地DNS服务器的过程）</li>
+<li>迭代方式，就是本地DNS服务器到根域名服务器查询的方式。</li>
+<li><a target="_blank" rel="noopener" href="https://www.bisend.cn/blog/dns-ji-chi-yu-wu-ran">什么是 DNS 劫持</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50043595">前端 dns-prefetch 优化</a></li>
+</ul>
+<p>递归查询：<br>    主机向本地域名服务器的查询一般都是采用递归查询。<br>    如果主机所询问的本地域名服务器不知道被查询的域名的IP地址，那么本地域名服务器就以DNS客户的身份，向其根域名服务器继续发出查询请求报文(即替主机继续查询)，而不是让主机自己进行下一步查询。因此，递归查询返回的查询结果或者是所要查询的IP地址，或者是返回一个失败的响应，表示无法查询到所需的IP地址</p>
+<p>迭代查询：<br>    本地域名服务器向根域名服务器的查询通常是采用迭代查询。<br>    当根域名服务器收到本地域名服务器发出的迭代查询请求报文时，要么返回给本地域名服务器所要查询的IP地址，要么返回给本地域名服务器下一步应当查询的域名服务器的IP地址。</p>
+<h3 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h3><p>TCP/IP 分四层,在发送数据时,每层都要对数据进行封装</p>
+<p><img src="https://cdn.darknights.cn/assets/images/in-post/browser-input/tcp.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="应用层-发送HTTP请求"><a href="#应用层-发送HTTP请求" class="headerlink" title="应用层:发送HTTP请求"></a>应用层:发送HTTP请求</h4><p>在前面的步骤我们已经得到服务器的 IP 地址，浏览器会开始构造一个 HTTP 报文，其中包括：</p>
+<ul>
+<li>请求报头（Request Header）：请求方法、目标地址、遵循的协议等等</li>
+<li>请求主体（其他参数）</li>
+</ul>
+<p>其中需要注意的点：</p>
+<ul>
+<li>浏览器只能发送 GET、POST 方法，而打开网页使用的是 GET 方法</li>
+</ul>
+<h4 id="传输层-TCP传输报文"><a href="#传输层-TCP传输报文" class="headerlink" title="传输层: TCP传输报文"></a>传输层: TCP传输报文</h4><p>传输层会发起一条到达服务器的 TCP 连接，为了方便传输，会对数据进行分割（以报文段为单位），并标记编号，方便服务器接受时能够准确地还原报文信息。</p>
+<p>在建立连接前，会先进行 TCP 三次握手。<a target="_blank" rel="noopener" href="https://github.com/jawil/blog/issues/14">通俗解释TCP协议三次握手</a>、<a target="_blank" rel="noopener" href="https://hit-alibaba.github.io/interview/basic/network/HTTP.html">计算机网络</a></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cpcpcp123/article/details/52739407">SYN 泛洪攻击</a></p>
+</blockquote>
+<h4 id="网络层-IP协议查询Mac地址"><a href="#网络层-IP协议查询Mac地址" class="headerlink" title="网络层: IP协议查询Mac地址"></a>网络层: IP协议查询Mac地址</h4><p>将数据段打包，并加入源及目标的IP地址，并且负责寻找传输路线。<br>判断目标地址是否与当前地址处于同一网络中，是的话直接根据 Mac 地址发送，否则使用路由表查找下一跳地址，以及使用 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28771785">ARP 协议</a>查询它的 Mac 地址。</p>
+<blockquote>
+<p>注意：在 OSI 参考模型中 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28771785">ARP</a> 协议位于链路层，但在 TCP/IP 中，它位于网络层。</p>
+</blockquote>
+<h4 id="链路层-以太网协议"><a href="#链路层-以太网协议" class="headerlink" title="链路层: 以太网协议"></a>链路层: 以太网协议</h4><p>根据以太网协议将数据分为以”帧”为单位的数据包, 每一帧分为两个部分:</p>
+<ul>
+<li>标头: 数据包的发送者、接受者、数据类型</li>
+<li>数据: 数据包具体内容</li>
+</ul>
+<blockquote>
+<p>Mac地址<br>以太网规定了连入网络的所有设备都必须具备“网卡”接口, 数据包都是从一块网卡传递到另一块网卡,网卡地址就是Mac地址.每一个Mac地址都是独一无二的,具备了一对一的能力.</p>
+</blockquote>
+<blockquote>
+<p>广播<br>发送数据的方法很原始，直接把数据通过 ARP 协议，向本网络的所有机器发送，接收方根据标头信息与自身 Mac 地址比较，一致就接受，否则丢弃。 但是接受方回应是单播.</p>
+</blockquote>
+<h4 id="服务器接受请求"><a href="#服务器接受请求" class="headerlink" title="服务器接受请求"></a>服务器接受请求</h4><h3 id="服务器处理请求"><a href="#服务器处理请求" class="headerlink" title="服务器处理请求"></a>服务器处理请求</h3><h4 id="HTTPD"><a href="#HTTPD" class="headerlink" title="HTTPD"></a>HTTPD</h4><p>最常见的 HTTPD 有 Linux 上常用的 Apache 和 Nginx，以及 Windows 上的 IIS。<br>它会监听得到的请求，然后开启一个子进程去处理这个请求。</p>
+<h4 id="处理请求"><a href="#处理请求" class="headerlink" title="处理请求"></a>处理请求</h4><p>接受 TCP 报文后，会对连接进行处理，对HTTP协议进行解析（请求方法、域名、路径等），并且进行一些验证：</p>
+<ul>
+<li>验证是否配置虚拟主机</li>
+<li>验证虚拟主机是否接受此方法</li>
+<li>验证该用户可以使用该方法（根据 IP 地址、身份信息等）</li>
+</ul>
+<h4 id="URL重写"><a href="#URL重写" class="headerlink" title="URL重写"></a>URL重写</h4><p>然后会查看 URL 重写规则，如果请求的文件是真实存在的，比如图片、html、css、js文件等，则会直接把这个文件返回。</p>
+<p>否则服务器会按照规则把请求重写到 一个 REST 风格的 URL 上。</p>
+<p>然后根据动态语言的脚本，来决定调用什么类型的动态文件解释器来处理这个请求。</p>
+<p>以 PHP 语言的 MVC 框架举例，它首先会初始化一些环境的参数，根据 URL 由上到下地去匹配路由，然后让路由所定义的方法去处理请求。</p>
+<h3 id="浏览器接受响应"><a href="#浏览器接受响应" class="headerlink" title="浏览器接受响应"></a>浏览器接受响应</h3><p>浏览器接收到来自服务器的响应资源后，会对资源进行分析。</p>
+<p>首先查看 Response header，根据不同状态码做不同的事（比如上面提到的重定向）。</p>
+<p>如果响应资源进行了压缩（比如 gzip），还需要进行解压。</p>
+<p>然后，对响应资源做缓存。</p>
+<p>接下来，根据响应资源里的 MIME 类型去解析响应内容（比如 HTML、Image各有不同的解析方式）。</p>
+<h3 id="渲染页面"><a href="#渲染页面" class="headerlink" title="渲染页面"></a>渲染页面</h3><p><img src="https://cdn.darknights.cn/assets/images/in-post/browser-input/core.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://cdn.darknights.cn/assets/images/in-post/browser-input/process.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="文章参考"><a href="#文章参考" class="headerlink" title="文章参考"></a>文章参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://hellogithub2014.github.io/2017/09/24/how-do-network-connect/">从浏览器输入url按回车后发生了什么</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/50043595">浏览器探究&amp;前端优化指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28771785">ARP</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bisend.cn/blog/dns-ji-chi-yu-wu-ran">什么是DNS劫持与DNS污染</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/59ba146c6fb9a00a4636d8b6">深入理解Http请求、DNS劫持与解析</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/it_rod/article/details/79939651">HTTP基础与DNS分析</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gopark/p/8430916.html">DNS原理及其解析过程</a></li>
+<li><a target="_blank" rel="noopener" href="https://4ark.me/post/b6c7c0a2.html">在浏览器输入 URL 回车之后发生了什么</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/xsilence/">DNS查找域名的过程</a></li>
+<li><a target="_blank" rel="noopener" href="http://fex.baidu.com/blog/2014/05/what-happen/">从输入 URL 到页面加载完成的过程中都发生了什么事情？</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80/">基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/HSTS/">HSTS</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/12/2019-11-12-js-array/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaScript内置对象之数组</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/09/08/2019-09-08-leetcode-five/">
+                        <span class="hidden-mobile">LeetCode刷题总结(简单版五)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,494 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/deskIcon.png">
+  <link rel="icon" href="/img/deskIcon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="binn">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="JS 中的最大安全整数JS中所有的数字类型存储都是双精度浮点数浮点数并不是能够精确表示范围内的所有数的， 虽然 double 浮点型的范围看上去很大: 2.23x10^(-308) ~ 1.79x10^308。 可以表示的最大整数可以很大，但能够精确表示，使用算数运算的并没有这么大。 例如下面会报错 123456789101112131415161718192021console.log(0.1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript的的最大安全数">
+<meta property="og:url" content="http://example.com/2017/11/01/2017-11-15-js-base-number/index.html">
+<meta property="og:site_name" content="blog">
+<meta property="og:description" content="JS 中的最大安全整数JS中所有的数字类型存储都是双精度浮点数浮点数并不是能够精确表示范围内的所有数的， 虽然 double 浮点型的范围看上去很大: 2.23x10^(-308) ~ 1.79x10^308。 可以表示的最大整数可以很大，但能够精确表示，使用算数运算的并没有这么大。 例如下面会报错 123456789101112131415161718192021console.log(0.1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.darknights.cn/assets/images/in-post/js-base/number.png">
+<meta property="article:published_time" content="2017-10-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-02T03:57:23.120Z">
+<meta property="article:author" content="追魂">
+<meta property="article:tag" content="计算机基础">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.darknights.cn/assets/images/in-post/js-base/number.png">
+  
+  
+  <title>javascript的的最大安全数 - blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>黑崎一护</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                文件
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                类别
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于我
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/son/">
+                <i class="iconfont icon-user-fill"></i>
+                彦
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bleach6.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="javascript基础知识">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2017-11-01 00:00" pubdate>
+        2017年11月1日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15 分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">javascript基础知识</h1>
+            
+            <div class="markdown-body">
+              <h2 id="JS-中的最大安全整数"><a href="#JS-中的最大安全整数" class="headerlink" title="JS 中的最大安全整数"></a>JS 中的最大安全整数</h2><p>JS中所有的数字类型存储都是<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%9B%99%E7%B2%BE%E5%BA%A6%E6%B5%AE%E9%BB%9E%E6%95%B8">双精度浮点数</a>浮点数并不是能够精确表示范围内的所有数的， 虽然 double 浮点型的范围看上去很大: 2.23x10^(-308) ~ 1.79x10^308。 可以表示的最大整数可以很大，但能够精确表示，使用算数运算的并没有这么大。</p>
+<p>例如下面会报错</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></div></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">0.1</span> + <span class="hljs-number">0.2</span>)<br><span class="hljs-comment">//output: 0.30000000000000004</span><br><br><span class="hljs-comment">//在js中的最大安全整数</span><br>Math.<span class="hljs-built_in">pow</span>(<span class="hljs-number">2</span>, <span class="hljs-number">53</span>) - <span class="hljs-number">1</span>     <span class="hljs-comment">// 9007199254740991</span><br><br><span class="hljs-comment">//在其他语言的64位环境中有符号的 安全（注意这里是指能够安全使用，进行算数运算的范围） 最大整数。</span><br><span class="hljs-number">2</span>^<span class="hljs-number">63</span> - <span class="hljs-number">1</span>;<span class="hljs-comment">//9223372036854775807</span><br><br><br><span class="hljs-comment">//JS 的最大和最小安全值可以这样获得:</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">Number</span>.MAX_SAFE_INTEGER); <span class="hljs-comment">//9007199254740991</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-built_in">Number</span>.MIN_SAFE_INTEGER); <span class="hljs-comment">//-9007199254740991</span><br><br><br><span class="hljs-comment">//通过下面的例子，你会明白为什么大于这个值的运算是不安全的,这些运算都是错误的结果， 因为它们进行的都是浮点数运算会丢失精度。</span><br><br><span class="hljs-keyword">var</span> x = <span class="hljs-number">9223372036854775807</span>;<br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(x === x + <span class="hljs-number">1</span>);<span class="hljs-comment">// output: true</span><br><span class="hljs-built_in">console</span>.<span class="hljs-built_in">log</span>(<span class="hljs-number">9223372036854775807</span> + <span class="hljs-number">1000</span>); <span class="hljs-comment">//output: 9223372036854776000</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="为什么是这个值"><a href="#为什么是这个值" class="headerlink" title="为什么是这个值?"></a>为什么是这个值?</h2><p><img src="https://cdn.darknights.cn/assets/images/in-post/js-base/number.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li>1 位符号位</li>
+<li>11 位指数位</li>
+<li>52 位尾数位</li>
+</ul>
+<p>使用 52 位表示一个数的整数部分，那么最大可以精确表示的数应该是 2^52 - 1 才对， 就像 64 位表示整数时那样: 2^63 - 1 （去掉 1 位符号位）。 但其实浮点数在保存数字的时候做了规格化处理，以 10 进制为例:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">20</span>*<span class="hljs-number">10</span>^<span class="hljs-number">2</span> =&gt; <span class="hljs-number">2</span>*<span class="hljs-number">10</span>^<span class="hljs-number">3</span> //小数点前只需要保留 <span class="hljs-number">1</span> 位数<br></code></pre></td></tr></table></figure>
+
+<p>对于二进制来说， 小数点前保留一位， 规格化后始终是 1.***, 节省了 1 bit，这个 1 并不需要保存。</p>
+<h2 id="大整数与数据库"><a href="#大整数与数据库" class="headerlink" title="大整数与数据库"></a>大整数与数据库</h2><p>Nodejs 越来越多的应用到后端的开发中， 不可避免的需要处理这样的溢出问题， 好在已经有很多优秀的第三方库来解决该问题：<a target="_blank" rel="noopener" href="https://github.com/justmoon/node-bignum">bignum</a>、bigint。</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs dns">//每种类型的第二行为无符号范围<br>TYPE         BYTE   MIN            MAX<br>TINYINT      <span class="hljs-number">1</span>     -<span class="hljs-number">128</span>            <span class="hljs-number">127</span><br>                                   <span class="hljs-number">255</span><br>SMALLINT     <span class="hljs-number">2</span>    -<span class="hljs-number">32768</span>          <span class="hljs-number">32767</span><br>                                  <span class="hljs-number">65535</span><br>MEDIUMINT    <span class="hljs-number">3</span>    -<span class="hljs-number">8388608</span>       <span class="hljs-number">8388607</span><br>                                 <span class="hljs-number">16777215</span><br>INT          <span class="hljs-number">4</span>   -<span class="hljs-number">2147483648</span>    <span class="hljs-number">2147483647</span><br>                                <span class="hljs-number">4294967295</span><br>BIGINT       <span class="hljs-number">8</span>  -<span class="hljs-number">9223372036854775808</span>    <span class="hljs-number">9223372036854775807</span><br>                                       <span class="hljs-number">18446744073709551615</span><br></code></pre></td></tr></table></figure>
+<p>BIGINT 就是 64 位整数， 一旦要处理的数据量超过了 BIGINT 能存储的范围，便要考虑使用字符串保存， 坏处是数字的算数运算需要通过应用程序使用大整数库来处理，不能依赖于数据库。</p>
+<p>注: 常常看到 BIGINT(5) 或者 INT(10)， 括号里的 5 或 10 只是表示展示宽度，并不影响数的精度范围和存储字节数，需要与 VARCHAR(100)或 DECIMAL(10,2)区分开</p>
+<h2 id="JS右移0位"><a href="#JS右移0位" class="headerlink" title="JS右移0位"></a>JS右移0位</h2><p>在Javascript代码有时候会看到this.length &gt;&gt; 0这样的类似代码，那么this.length &gt;&gt; 0这样的代码有什么用呢？</p>
+<ul>
+<li>&gt;&gt; 代表有符号右移运算符 === 算术右移</li>
+<li>&gt;&gt;&gt; 在Javascript中代表无符号右移运算符 === 逻辑右移<br>移位运算分为左移和右移，其中左移运算都是丢弃最高位，在右端补零。而右移预算则分为逻辑右移<code>>>></code>和算术右移动<code>>></code>，逻辑右移在左端补零，算术右移则在左端扑最高有效位的值。</li>
+</ul>
+<p><code>this.length >> 0</code>的作用更简易的总结：</p>
+<ul>
+<li>所有非数值转换成0</li>
+<li>所有大于等于 0 数取整数部分（快速去掉小数）<br>例：<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-string">&#x27;hello&#x27;</span> &gt;&gt; <span class="hljs-number">0</span>  <span class="hljs-regexp">//</span> <span class="hljs-number">0</span><br><span class="hljs-number">32.5</span> &gt;&gt; <span class="hljs-number">0</span>  <span class="hljs-regexp">//</span> <span class="hljs-number">32</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="文章参考"><a href="#文章参考" class="headerlink" title="文章参考"></a>文章参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://michalbe.blogspot.sg/2013/03/javascript-less-known-parts-bitwise.html">JavaScript: The less known parts</a></li>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000002608050">JS 的整型你懂了吗？</a></li>
+</ul>
+<h1 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://yanhaijing.com/javascript/2014/03/14/what-every-javascript-developer-should-know-about-floating-points/">每一个JavaScript开发者应该了解的浮点知识</a></li>
+<li><a target="_blank" rel="noopener" href="http://jser.it/blog/2014/07/07/numbers-in-javascript/">Numbers in JavaScript</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/js%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">js基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">计算机基础</a>
+                    
+                      <a class="hover-with-bg" href="/tags/javascript/">javascript</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2017/11/01/2017-11-01-bin-operate/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">javascript的位操作</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2017/10/31/2017-10-31-admin-theme/">
+                        <span class="hidden-mobile">常用的后台管理主题模板</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>bleach</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/liutongbin2017" target="_blank" rel="nofollow noopener"><span>黑崎一护</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
